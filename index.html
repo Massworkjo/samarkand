@@ -127,7 +127,7 @@ header.stuck{box-shadow:0 4px 30px rgba(31,45,43,.08)}
 .nav-logo img{height:46px;width:auto}
 nav ul{display:flex;gap:2px;list-style:none;align-items:center}
 nav a{text-decoration:none;color:var(--ink);font-size:.98rem;padding:9px 14px;border-radius:999px;transition:background .25s var(--ease)}
-nav a:hover{background:rgba(255,255,255,.55)}
+nav a:hover,nav a[aria-current]{background:rgba(255,255,255,.55)}
 .nav-cta{background:var(--ink);color:#fff !important}
 .nav-cta:hover{background:var(--teal) !important;color:var(--ink) !important}
 .lang-btn{background:transparent;border:1.5px solid var(--ink);cursor:pointer;font-family:'Jost';font-weight:400;
@@ -139,8 +139,10 @@ nav a:hover{background:rgba(255,255,255,.55)}
 
 /* ---------- hero ---------- */
 .hero{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;
-  padding:calc(var(--header-h) + var(--s5)) 20px var(--s6)}
-.hero-cards{position:absolute;inset:0;perspective:1100px;pointer-events:none;z-index:-1}
+  padding:calc(var(--header-h) + var(--s5)) 20px var(--s6);perspective:1400px}
+/* the whole cluster leans toward the pointer; --mx/--my are 0 on touch devices */
+.hero-cards{position:absolute;inset:0;perspective:1100px;pointer-events:none;z-index:-1;transform-style:preserve-3d;
+  transform:rotateY(calc(var(--mx)*7deg)) rotateX(calc(var(--my)*-5deg))}
 .hc-wrap{position:absolute;inset-block-start:var(--y);--out:calc(var(--side)*var(--dir))}
 .hc-wrap.start{inset-inline-start:var(--x);--side:1}
 .hc-wrap.end{inset-inline-end:var(--x);--side:-1}
@@ -165,14 +167,24 @@ nav a:hover{background:rgba(255,255,255,.55)}
   transition:transform .2s var(--ease),background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease)}
 .btn:active{transform:scale(.97)}
 .btn-ink{background:var(--ink);color:#fff}
-.btn-ink:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn-ink:hover{background:var(--teal);color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow)}   /* 5.0:1 */
 .btn-line{background:transparent;color:var(--ink);border-color:var(--ink)}
 .btn-line:hover{background:var(--ink);color:#fff}
 .btn svg{inline-size:20px;block-size:20px;flex:none}
 
+/* entrance: cards pop in one after another, then the copy rises */
+@media (prefers-reduced-motion:no-preference){
+  .js .hc-wrap{animation:hc-in .9s var(--ease) both;animation-delay:calc(var(--i,0)*90ms + 120ms)}
+  .js .hero-copy>*{animation:rise .8s var(--ease) both;animation-delay:calc(var(--i,0)*120ms + 350ms)}
+}
+@keyframes hc-in{from{opacity:0;transform:translateY(60px) scale(.7) rotate(calc(var(--out)*-10deg))}}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}}
+/* scroll: cards drift outward and the copy lifts away. The two animations stack — the
+   scroll one's missing "from" keyframe takes the entrance's value as its base. */
 @supports (animation-timeline: scroll()){
   @media (prefers-reduced-motion:no-preference){
-    .hc-wrap{animation:hc-out linear both;animation-timeline:scroll(root);animation-range:0 95vh}
+    .js .hc-wrap{animation:hc-in .9s var(--ease) both,hc-out linear both;animation-delay:calc(var(--i,0)*90ms + 120ms),0s;
+      animation-timeline:auto,scroll(root);animation-range:normal,0 95vh}
     .hero-copy{animation:copy-out linear both;animation-timeline:scroll(root);animation-range:10vh 85vh}
   }
 }
@@ -187,7 +199,9 @@ section{padding:var(--s7) 22px;position:relative}
 .eyebrow{position:relative;display:inline-block;font-family:'Jost';font-weight:400;letter-spacing:.1em;text-transform:uppercase;
   font-size:.82rem;padding:7px 22px;margin-block-end:var(--s2);color:var(--ink);direction:ltr}
 .eyebrow[lang="ar"]{font-family:'Almarai';letter-spacing:0;text-transform:none;font-size:.95rem;direction:rtl}
-.eyebrow svg{position:absolute;inset:0;inline-size:100%;block-size:100%;fill:var(--lbl,var(--teal));z-index:-1}
+.eyebrow svg{position:absolute;inset:0;inline-size:100%;block-size:100%;fill:var(--lbl,var(--teal));z-index:-1;
+  transform-origin:0 50%;transition:transform .7s var(--ease) .15s}
+.js .eyebrow[data-reveal]:not(.in) svg{transform:scaleX(0)}   /* the stroke paints itself when the section arrives */
 h2.sec-title{font-size:clamp(2rem,1.3rem + 3vw,3.4rem);font-weight:500;margin-block-end:var(--s2);text-wrap:balance}
 .lede{max-width:58ch;color:var(--muted);font-weight:300;font-size:1.12rem;text-wrap:pretty}
 .center .lede{margin-inline:auto}
@@ -200,7 +214,8 @@ h2.sec-title{font-size:clamp(2rem,1.3rem + 3vw,3.4rem);font-weight:500;margin-bl
 .story-head{max-width:1240px;margin-inline:auto;padding:0 22px var(--s4)}
 .story-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);max-width:1240px;margin-inline:auto;padding:0 22px}
 .story-media{position:sticky;inset-block-start:calc(var(--header-h) + 4svh);block-size:calc(100svh - var(--header-h) - 8svh);display:grid;place-items:center}
-.story-media img{grid-area:1/1;inline-size:min(100%,calc((100svh - var(--header-h) - 8svh)*.8));aspect-ratio:4/5;object-fit:cover;
+/* 4/4.4 instead of the posters' 4/5: crops the caption strip printed at the bottom of each post */
+.story-media img{grid-area:1/1;inline-size:min(100%,calc((100svh - var(--header-h) - 8svh)*.85));aspect-ratio:4/4.4;object-fit:cover;object-position:50% 12%;
   border-radius:var(--r);box-shadow:0 30px 70px rgba(31,45,43,.2);opacity:0;transform:scale(.94) rotate(calc(var(--dir)*-3deg));
   transition:opacity .6s var(--ease),transform .9s var(--ease)}
 .story-media img.on{opacity:1;transform:none}
@@ -245,6 +260,9 @@ h2.sec-title{font-size:clamp(2rem,1.3rem + 3vw,3.4rem);font-weight:500;margin-bl
 .chip-btn .c{opacity:.7;font-size:.85em}
 .ev-list,.ev-past-list{list-style:none;display:grid;gap:10px}
 @media (min-width:1000px){.ev-list,.ev-past-list{grid-template-columns:1fr 1fr}}
+.ev-month{grid-column:1/-1;font-family:'Jost';font-weight:400;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;
+  color:var(--muted);padding:var(--s3) 4px 2px;direction:ltr;text-align:start}
+html[dir="rtl"] .ev-month{direction:rtl;font-family:'Almarai';letter-spacing:0;text-transform:none;font-size:.9rem}
 .ev{display:grid;grid-template-columns:7.5rem 1fr auto;gap:var(--s3);align-items:center;background:var(--white);
   border-radius:var(--r-sm);padding:16px 20px;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 .ev:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
@@ -324,11 +342,12 @@ dialog#lb img{max-width:96vw;max-height:84vh;width:auto;border-radius:var(--r-sm
 .ig-grid a:hover img{transform:scale(1.05)}
 
 /* ---------- contact ---------- */
-.contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-block-start:var(--s4)}
-.c-card{background:var(--white);border-radius:var(--r-sm);padding:var(--s4) var(--s3);text-align:center}
-.c-card .ic{inline-size:36px;block-size:36px;margin:0 auto var(--s1);color:var(--ink)}
-.c-card h3{font-size:1rem;margin-block-end:2px;color:var(--muted);font-family:'Almarai';font-weight:400}
-.c-card a{color:var(--ink);font-family:'Jost';font-weight:400;font-size:1.1rem;text-decoration:none;display:inline-block;min-height:44px;line-height:44px;padding-inline:6px}
+/* a hairline list, not six boxes */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 var(--s6);margin:var(--s4) auto 0;max-width:900px;text-align:start}
+.c-card{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:14px;padding:12px 0;border-block-end:1px solid rgba(31,45,43,.16)}
+.c-card .ic{inline-size:24px;block-size:24px;color:var(--ink)}
+.c-card h3{font-size:.98rem;color:var(--muted);font-family:'Almarai';font-weight:400}
+.c-card a{color:var(--ink);font-family:'Jost';font-weight:400;font-size:1.08rem;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
 .c-card a:hover{text-decoration:underline;text-underline-offset:4px}
 .c-card p{color:var(--ink)}
 .contact-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-block-start:var(--s4)}
@@ -363,14 +382,14 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   nav ul li{inline-size:100%}
   nav ul a,.lang-btn{inline-size:100%;text-align:center;display:block}
   .hero{display:flex;flex-direction:column;align-items:center;padding-block-start:calc(var(--header-h) + var(--s3))}
-  .hero-cards{position:relative;inset:auto;display:flex;justify-content:center;perspective:none;block-size:190px;margin-block-end:var(--s3)}
+  .hero-cards{position:relative;inset:auto;display:flex;justify-content:center;perspective:none;block-size:auto;margin-block:14px var(--s3);transform:none}
   .hc-wrap{position:relative;inset:auto !important;margin-inline:-18px}
   .hc-wrap:nth-child(n+6){display:none}
   .hc{--w:118px;transform:rotateZ(var(--rz,0deg))}
   .story-body{display:block;padding:0}
   .story-media{display:none}
   .sp{min-block-size:0;padding:var(--s5) 22px}
-  .sp-img{display:block;inline-size:min(100%,420px);aspect-ratio:4/5;object-fit:cover;border-radius:22px;margin-block-end:var(--s3);
+  .sp-img{display:block;inline-size:min(100%,420px);aspect-ratio:4/4.4;object-fit:cover;object-position:50% 12%;border-radius:22px;margin-block-end:var(--s3);
     box-shadow:0 24px 50px rgba(31,45,43,.2)}
   .about-grid{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -472,18 +491,18 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 <section class="hero" id="top" data-bg="cream">
   <div class="pattern" aria-hidden="true"></div>
   <div class="hero-cards" aria-hidden="true">
-    <div class="hc-wrap start" style="--x:3%;--y:15%"><div class="hc" style="--rz:-7deg;--dl:0s"><img src="assets/ig/chocobreak-sky-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
-    <div class="hc-wrap end" style="--x:4%;--y:12%"><div class="hc" style="--rz:6deg;--dl:-2s"><img src="assets/ig/stuns-smart-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
-    <div class="hc-wrap start" style="--x:15%;--y:48%"><div class="hc" style="--rz:5deg;--dl:-4s;--w:clamp(100px,10.5vw,170px)"><img src="assets/ig/texture-400.webp" width="400" height="500" alt=""></div></div>
-    <div class="hc-wrap end" style="--x:16%;--y:46%"><div class="hc" style="--rz:-5deg;--dl:-1s;--w:clamp(100px,10.5vw,170px)"><img src="assets/ig/chips-share-2-400.webp" width="400" height="500" alt=""></div></div>
-    <div class="hc-wrap start" style="--x:5%;--y:72%"><div class="hc" style="--rz:-3deg;--dl:-3s"><img src="assets/ig/frost-3x-400.webp" width="400" height="500" alt=""></div></div>
-    <div class="hc-wrap end" style="--x:6%;--y:70%"><div class="hc" style="--rz:8deg;--dl:-5s"><img src="assets/ig/cookies-400.webp" width="400" height="500" alt=""></div></div>
+    <div class="hc-wrap start" style="--x:3%;--y:15%;--i:0"><div class="hc" style="--rz:-7deg;--dl:0s"><img src="assets/ig/chocobreak-sky-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
+    <div class="hc-wrap end" style="--x:4%;--y:12%;--i:1"><div class="hc" style="--rz:6deg;--dl:-2s"><img src="assets/ig/stuns-smart-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
+    <div class="hc-wrap start" style="--x:15%;--y:48%;--i:2"><div class="hc" style="--rz:5deg;--dl:-4s;--w:clamp(100px,10.5vw,170px)"><img src="assets/ig/texture-400.webp" width="400" height="500" alt=""></div></div>
+    <div class="hc-wrap end" style="--x:16%;--y:46%;--i:3"><div class="hc" style="--rz:-5deg;--dl:-1s;--w:clamp(100px,10.5vw,170px)"><img src="assets/ig/chips-share-2-400.webp" width="400" height="500" alt=""></div></div>
+    <div class="hc-wrap start" style="--x:5%;--y:72%;--i:4"><div class="hc" style="--rz:-3deg;--dl:-3s"><img src="assets/ig/frost-3x-400.webp" width="400" height="500" alt=""></div></div>
+    <div class="hc-wrap end" style="--x:6%;--y:70%;--i:5"><div class="hc" style="--rz:8deg;--dl:-5s"><img src="assets/ig/cookies-400.webp" width="400" height="500" alt=""></div></div>
   </div>
   <div class="hero-copy">
-    <a class="hero-pill" id="heroPill" href="#events" hidden></a>
-    <h1 data-i18n="hero_title">طعم خيالي</h1>
-    <p class="tag" data-i18n="hero_tag">سكاكر وشوكولاتة نستوردها ونوزّعها بحب — من عمّان إلى كل رفّ في الشرق الأوسط.</p>
-    <div class="hero-btns">
+    <a class="hero-pill" id="heroPill" href="#events" hidden style="--i:0"></a>
+    <h1 data-i18n="hero_title" style="--i:1">طعم خيالي</h1>
+    <p class="tag" data-i18n="hero_tag" style="--i:2">سكاكر وشوكولاتة نستوردها ونوزّعها بحب — من عمّان إلى كل رفّ في الشرق الأوسط.</p>
+    <div class="hero-btns" style="--i:3">
       <a href="#brands" class="btn btn-ink" data-i18n="hero_btn1">اكتشف علاماتنا</a>
       <a href="#contact" class="btn btn-line" data-i18n="hero_btn2">اطلب عرض أسعار</a>
     </div>
@@ -983,7 +1002,11 @@ function renderEvents(){
     return `<button type="button" class="chip-btn" data-region="${r}" aria-pressed="${r === region}">${t(r === 'all' ? 'ev_all' : 'r_' + r)} <span class="c num">${n}</span></button>`;
   }).join('');
   const shown = upcoming.filter(e => region === 'all' || REGION[e.country] === region);
-  $('#evList').innerHTML = shown.length ? shown.map(evItem).join('') : `<li class="ev-empty">${t('ev_none')}</li>`;
+  // month headers give the long list a rhythm; TBA events share one header
+  const monthOf = e => e.start ? new Intl.DateTimeFormat(loc(), {month:'long', year:'numeric', timeZone:'UTC'}).format(utc(e.start)) : t('ev_tba');
+  let last = null, html = '';
+  for(const e of shown){ const m = monthOf(e); if(m !== last){ html += `<li class="ev-month" aria-hidden="true">${esc(m)}</li>`; last = m; } html += evItem(e); }
+  $('#evList').innerHTML = shown.length ? html : `<li class="ev-empty">${t('ev_none')}</li>`;
   $('#evPast').innerHTML = past.map(evItem).join('');
   $('#evPastWrap').hidden = !past.length;
 }
@@ -1068,9 +1091,21 @@ function openLB(i){
   if(!$('#lb').open) $('#lb').showModal();
 }
 
+// the nav highlights whichever section holds the middle of the viewport
+function initNav(){
+  const links = $$('#menu a[href^="#"]'), byId = Object.fromEntries(links.map(a => [a.hash.slice(1), a]));
+  const targets = Object.keys(byId).map(id => document.getElementById(id)).filter(Boolean);
+  if(!targets.length || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(ents => ents.forEach(e => { if(!e.isIntersecting) return;
+    links.forEach(a => a.removeAttribute('aria-current')); byId[e.target.id].setAttribute('aria-current', 'true'); }),
+    {rootMargin:'-40% 0px -55% 0px'});
+  targets.forEach(s => io.observe(s));
+}
+
 /* ================= boot ================= */
 buildCatalog(); buildIG(); buildFlags(); applyLang();
-initReveal(); initCounters(); initPage(); initBlobs();
+$$('.eyebrow').forEach(e => e.setAttribute('data-reveal', ''));   // brush labels draw in with their section
+initReveal(); initCounters(); initPage(); initBlobs(); initNav();
 
 fetch('events.json', {cache:'no-cache'})
   .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
