@@ -575,7 +575,9 @@ footer a:focus-visible{outline:3px solid var(--yellow)}
 </section>
 
 <dialog id="lb" aria-label="عارض الصور">
-  <img id="lbImg" src="" alt="">
+  <!-- no src= until a product is chosen: an empty src resolves to the page URL and
+       makes the browser re-download this document as a phantom image -->
+  <img id="lbImg" alt="">
   <div class="lb-bar">
     <span class="lb-cap" id="lbCap"></span>
     <div class="lb-nav">
