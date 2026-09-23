@@ -1,0 +1,58 @@
+{
+ "babyfox": {
+  "bg": "#FF8AA2",
+  "ink": 5.87
+ },
+ "chips-share-1": {
+  "bg": "#06AEBA",
+  "ink": 4.84
+ },
+ "chips-share-2": {
+  "bg": "#FF8A96",
+  "ink": 5.81
+ },
+ "chocobreak-crunch": {
+  "bg": "#96AE4E",
+  "ink": 5.27
+ },
+ "chocobreak-happy": {
+  "bg": "#FFD24E",
+  "ink": 9.09
+ },
+ "chocobreak-sky": {
+  "bg": "#639EDA",
+  "ink": 4.63
+ },
+ "cookies": {
+  "bg": "#F6AE7E",
+  "ink": 7.03
+ },
+ "dino": {
+  "bg": "#06A6D7",
+  "ink": 4.64
+ },
+ "frost-3x": {
+  "bg": "#8ADEF6",
+  "ink": 8.64
+ },
+ "frostlab": {
+  "bg": "#06BA42",
+  "ink": 5.06
+ },
+ "stuns-smart": {
+  "bg": "#F6C6D2",
+  "ink": 8.68
+ },
+ "stuns": {
+  "bg": "#12C6C6",
+  "ink": 6.18
+ },
+ "teaser": {
+  "bg": "#5AC6C6",
+  "ink": 6.44
+ },
+ "texture": {
+  "bg": "#FFD206",
+  "ink": 9.02
+ }
+}

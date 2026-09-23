@@ -9,7 +9,6 @@
 <link rel="canonical" href="https://www.samarqandsweets.com/">
 <link rel="icon" href="assets/logo.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/logo.png">
-
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.samarqandsweets.com/">
 <meta property="og:site_name" content="Samarqand Sweets">
@@ -22,8 +21,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="assets/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;600;700;800&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="modulepreload" href="assets/events.js">
 
 <script type="application/ld+json">
 {
@@ -38,322 +37,378 @@
   "address":{"@type":"PostalAddress","addressLocality":"عمّان","addressCountry":"JO"},
   "email":"info@samarqandsweets.com",
   "telephone":"+962778932185",
+  "sameAs":["https://www.instagram.com/samarqand.mena/","https://www.facebook.com/p/%D8%B4%D8%B1%D9%83%D8%A9-%D8%B3%D9%85%D8%B1%D9%82%D9%86%D8%AF-%D9%84%D9%84%D8%B3%D9%83%D8%A7%D9%83%D8%B1-Samarqand-co-100091360552095/"],
   "areaServed":["JO","US","SA","PS","LB","SY","YE","OM"]
 }
 </script>
 
+<!-- Reveal-on-scroll hides content only once this proves JS runs; see README -->
 <script>document.documentElement.className+=' js';</script>
 <style>
 /* ============================================================
-   Samarqand — design tokens
-   Brand FILLS are exactly the values in قايد لاين سمرقند (2026-07);
-   the guideline forbids altering them. Where a brand colour has to
-   carry TEXT, a darker shade of the SAME hue+saturation is derived,
-   lowered only as far as WCAG AA requires. Fills are never changed.
+   Tokens. Brand FILLS are exactly the values in قايد لاين سمرقند
+   (2026-07) and must not be altered. Where a brand colour carries
+   TEXT, a darker shade of the same hue is used (ratio in comment).
+   Story colours are sampled from each Instagram post and lightened
+   (same hue) until ink text reaches 4.6:1.
    ============================================================ */
 :root{
-  /* brand fills — unchanged, per brand guideline */
   --teal:#4BA89D; --teal-deep:#2E7A70; --mint:#A2DBD5;
   --orange:#EA8A34; --yellow:#F8C311; --coral:#FE7C7C; --pink:#EBA09D;
   --cream:#FEEED7; --cream-lt:#FFF8EC; --white:#FFFFFF;
 
-  /* derived text-safe shades (same hue + saturation) */
   --teal-text:#367870;     /* 4.52:1 on cream    */
   --teal-solid:#3A827A;    /* white on it 4.51:1 */
   --orange-text:#B55F13;   /* 4.55:1 on white    */
   --orange-deep:#A85811;   /* 4.53:1 on cream-lt */
   --wa-solid:#188842;      /* white on it 4.53:1 */
-  --footer-bg:#215A53;
+  --footer-bg:#215A53;     /* white 7.92, mint 5.14 */
 
   --ink:#3A2E2A;           /* 11.49:1 on cream   */
   --ink-soft:#5B4F4A;      /* 7.89:1 on white    */
 
-  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem;
-  --s5:3rem; --s6:4.5rem;
-
-  --radius:26px; --radius-sm:16px;
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem; --s5:3rem; --s6:4.5rem; --s7:7rem;
+  --radius:28px; --radius-sm:18px;
   --shadow:0 10px 30px rgba(58,46,42,.10);
-  --shadow-lift:0 22px 50px rgba(58,46,42,.16);
-  --ring:3px solid var(--ink);
-  --ease:cubic-bezier(.2,.7,.3,1);
-  --header-h:74px;
+  --shadow-lift:0 24px 60px rgba(58,46,42,.18);
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --header-h:72px;
+  --dir:1;                 /* +1 in RTL, -1 in LTR: "outward from inline-start" */
 }
+html[dir="ltr"]{--dir:-1}
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 12px);-webkit-text-size-adjust:100%}
-body{
-  font-family:'Cairo',system-ui,'Segoe UI',sans-serif;
-  color:var(--ink); background:var(--cream);
-  line-height:1.8; overflow-x:hidden;
-  font-size:clamp(1rem,.96rem + .2vw,1.075rem);
-}
-h1,h2,h3,.disp{font-family:'Baloo Bhaijaan 2','Cairo',sans-serif;line-height:1.25}
+body{font-family:'Cairo',system-ui,'Segoe UI',sans-serif;color:var(--ink);background:var(--cream);
+  line-height:1.8;overflow-x:hidden;font-size:clamp(1rem,.96rem + .2vw,1.075rem)}
+h1,h2,h3,h4,.disp{font-family:'Baloo Bhaijaan 2','Cairo',sans-serif;line-height:1.2}
 img{max-width:100%;display:block}
-:where(a,button,summary):focus-visible{outline:var(--ring);outline-offset:3px;border-radius:6px}
+button{font:inherit;color:inherit}
+:where(a,button,summary):focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
 
 /* numerals inside Arabic prose must be isolated or bidi reorders them */
 .num,.tel{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
 
-.skip{position:absolute;inset-inline-start:-9999px;inset-block-start:0;z-index:300;
-  background:var(--ink);color:#fff;padding:12px 20px;border-radius:0 0 12px 12px;font-weight:600;text-decoration:none}
+.skip{position:absolute;inset-inline-start:-9999px;inset-block-start:0;z-index:300;background:var(--ink);color:#fff;
+  padding:12px 20px;border-radius:0 0 12px 12px;font-weight:600;text-decoration:none}
 .skip:focus{inset-inline-start:0}
 
-/* ---------- scroll progress ---------- */
-#bar{position:fixed;inset-block-start:0;inset-inline:0;height:4px;z-index:120;
-  background:linear-gradient(90deg,var(--coral),var(--orange),var(--yellow),var(--teal));
-  transform:scaleX(0);transform-origin:right center}
+#bar{position:fixed;inset-block-start:0;inset-inline:0;height:3px;z-index:120;
+  background:linear-gradient(90deg,var(--coral),var(--orange),var(--yellow),var(--teal));transform:scaleX(0);transform-origin:right center}
 html[dir="ltr"] #bar{transform-origin:left center}
 
-/* ---------- header ---------- */
-header{position:fixed;inset-block-start:0;inset-inline:0;z-index:100;
-  background:rgba(254,238,215,.88);backdrop-filter:blur(14px) saturate(1.3);
-  border-block-end:1px solid rgba(58,46,42,.10);transition:box-shadow .3s var(--ease)}
+/* ---------- header + event bar ---------- */
+header{position:fixed;inset-block-start:0;inset-inline:0;z-index:100;background:rgba(254,238,215,.82);
+  backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border-block-end:1px solid rgba(58,46,42,.08);transition:box-shadow .3s var(--ease)}
 header.stuck{box-shadow:0 6px 24px rgba(58,46,42,.10)}
-.nav{max-width:1180px;margin-inline:auto;padding:8px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.evbar{background:var(--acc,var(--teal));color:var(--ink);font-weight:700;font-size:.9rem;text-align:center;
+  padding:7px 16px;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+.evbar[hidden]{display:none}
+.evbar a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.evbar .short{display:none}
+.nav{max-width:1240px;margin-inline:auto;padding:8px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-deep)}
-.nav-logo img{height:48px;width:auto}
-.nav-logo span{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:1.25rem}
-nav ul{display:flex;gap:4px;list-style:none;align-items:center}
-nav a{text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;
-  padding:9px 15px;border-radius:999px;transition:background .22s var(--ease),color .22s var(--ease)}
-nav a:hover{background:var(--mint);color:var(--teal-deep)}
-.nav-cta{background:var(--orange);color:var(--ink) !important;font-weight:700}
-.nav-cta:hover{background:var(--yellow) !important}
-.lang-btn{background:var(--teal);color:var(--ink);border:none;cursor:pointer;
-  font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:.95rem;
-  padding:9px 18px;border-radius:999px;transition:background .22s var(--ease)}
-.lang-btn:hover{background:var(--mint)}
-.burger{display:none;background:none;border:none;cursor:pointer;color:var(--teal-deep);
-  inline-size:44px;block-size:44px;align-items:center;justify-content:center;border-radius:12px}
-.burger:hover{background:var(--mint)}
+.nav-logo img{height:44px;width:auto}
+nav ul{display:flex;gap:2px;list-style:none;align-items:center}
+nav a{text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;padding:9px 14px;border-radius:999px;
+  transition:background .2s var(--ease)}
+nav a:hover{background:rgba(162,219,213,.7)}
+.nav-cta{background:var(--ink);color:#fff !important}
+.nav-cta:hover{background:var(--teal-deep) !important}
+.lang-btn{background:transparent;border:2px solid var(--ink);cursor:pointer;font-family:'Baloo Bhaijaan 2';font-weight:700;
+  font-size:.92rem;padding:6px 16px;border-radius:999px;min-height:40px}
+.lang-btn:hover{background:var(--ink);color:#fff}
+.burger{display:none;background:none;border:none;cursor:pointer;color:var(--ink);inline-size:44px;block-size:44px;
+  align-items:center;justify-content:center;border-radius:12px}
 .burger svg{inline-size:26px;block-size:26px}
 
-/* ---------- hero ---------- */
-.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;position:relative;isolation:isolate;
-  padding:calc(var(--header-h) + var(--s5)) 20px var(--s6);background:var(--cream);overflow:hidden}
-/* ambient colour wash, not hard shapes — the blur keeps them behind the wordmark */
-.blob{position:absolute;z-index:-1;border-radius:46% 54% 60% 40%/52% 44% 56% 48%;
-  filter:blur(26px);opacity:.55;pointer-events:none}
-.b1{inline-size:min(46vw,440px);aspect-ratio:1.1;background:var(--mint);inset-block-start:-6%;inset-inline-end:-8%;animation:drift 19s ease-in-out infinite}
-.b2{inline-size:min(38vw,360px);aspect-ratio:1;background:var(--yellow);opacity:.32;inset-block-end:-10%;inset-inline-start:-6%;animation:drift 23s ease-in-out infinite reverse}
-.b3{inline-size:min(28vw,270px);aspect-ratio:1.2;background:var(--coral);opacity:.24;inset-block-start:38%;inset-inline-start:4%;animation:drift 27s ease-in-out infinite}
-.b4{inline-size:min(24vw,230px);aspect-ratio:1;background:var(--pink);opacity:.28;inset-block-end:16%;inset-inline-end:6%;animation:drift 21s ease-in-out infinite reverse}
-@keyframes drift{0%,100%{transform:translate3d(0,0,0) rotate(0)}50%{transform:translate3d(14px,-22px,0) rotate(8deg)}}
+/* ---------- hero: headline inside a 3D cluster of Instagram posts ---------- */
+.hero{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;
+  padding:calc(var(--header-h) + var(--s5)) 20px var(--s6);background:
+   radial-gradient(60% 50% at 50% 45%,var(--cream-lt) 0,transparent 70%),var(--cream)}
+.hero-cards{position:absolute;inset:0;perspective:1100px;pointer-events:none;z-index:-1}
+.hc-wrap{position:absolute;inset-block-start:var(--y);--out:calc(var(--side)*var(--dir))}
+.hc-wrap.start{inset-inline-start:var(--x);--side:1}
+.hc-wrap.end{inset-inline-end:var(--x);--side:-1}
+.hc{inline-size:var(--w,clamp(120px,13vw,210px));aspect-ratio:4/5;border-radius:22px;overflow:hidden;
+  box-shadow:0 30px 60px rgba(58,46,42,.22),0 6px 14px rgba(58,46,42,.10);
+  transform:rotateY(calc(var(--out)*-14deg)) rotateZ(var(--rz,0deg));animation:bob 7s ease-in-out infinite;animation-delay:var(--dl,0s)}
+.hc img{inline-size:100%;block-size:100%;object-fit:cover}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -14px}}
 
-.hero img.logo{inline-size:min(320px,62vw);height:auto;margin-block-end:var(--s3);animation:float 6s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.hero h1{font-size:clamp(2rem,1.3rem + 3.6vw,4.25rem);font-weight:800;color:var(--teal-deep);
-  max-width:16ch;text-wrap:balance;letter-spacing:-.01em}
+.hero-copy{text-align:center;max-width:980px}
+.hero-pill{display:inline-flex;align-items:center;gap:10px;background:var(--acc,var(--teal));color:var(--ink);
+  font-weight:700;font-size:.92rem;padding:8px 18px;border-radius:999px;text-decoration:none;margin-block-end:var(--s3);
+  box-shadow:var(--shadow)}
+.hero-pill[hidden]{display:none}
+.dot{inline-size:10px;block-size:10px;border-radius:50%;background:var(--ink);flex:none}
+.dot.live{background:#C8102E;box-shadow:0 0 0 0 rgba(200,16,46,.6);animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(200,16,46,0)}100%{box-shadow:0 0 0 0 rgba(200,16,46,0)}}
+.hero h1{font-size:clamp(2.7rem,1.3rem + 5.6vw,6.4rem);font-weight:800;color:var(--ink);letter-spacing:-.015em;
+  line-height:1.05;text-wrap:balance}
 .hero h1 em{font-style:normal;color:var(--orange-text)}
-.hero p.tag{font-size:clamp(1.05rem,1rem + .5vw,1.3rem);margin-block-start:var(--s2);max-width:52ch;text-wrap:pretty}
-.hero .en-tag{font-family:'Baloo Bhaijaan 2';direction:ltr;unicode-bidi:isolate;color:var(--teal-text);
-  letter-spacing:.4px;margin-block-start:var(--s1);font-weight:700;font-size:1rem}
-.hero-btns{margin-block-start:var(--s4);display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.hero .tag{font-size:clamp(1.05rem,.98rem + .5vw,1.3rem);margin:var(--s3) auto 0;max-width:46ch;color:var(--ink-soft);text-wrap:pretty}
+.hero-btns{margin-block-start:var(--s4);display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 
-.btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;
-  font-family:'Baloo Bhaijaan 2';padding:14px 32px;border-radius:999px;font-size:1.05rem;
-  min-height:48px;box-shadow:var(--shadow);cursor:pointer;border:3px solid transparent;
-  transition:transform .22s var(--ease),background .22s var(--ease),box-shadow .22s var(--ease)}
-.btn-primary{background:var(--teal-solid);color:#fff}
-.btn-primary:hover{background:var(--teal-deep);transform:translateY(-3px);box-shadow:var(--shadow-lift)}
-.btn-ghost{background:#fff;color:var(--orange-text);border-color:var(--orange)}
-.btn-ghost:hover{background:var(--orange);color:var(--ink);transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;font-weight:700;
+  font-family:'Baloo Bhaijaan 2';padding:13px 30px;border-radius:999px;font-size:1.05rem;min-height:50px;cursor:pointer;
+  border:2px solid transparent;transition:transform .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:var(--teal-deep);transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.btn-line{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-line:hover{background:var(--ink);color:#fff}
 .btn svg{inline-size:20px;block-size:20px;flex:none}
 
-.scroll-hint{margin-block-start:var(--s5);color:var(--ink-soft);display:flex;flex-direction:column;
-  align-items:center;gap:4px;font-size:.85rem;font-weight:600}
-.scroll-hint svg{inline-size:22px;block-size:22px;animation:bob 2.2s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+/* scroll-driven hero: cards drift outward and the copy lifts away. Native scroll
+   timelines only — browsers without them simply keep the static composition. */
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    .hc-wrap{animation:hc-out linear both;animation-timeline:scroll(root);animation-range:0 95vh}
+    .hero-copy{animation:copy-out linear both;animation-timeline:scroll(root);animation-range:10vh 85vh}
+  }
+}
+@keyframes hc-out{to{transform:translate3d(calc(var(--out)*18vw),-14vh,0) rotate(calc(var(--out)*12deg)) scale(1.15);opacity:0}}
+@keyframes copy-out{to{transform:translateY(-9vh) scale(.94);opacity:0}}
 
-/* ---------- sections ---------- */
-section{padding:var(--s6) 22px}
-.wrap{max-width:1180px;margin-inline:auto}
+/* ---------- common section chrome ---------- */
+section{padding:var(--s7) 22px}
+.wrap{max-width:1240px;margin-inline:auto}
 .center{text-align:center}
-.eyebrow{display:inline-block;background:var(--yellow);color:var(--ink);
-  font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:.9rem;
-  padding:6px 18px;border-radius:999px;margin-block-end:var(--s2)}
-h2.sec-title{font-size:clamp(1.75rem,1.3rem + 2vw,2.9rem);color:var(--teal-deep);font-weight:800;
-  margin-block-end:var(--s2);text-wrap:balance}
-.lede{max-width:60ch;margin-inline:auto;text-wrap:pretty;color:var(--ink-soft)}
+.eyebrow{display:inline-block;font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:.9rem;padding:6px 16px;
+  border-radius:999px;background:var(--yellow);color:var(--ink);margin-block-end:var(--s2)}
+h2.sec-title{font-size:clamp(2rem,1.3rem + 3vw,3.6rem);font-weight:800;color:var(--ink);margin-block-end:var(--s2);
+  text-wrap:balance;letter-spacing:-.01em}
+.lede{max-width:60ch;color:var(--ink-soft);text-wrap:pretty}
+.center .lede{margin-inline:auto}
 
-/* Scroll reveal is progressive enhancement: content is visible by default and only
-   starts hidden once the inline head script proves JS runs. Without the `.js` gate a
-   script error — or an IntersectionObserver that never fires (a backgrounded tab does
-   not always dispatch) — would leave the whole page blank. */
-.js [data-reveal]{opacity:0;transform:translateY(22px);
-  transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:var(--d,0ms)}
+.js [data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);
+  transition-delay:var(--d,0ms)}
 .js [data-reveal].in{opacity:1;transform:none}
 
-/* ---------- conveyor (signature) ---------- */
-.belt-sec{padding:0;background:var(--cream-lt);border-block:1px solid rgba(58,46,42,.07);overflow:hidden}
-.belt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  max-width:1180px;margin-inline:auto;padding:var(--s3) 22px var(--s1)}
-.belt-head p{font-weight:700;color:var(--teal-deep);font-family:'Baloo Bhaijaan 2';font-size:1.05rem}
-.belt-viewport{overflow:hidden;padding-block:var(--s2) var(--s3);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-          mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.belt{display:flex;inline-size:max-content;animation:belt 46s linear infinite;will-change:transform}
-.belt-viewport:hover .belt,.belt-viewport:focus-within .belt{animation-play-state:paused}
-.belt.paused{animation-play-state:paused !important}
-/* The track is anchored to the inline-start edge, which flips with direction: in LTR it
-   sits at the left and must travel left; in RTL it sits at the right and must travel
-   right. Using -50% in both directions empties the viewport in RTL. */
-@keyframes belt{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
-@keyframes belt-rtl{from{transform:translate3d(0,0,0)}to{transform:translate3d(50%,0,0)}}
-html[dir="rtl"] .belt{animation-name:belt-rtl}
-.belt figure{inline-size:250px;flex:none;margin-inline-end:18px;background:#fff;
-  border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow)}
-.belt img{inline-size:100%;height:auto;aspect-ratio:900/637;object-fit:cover}
-.belt figcaption{padding:10px 12px;font-size:.85rem;font-weight:600;color:var(--teal-deep)}
-.belt-pause{background:#fff;border:2px solid var(--teal);color:var(--teal-deep);cursor:pointer;
-  border-radius:999px;min-height:44px;padding:6px 18px;font-family:'Cairo',sans-serif;font-weight:600;font-size:.88rem;
-  display:inline-flex;align-items:center;gap:7px}
-.belt-pause:hover{background:var(--mint)}
-.belt-pause svg{inline-size:15px;block-size:15px}
+/* ---------- brand story (signature): the section takes each product's colour ---------- */
+.story{padding:var(--s7) 0 0;background-color:var(--story-bg,var(--cream-lt));transition:background-color .8s var(--ease)}
+.story-head{max-width:1240px;margin-inline:auto;padding:0 22px var(--s4)}
+.story-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);
+  max-width:1240px;margin-inline:auto;padding:0 22px}
+.story-media{position:sticky;inset-block-start:calc(var(--header-h) + 4svh);block-size:calc(100svh - var(--header-h) - 8svh);
+  display:grid;place-items:center}
+.story-media img{grid-area:1/1;inline-size:min(100%,calc((100svh - var(--header-h) - 8svh)*.8));aspect-ratio:4/5;object-fit:cover;
+  border-radius:var(--radius);box-shadow:0 40px 80px rgba(58,46,42,.25);opacity:0;transform:scale(.92) rotate(calc(var(--dir)*-3deg));
+  transition:opacity .6s var(--ease),transform .9s var(--ease)}
+.story-media img.on{opacity:1;transform:none}
+.sp{min-block-size:88svh;display:flex;flex-direction:column;justify-content:center;padding-block:8svh}
+.sp-img{display:none}
+.sp .kicker{font-weight:700;font-size:.95rem;letter-spacing:.02em;margin-block-end:var(--s1)}
+.sp .brand{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:clamp(3rem,1.6rem + 5.4vw,6rem);line-height:1;
+  direction:ltr;unicode-bidi:isolate;text-align:start}
+.sp .line{font-size:clamp(1.15rem,1rem + .7vw,1.55rem);font-weight:600;margin-block-start:var(--s3);max-width:30ch;text-wrap:pretty}
+.sp .slogan{display:inline-block;margin-block-start:var(--s3);font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:1.05rem;
+  direction:ltr;unicode-bidi:isolate;border:2px solid var(--ink);border-radius:999px;padding:4px 16px}
+.story-foot{padding:var(--s5) 22px var(--s6);text-align:center}
 
-/* ---------- about ---------- */
+/* ---------- about + stats ---------- */
 .about{background:var(--white)}
-.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s5);align-items:center}
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s6);align-items:center}
 .about p{margin-block-end:var(--s2);max-width:62ch;text-wrap:pretty}
-.legacy{background:var(--cream);border-radius:var(--radius);padding:var(--s4) var(--s3);
-  border:3px dashed var(--mint);text-align:center}
-.legacy .year{font-family:'Baloo Bhaijaan 2';font-size:clamp(2.6rem,2rem + 2vw,3.5rem);font-weight:800;
-  color:var(--orange-text);line-height:1.05;display:block}
+.legacy{background:var(--cream);border-radius:var(--radius);padding:var(--s5) var(--s4);text-align:center}
+.legacy .year{font-family:'Baloo Bhaijaan 2';font-size:clamp(3rem,2.2rem + 2.4vw,4.4rem);font-weight:800;line-height:1;display:block}
+.legacy .year.a{color:var(--orange-text)}
 .legacy .year.b{color:var(--teal-text)}
-/* .98rem/600 is normal-size text, so it needs 4.5:1 — teal-deep on cream is only 4.46:1 */
-.legacy .lbl{font-weight:600;color:var(--teal-text);font-size:.98rem}
-.legacy .rail{display:flex;align-items:center;gap:10px;margin-block:var(--s3)}
-.legacy .rail::before,.legacy .rail::after{content:"";height:3px;flex:1;
-  background:repeating-linear-gradient(90deg,var(--pink) 0 8px,transparent 8px 16px)}
-.legacy .rail svg{inline-size:22px;block-size:22px;color:var(--pink)}
+.legacy .lbl{font-weight:600;color:var(--teal-text);font-size:.98rem;margin-block-start:6px}
+.legacy .rail{block-size:56px;inline-size:3px;margin:var(--s3) auto;background:repeating-linear-gradient(180deg,var(--pink) 0 8px,transparent 8px 16px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-block-start:var(--s6);text-align:center}
+.stat{border-block-start:3px solid var(--ink);padding-block-start:var(--s2)}
+.stat .num{font-family:'Baloo Bhaijaan 2';font-size:clamp(2.4rem,1.8rem + 2vw,3.6rem);font-weight:800;display:block;line-height:1.1}
+.stat .txt{font-weight:600;font-size:.95rem;color:var(--ink-soft)}
 
-/* ---------- stats ---------- */
-.stats{background:var(--teal);color:var(--ink)}
-.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);text-align:center}
-.stat{background:rgba(255,255,255,.42);border-radius:var(--radius);padding:var(--s4) var(--s2)}
-.stat .num{font-family:'Baloo Bhaijaan 2';font-size:clamp(2rem,1.6rem + 1.6vw,2.9rem);
-  font-weight:800;color:var(--ink);display:block}
-.stat .txt{font-weight:600;font-size:.96rem;color:var(--ink)}
+/* ---------- events ---------- */
+.events{background:var(--cream)}
+.ev-feat{--acc:var(--teal);background:var(--acc);border-radius:var(--radius);padding:clamp(1.5rem,1rem + 2.5vw,3rem);
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(1.5rem,1rem + 3vw,3.5rem);align-items:center;margin-block:var(--s4) var(--s5);
+  box-shadow:var(--shadow-lift)}
+.ev-feat[hidden]{display:none}
+.ev-count{text-align:center;min-inline-size:9rem}
+.ev-count .n{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:clamp(4rem,3rem + 4vw,7rem);line-height:.9;display:block}
+.ev-count .u{font-weight:700;font-size:1.05rem}
+.ev-feat .kicker{font-weight:700;display:flex;align-items:center;gap:8px}
+.ev-feat h3{font-size:clamp(1.8rem,1.3rem + 2.2vw,3rem);font-weight:800;margin-block:6px 10px}
+.ev-feat .meta{font-weight:600;line-height:1.7}
+.ev-feat .acts{display:flex;flex-wrap:wrap;gap:10px;margin-block-start:var(--s3)}
+.ev-feat .btn{font-size:.98rem;padding:10px 22px;min-height:46px}
+.ev-feat .btn-line{border-color:var(--ink)}
 
-/* ---------- products ---------- */
-.products{background:var(--cream-lt)}
-.prod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:var(--s3);margin-block-start:var(--s4)}
-.card{background:#fff;border-radius:var(--radius);padding:var(--s4) var(--s3);text-align:center;
-  box-shadow:var(--shadow);border-block-start:8px solid var(--teal);
-  transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.card:nth-child(2){border-block-start-color:var(--orange)}
-.card:nth-child(3){border-block-start-color:var(--coral)}
-.card:nth-child(4){border-block-start-color:var(--yellow)}
-.card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lift)}
-.card .ic{inline-size:60px;block-size:60px;margin:0 auto var(--s2);display:block}
-.card h3{color:var(--teal-deep);font-size:1.22rem;margin-block-end:var(--s1)}
-.card p{font-size:.95rem;color:var(--ink-soft);text-wrap:pretty}
+.ev-filters{display:flex;flex-wrap:wrap;gap:8px;margin-block:var(--s3)}
+.chip-btn{border:2px solid var(--ink);background:transparent;border-radius:999px;padding:6px 16px;min-height:42px;cursor:pointer;
+  font-weight:600;font-size:.92rem}
+.chip-btn[aria-pressed="true"]{background:var(--ink);color:#fff}
+.chip-btn .c{opacity:.75;font-size:.85em}
+.ev-list,.ev-past-list{list-style:none;display:grid;gap:10px}
+@media (min-width:1000px){.ev-list,.ev-past-list{grid-template-columns:1fr 1fr}}
+.ev{display:grid;grid-template-columns:7.5rem 1fr auto;gap:var(--s3);align-items:center;background:var(--white);
+  border-radius:var(--radius-sm);padding:16px 20px;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.ev:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.ev.mine{box-shadow:inset 0 0 0 3px var(--ink)}
+.ev-date{font-family:'Baloo Bhaijaan 2';line-height:1.15;text-align:center}
+.ev-date .d{font-weight:800;font-size:1.2rem;display:block}
+.ev-date .y{font-size:.85rem;color:var(--ink-soft)}
+.ev h4{font-size:1.1rem;font-weight:700;margin-block-end:2px}
+.ev .where{font-size:.92rem;color:var(--ink-soft);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ev .where svg{inline-size:21px;block-size:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(58,46,42,.15)}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-block-start:6px}
+.badge{font-size:.78rem;font-weight:700;border-radius:999px;padding:2px 10px;background:var(--cream)}
+.badge.mine{background:var(--ink);color:#fff}
+.badge.live{background:#FDE2E6;color:#8A0A1F}
+.badge.soft{background:transparent;border:1px dashed var(--ink-soft);color:var(--ink-soft)}
+.ev-acts{display:flex;gap:6px}
+.icon-btn{inline-size:44px;block-size:44px;border-radius:50%;border:2px solid var(--ink);background:transparent;cursor:pointer;
+  display:grid;place-items:center;color:var(--ink);text-decoration:none}
+.icon-btn:hover{background:var(--ink);color:#fff}
+.icon-btn svg{inline-size:19px;block-size:19px}
+.ev-past{margin-block-start:var(--s4)}
+.ev-past summary{cursor:pointer;font-weight:700;padding:10px 0;min-height:44px}
+.ev-past .ev{opacity:.8}
+.ev-note{margin-block-start:var(--s3);font-size:.88rem;color:var(--ink-soft)}
+.ev-empty{padding:var(--s3);background:var(--white);border-radius:var(--radius-sm)}
 
-/* ---------- gallery ---------- */
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s3);margin-block-start:var(--s3)}
-.gallery button{display:block;padding:0;border:none;background:#fff;border-radius:var(--radius-sm);
-  overflow:hidden;cursor:zoom-in;box-shadow:var(--shadow);inline-size:100%;text-align:inherit;
-  font:inherit;color:inherit;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.gallery button:hover{transform:translateY(-6px);box-shadow:var(--shadow-lift)}
-.gallery img{inline-size:100%;height:auto;aspect-ratio:900/637;object-fit:cover}
-.gallery .cap{display:block;padding:12px 14px;font-weight:600;font-size:.92rem;color:var(--teal-deep)}
-
-dialog#lb{border:none;padding:0;background:transparent;max-width:96vw;max-height:96vh;overscroll-behavior:contain}
-dialog#lb::backdrop{background:rgba(58,46,42,.88);backdrop-filter:blur(4px)}
-dialog#lb img{max-width:96vw;max-height:84vh;width:auto;border-radius:var(--radius-sm);box-shadow:0 24px 70px rgba(0,0,0,.5)}
+/* ---------- catalogue row ---------- */
+.catalog{background:var(--white)}
+.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s2);margin-block:var(--s4)}
+.cat{background:var(--cream);border-radius:var(--radius-sm);padding:var(--s3);display:flex;gap:14px;align-items:flex-start}
+.cat svg{inline-size:46px;block-size:46px;flex:none}
+.cat h3{font-size:1.05rem}
+.cat p{font-size:.9rem;color:var(--ink-soft)}
+.cat-row{display:grid;grid-auto-flow:column;grid-auto-columns:min(78vw,320px);gap:18px;overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;padding:6px 2px 22px;scrollbar-width:thin}
+.cat-row button{scroll-snap-align:start;border:none;background:var(--cream);border-radius:var(--radius-sm);overflow:hidden;
+  cursor:zoom-in;text-align:start;padding:0;transition:transform .25s var(--ease)}
+.cat-row button:hover{transform:translateY(-4px)}
+.cat-row img{inline-size:100%;block-size:auto;aspect-ratio:900/637;object-fit:cover}
+.cat-row .cap{display:block;padding:10px 14px;font-weight:600;font-size:.9rem}
+dialog#lb{border:none;padding:0;background:transparent;max-width:96vw;max-height:96vh;margin:auto}
+dialog#lb::backdrop{background:rgba(58,46,42,.9);backdrop-filter:blur(4px)}
+dialog#lb img{max-width:96vw;max-height:84vh;width:auto;border-radius:var(--radius-sm)}
 .lb-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-block-start:12px;color:#fff}
-.lb-cap{font-weight:600;font-size:.95rem}
 .lb-nav{display:flex;gap:8px}
-.lb-btn{background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.6);color:#fff;cursor:pointer;
-  border-radius:999px;min-inline-size:44px;min-block-size:44px;display:inline-flex;align-items:center;
-  justify-content:center;padding:8px 14px;font:inherit;font-weight:600}
-.lb-btn:hover{background:rgba(255,255,255,.32)}
+.lb-btn{background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.6);color:#fff;cursor:pointer;border-radius:999px;
+  min-inline-size:44px;min-block-size:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px 12px}
 .lb-btn svg{inline-size:20px;block-size:20px}
-
-/* ---------- values ---------- */
-.values{background:var(--white)}
-.val-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:var(--s3);margin-block-start:var(--s4)}
-.val{display:flex;gap:14px;align-items:flex-start;background:var(--cream);border-radius:var(--radius-sm);padding:var(--s3)}
-.val .ic{flex:none;inline-size:50px;block-size:50px;border-radius:50%;display:grid;place-items:center;background:var(--mint)}
-.val:nth-child(2) .ic{background:var(--yellow)}
-.val:nth-child(3) .ic{background:var(--pink)}
-.val:nth-child(4) .ic{background:var(--orange)}
-.val .ic svg{inline-size:25px;block-size:25px;color:var(--ink)}
-.val h3{font-size:1.1rem;color:var(--teal-deep);margin-block-end:2px}
-.val p{font-size:.93rem;color:var(--ink-soft);text-wrap:pretty}
-
-/* ---------- clients ---------- */
-.clients{background:var(--orange);color:var(--ink);text-align:center;padding:var(--s6) 22px}
-.clients h2{font-family:'Baloo Bhaijaan 2';font-size:clamp(1.6rem,1.2rem + 2vw,2.5rem);font-weight:800;margin-block-end:var(--s1)}
-.clients p{max-width:62ch;margin-inline:auto}
-.chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-block-start:var(--s3)}
-.chip{background:rgba(255,255,255,.62);border:2px solid rgba(58,46,42,.18);border-radius:999px;
-  padding:9px 20px;font-weight:600;font-size:.95rem}
 
 /* ---------- markets ---------- */
 .markets{background:var(--cream-lt)}
-.flag-grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-block-start:var(--s4)}
-.flag{background:#fff;border-radius:18px;padding:16px 22px;text-align:center;box-shadow:var(--shadow);
-  min-inline-size:132px;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
-.flag:hover{transform:translateY(-5px);box-shadow:var(--shadow-lift)}
+.flag-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-block-start:var(--s4)}
+.flag{background:#fff;border-radius:16px;padding:14px 20px;text-align:center;min-inline-size:124px;box-shadow:var(--shadow)}
 .flag svg{inline-size:42px;block-size:28px;margin-inline:auto;border-radius:4px;box-shadow:0 1px 4px rgba(58,46,42,.3)}
-.flag .nm{font-weight:600;font-size:.95rem;color:var(--teal-deep);margin-block-start:8px;display:block}
-.flag.soon{background:transparent;border:3px dashed var(--pink);box-shadow:none}
-.flag.soon svg{opacity:.7}
+.flag .nm{font-weight:600;font-size:.95rem;margin-block-start:8px;display:block}
+.flag.soon{background:transparent;border:2px dashed var(--pink);box-shadow:none}
 .soon-title{margin-block-start:var(--s5);font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:1.2rem;color:var(--orange-deep)}
+
+/* ---------- values ---------- */
+.values{background:var(--white)}
+.val-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3);margin-block-start:var(--s4)}
+.val .ic{inline-size:56px;block-size:56px;border-radius:18px;display:grid;place-items:center;background:var(--mint);margin-block-end:var(--s2)}
+.val:nth-child(2) .ic{background:var(--yellow)}
+.val:nth-child(3) .ic{background:var(--pink)}
+.val:nth-child(4) .ic{background:var(--orange)}
+.val .ic svg{inline-size:26px;block-size:26px;color:var(--ink)}
+.val h3{font-size:1.15rem;margin-block-end:4px}
+.val p{font-size:.95rem;color:var(--ink-soft)}
+.channels{margin-block-start:var(--s6);padding:var(--s5) var(--s4);border-radius:var(--radius);background:var(--orange);text-align:center}
+.channels h3{font-size:clamp(1.5rem,1.1rem + 1.8vw,2.3rem);font-weight:800}
+.channels p{max-width:60ch;margin:6px auto 0}
+.chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-block-start:var(--s3)}
+.chip{background:rgba(255,255,255,.65);border-radius:999px;padding:8px 18px;font-weight:600;font-size:.95rem}
+
+/* ---------- instagram ---------- */
+.social{background:var(--cream-lt)}
+.ig-head{display:flex;justify-content:space-between;align-items:end;gap:var(--s3);flex-wrap:wrap}
+.ig-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-block-start:var(--s4)}
+.ig-grid a{display:block;border-radius:var(--radius-sm);overflow:hidden;position:relative;aspect-ratio:4/5;background:var(--cream)}
+.ig-grid img{inline-size:100%;block-size:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.ig-grid a:hover img{transform:scale(1.05)}
 
 /* ---------- contact ---------- */
 .contact{background:var(--cream)}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:var(--s3);margin-block-start:var(--s4)}
-.c-card{background:#fff;border-radius:var(--radius);padding:var(--s4) var(--s3);text-align:center;box-shadow:var(--shadow)}
-.c-card .ic{inline-size:40px;block-size:40px;margin:0 auto var(--s1);color:var(--teal-deep)}
-.c-card h3{color:var(--teal-deep);margin-block-end:4px;font-size:1.08rem}
-.c-card a{color:var(--orange-text);font-weight:700;text-decoration:none;display:inline-block;
-  min-height:44px;line-height:44px;padding-inline:6px}
+.contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-block-start:var(--s4)}
+.c-card{background:#fff;border-radius:var(--radius-sm);padding:var(--s4) var(--s3);text-align:center}
+.c-card .ic{inline-size:38px;block-size:38px;margin:0 auto var(--s1);color:var(--teal-deep)}
+.c-card h3{font-size:1.02rem;margin-block-end:2px}
+.c-card a{color:var(--orange-text);font-weight:700;text-decoration:none;display:inline-block;min-height:44px;line-height:44px;padding-inline:6px}
 .c-card a:hover{text-decoration:underline}
 .c-card p{color:var(--ink-soft)}
-.wa-btn{display:inline-flex;align-items:center;gap:10px;margin-block-start:var(--s4);
-  background:var(--wa-solid);color:#fff;font-family:'Baloo Bhaijaan 2';font-weight:700;
-  padding:15px 34px;border-radius:999px;text-decoration:none;font-size:1.1rem;min-height:52px;
-  box-shadow:var(--shadow);transition:transform .22s var(--ease),background .22s var(--ease)}
-.wa-btn:hover{transform:translateY(-3px);background:#127036}
-.wa-btn svg{inline-size:23px;block-size:23px}
+.contact-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-block-start:var(--s4)}
+.wa-btn{background:var(--wa-solid);color:#fff}
+.wa-btn:hover{background:#127036;transform:translateY(-2px)}
 
-/* ---------- footer ---------- */
-footer{background:var(--footer-bg);color:#fff;padding:var(--s5) 22px var(--s3);text-align:center}
-footer img{height:62px;margin-inline:auto;margin-block-end:var(--s2)}
-footer p{font-size:.93rem}
-footer .links{display:flex;gap:18px;justify-content:center;margin-block:var(--s2);flex-wrap:wrap}
-footer .links a{color:var(--mint);text-decoration:none;font-weight:600;min-height:44px;line-height:44px}
-footer .links a:hover{color:var(--yellow);text-decoration:underline}
-footer .fine{margin-block-start:var(--s1);font-size:.82rem;color:rgba(255,255,255,.85);max-width:70ch;margin-inline:auto}
-footer a:focus-visible{outline:3px solid var(--yellow)}
+/* ---------- footer with giant wordmark ---------- */
+footer{background:var(--footer-bg);color:#fff;padding:var(--s6) 22px 0;overflow:hidden}
+.foot{max-width:1240px;margin-inline:auto;display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;align-items:flex-start}
+.foot img{height:56px;width:auto}
+.foot p{font-size:.93rem;margin-block-start:var(--s1);max-width:44ch}
+.foot nav{display:flex;flex-wrap:wrap;gap:4px 16px}
+.foot nav a{color:var(--mint);text-decoration:none;font-weight:600;min-height:44px;line-height:44px}
+.foot nav a:hover{color:var(--yellow);text-decoration:underline}
+.socials{display:flex;gap:10px;margin-block-start:var(--s2)}
+.socials a{inline-size:44px;block-size:44px;border-radius:50%;border:2px solid rgba(255,255,255,.7);display:grid;place-items:center;color:#fff}
+.socials a:hover{background:#fff;color:var(--footer-bg)}
+.socials svg{inline-size:20px;block-size:20px}
+.fine{max-width:1240px;margin:var(--s4) auto 0;font-size:.82rem;color:rgba(255,255,255,.85)}
+.wordmark{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:clamp(4rem,19vw,19rem);line-height:.78;letter-spacing:-.03em;
+  color:var(--teal);text-align:center;margin-block-start:var(--s4);direction:ltr;user-select:none;white-space:nowrap}
+footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 
 /* ---------- responsive ---------- */
-@media(max-width:880px){
-  .about-grid{grid-template-columns:1fr}
-  .stats .wrap{grid-template-columns:repeat(2,1fr)}
+@media (max-width:1000px){
+  .cats,.val-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
   .burger{display:flex}
-  nav ul{position:fixed;inset-block-start:var(--header-h);inset-inline:0;background:var(--cream-lt);
-    flex-direction:column;padding:var(--s2);gap:6px;display:none;
-    border-block-end:1px solid rgba(58,46,42,.12);box-shadow:0 12px 24px rgba(58,46,42,.12)}
+  nav ul{position:fixed;inset-block-start:var(--header-h);inset-inline:0;background:var(--cream-lt);flex-direction:column;
+    padding:var(--s2);gap:6px;display:none;box-shadow:0 12px 24px rgba(58,46,42,.12)}
   nav ul.open{display:flex}
   nav ul li{inline-size:100%}
   nav ul a,.lang-btn{inline-size:100%;text-align:center;display:block}
+
+  /* hero: the cluster becomes a fan above the headline */
+  .hero{place-items:start center;padding-block-start:calc(var(--header-h) + var(--s3))}
+  .hero-cards{position:relative;inset:auto;display:flex;justify-content:center;perspective:none;block-size:190px;margin-block-end:var(--s3)}
+  .hc-wrap{position:relative;inset:auto !important;margin-inline:-18px}
+  .hc-wrap:nth-child(n+6){display:none}
+  .hc{--w:118px;transform:rotateZ(var(--rz,0deg))}
+  .hero{display:flex;flex-direction:column;align-items:center}
+
+  /* story: stacked full-bleed colour bands, each with its own post */
+  .story{padding-block-start:var(--s6);background-color:var(--cream-lt)}
+  .story-body{display:block;padding:0}
+  .story-media{display:none}
+  .sp{min-block-size:0;padding:var(--s5) 22px;background:var(--bg)}
+  .sp-img{display:block;inline-size:min(100%,420px);aspect-ratio:4/5;object-fit:cover;border-radius:22px;margin-block-end:var(--s3);
+    box-shadow:0 24px 50px rgba(58,46,42,.22)}
+  .about-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .ev-feat{grid-template-columns:1fr;text-align:start}
+  .ev-count{text-align:start}
+  .ig-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(max-width:520px){
-  section{padding:var(--s5) 18px}
-  .belt figure{inline-size:200px}
+@media (max-width:600px){
+  section{padding:var(--s6) 18px}
+  .evbar{font-size:.84rem;padding-block:6px}
+  .evbar .long{display:none}
+  .evbar .short{display:inline}
+  .hc-wrap:nth-child(n+5){display:none}
+  .hc{--w:104px}
+  .hc-wrap{margin-inline:-14px}
+  .cats,.val-grid,.contact-grid{grid-template-columns:1fr}
+  .ev{grid-template-columns:5.5rem 1fr;row-gap:8px}
+  .ev-acts{grid-column:1/-1;justify-content:flex-end}
 }
-@media(prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
   .js [data-reveal]{opacity:1 !important;transform:none !important}
 }
-@media(prefers-contrast:more){
-  .stat{background:#fff}
-  .chip{background:#fff;border-color:var(--ink)}
-}
+@media (prefers-contrast:more){ .chip{background:#fff} }
 </style>
 </head>
 <body>
@@ -361,107 +416,64 @@ footer a:focus-visible{outline:3px solid var(--yellow)}
 <a class="skip" href="#main" data-i18n="skip">تخطَّ إلى المحتوى</a>
 <div id="bar" aria-hidden="true"></div>
 
-<!-- ============ ICON + FLAG SPRITE ============ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-  <!-- product category icons, drawn in the brand's rounded/playful manner -->
-  <symbol id="i-choc" viewBox="0 0 48 48">
-    <rect x="9" y="7" width="30" height="34" rx="5" fill="#8A5A2B"/>
-    <rect x="13" y="11" width="10" height="12" rx="2" fill="#B07C43"/>
-    <rect x="25" y="11" width="10" height="12" rx="2" fill="#B07C43"/>
-    <rect x="13" y="25" width="10" height="12" rx="2" fill="#B07C43"/>
-    <rect x="25" y="25" width="10" height="12" rx="2" fill="#B07C43"/>
-  </symbol>
-  <symbol id="i-candy" viewBox="0 0 48 48">
-    <circle cx="24" cy="24" r="11" fill="#FE7C7C"/>
-    <circle cx="24" cy="24" r="5.5" fill="#F8C311"/>
-    <path d="M13 24 4 16v16z" fill="#EBA09D"/>
-    <path d="M35 24l9-8v16z" fill="#EBA09D"/>
-  </symbol>
-  <symbol id="i-mint" viewBox="0 0 48 48">
-    <ellipse cx="24" cy="30" rx="13" ry="10" fill="#A2DBD5"/>
-    <ellipse cx="24" cy="27" rx="13" ry="10" fill="#4BA89D"/>
-    <ellipse cx="24" cy="27" rx="7" ry="5" fill="#FFF8EC"/>
-    <path d="M24 16c0-5 4-8 8-8 0 5-3 8-8 8z" fill="#2E7A70"/>
-  </symbol>
-  <symbol id="i-gift" viewBox="0 0 48 48">
-    <rect x="8" y="20" width="32" height="21" rx="4" fill="#EA8A34"/>
-    <rect x="6" y="13" width="36" height="9" rx="3" fill="#F8C311"/>
-    <rect x="21" y="13" width="6" height="28" fill="#FE7C7C"/>
-    <path d="M24 13c-3-7-11-6-11-1 0 3 6 3 11 1zm0 0c3-7 11-6 11-1 0 3-6 3-11 1z" fill="#FE7C7C"/>
-  </symbol>
-  <!-- UI icons (stroke, 2px, consistent family) -->
-  <symbol id="u-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M11 17 9.4 15.4M14 14l-2 -2M3 10l4-4 5 2 5-2 4 4-4 7-5-3-5 3z"/></symbol>
-  <symbol id="u-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
-  <symbol id="u-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M2 7h11v9H2zM13 10h4l3 3v3h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></symbol>
-  <symbol id="u-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></symbol>
-  <symbol id="u-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 9 4.5 4h15L21 9M4 9v11h16V9M4 9h16"/><path d="M9 20v-6h6v6"/></symbol>
-  <symbol id="u-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2.2 2A16 16 0 0 1 4 5.2 2 2 0 0 1 6 3z"/></symbol>
-  <symbol id="u-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
-  <symbol id="u-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
-  <symbol id="u-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></symbol>
-  <symbol id="u-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 5v14M6 13l6 6 6-6"/></symbol>
-  <symbol id="u-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-    <path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-  <symbol id="u-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-    <path d="M6 6l12 12M18 6 6 18"/></symbol>
-  <symbol id="u-prev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M15 5l-7 7 7 7"/></symbol>
-  <symbol id="u-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9 5l7 7-7 7"/></symbol>
-  <symbol id="u-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></symbol>
-  <symbol id="u-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></symbol>
-  <symbol id="u-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M4 5a2 2 0 0 1 2-2h5v18H6a2 2 0 0 1-2-2zM20 5a2 2 0 0 0-2-2h-5v18h5a2 2 0 0 0 2-2z"/></symbol>
-  <symbol id="u-wa" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9a9.8 9.8 0 0 0 1.35 4.96L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01A9.9 9.9 0 0 0 22 11.92 9.9 9.9 0 0 0 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.12.07-1.81-.11a16.6 16.6 0 0 1-1.64-.6c-2.89-1.25-4.77-4.16-4.92-4.35-.14-.2-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39a1.05 1.05 0 0 1 .76-.35h.54c.17 0 .41-.07.64.49.24.57.8 1.98.87 2.13.07.14.12.31.02.5-.1.2-.15.32-.29.49l-.43.5c-.14.14-.29.3-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2 1.27 2.3 1.42.28.14.45.12.62-.07.17-.2.71-.83.9-1.12.19-.28.38-.24.64-.14.26.1 1.66.78 1.95.92.28.15.47.22.54.34.07.12.07.68-.17 1.35z"/></symbol>
+  <symbol id="i-choc" viewBox="0 0 48 48"><rect x="9" y="7" width="30" height="34" rx="5" fill="#8A5A2B"/><rect x="13" y="11" width="10" height="12" rx="2" fill="#B07C43"/><rect x="25" y="11" width="10" height="12" rx="2" fill="#B07C43"/><rect x="13" y="25" width="10" height="12" rx="2" fill="#B07C43"/><rect x="25" y="25" width="10" height="12" rx="2" fill="#B07C43"/></symbol>
+  <symbol id="i-candy" viewBox="0 0 48 48"><circle cx="24" cy="24" r="11" fill="#FE7C7C"/><circle cx="24" cy="24" r="5.5" fill="#F8C311"/><path d="M13 24 4 16v16z" fill="#EBA09D"/><path d="M35 24l9-8v16z" fill="#EBA09D"/></symbol>
+  <symbol id="i-mint" viewBox="0 0 48 48"><ellipse cx="24" cy="30" rx="13" ry="10" fill="#A2DBD5"/><ellipse cx="24" cy="27" rx="13" ry="10" fill="#4BA89D"/><ellipse cx="24" cy="27" rx="7" ry="5" fill="#FFF8EC"/><path d="M24 16c0-5 4-8 8-8 0 5-3 8-8 8z" fill="#2E7A70"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 48 48"><rect x="8" y="20" width="32" height="21" rx="4" fill="#EA8A34"/><rect x="6" y="13" width="36" height="9" rx="3" fill="#F8C311"/><rect x="21" y="13" width="6" height="28" fill="#FE7C7C"/><path d="M24 13c-3-7-11-6-11-1 0 3 6 3 11 1zm0 0c3-7 11-6 11-1 0 3-6 3-11 1z" fill="#FE7C7C"/></symbol>
+  <symbol id="u-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17 9.4 15.4M14 14l-2-2M3 10l4-4 5 2 5-2 4 4-4 7-5-3-5 3z"/></symbol>
+  <symbol id="u-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+  <symbol id="u-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h11v9H2zM13 10h4l3 3v3h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></symbol>
+  <symbol id="u-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></symbol>
+  <symbol id="u-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 4.5 4h15L21 9M4 9v11h16V9M4 9h16"/><path d="M9 20v-6h6v6"/></symbol>
+  <symbol id="u-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2.2 2A16 16 0 0 1 4 5.2 2 2 0 0 1 6 3z"/></symbol>
+  <symbol id="u-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
+  <symbol id="u-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="u-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="u-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="u-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="u-prev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="u-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="u-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></symbol>
+  <symbol id="u-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="u-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h5v18H6a2 2 0 0 1-2-2zM20 5a2 2 0 0 0-2-2h-5v18h5a2 2 0 0 0 2-2z"/></symbol>
+  <symbol id="u-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="u-fb" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5a.5.5 0 0 1 .5-.5z"/></symbol>
+  <symbol id="u-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9a9.8 9.8 0 0 0 1.35 4.96L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01A9.9 9.9 0 0 0 22 11.92 9.9 9.9 0 0 0 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.12.07-1.81-.11a16.6 16.6 0 0 1-1.64-.6c-2.89-1.25-4.77-4.16-4.92-4.35-.14-.2-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39a1.05 1.05 0 0 1 .76-.35h.54c.17 0 .41-.07.64.49.24.57.8 1.98.87 2.13.07.14.12.31.02.5-.1.2-.15.32-.29.49l-.43.5c-.14.14-.29.3-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2 1.27 2.3 1.42.28.14.45.12.62-.07.17-.2.71-.83.9-1.12.19-.28.38-.24.64-.14.26.1 1.66.78 1.95.92.28.15.47.22.54.34.07.12.07.68-.17 1.35z"/></symbol>
 
-  <!-- country flags: emoji flags do NOT render on Windows (they show as letter pairs) -->
-  <symbol id="f-jo" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#000"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#007A3D"/><path d="M0 0l13 10L0 20z" fill="#CE1126"/><path d="m4.7 10 .55 1.1 1.2.16-.9.83.23 1.2-1.08-.6-1.08.6.23-1.2-.9-.83 1.2-.16z" fill="#fff"/></symbol>
-  <symbol id="f-ps" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#000"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#007A3D"/><path d="M0 0l13 10L0 20z" fill="#CE1126"/></symbol>
-  <symbol id="f-sy" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#000"/><path d="m11 8.2.5 1.1 1.2.1-.9.8.2 1.2-1-.6-1.1.6.2-1.2-.9-.8 1.2-.1z" fill="#007A3D"/><path d="m19 8.2.5 1.1 1.2.1-.9.8.2 1.2-1-.6-1.1.6.2-1.2-.9-.8 1.2-.1z" fill="#007A3D"/></symbol>
-  <symbol id="f-ye" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#000"/></symbol>
-  <symbol id="f-eg" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#000"/><circle cx="15" cy="10" r="2.2" fill="#C09300"/></symbol>
-  <symbol id="f-iq" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#000"/><rect x="10" y="8.6" width="10" height="2.8" rx="1" fill="#007A3D"/></symbol>
-  <symbol id="f-sa" viewBox="0 0 30 20"><rect width="30" height="20" fill="#006C35"/><rect x="5" y="7" width="20" height="1.9" rx=".9" fill="#fff"/><rect x="5" y="11.6" width="20" height="1.5" rx=".75" fill="#fff"/><path d="M5 13.1h2v1.6H5z" fill="#fff"/></symbol>
+  <!-- flags: emoji flags do NOT render on Windows (they show as letter pairs) -->
+  <symbol id="f-jo" viewBox="0 0 30 20"><rect width="30" height="6.67"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#007A3D"/><path d="M0 0l13 10L0 20z" fill="#CE1126"/><path d="m4.7 10 .55 1.1 1.2.16-.9.83.23 1.2-1.08-.6-1.08.6.23-1.2-.9-.83 1.2-.16z" fill="#fff"/></symbol>
+  <symbol id="f-ps" viewBox="0 0 30 20"><rect width="30" height="6.67"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#007A3D"/><path d="M0 0l13 10L0 20z" fill="#CE1126"/></symbol>
+  <symbol id="f-sy" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67"/><path d="m11 8.2.5 1.1 1.2.1-.9.8.2 1.2-1-.6-1.1.6.2-1.2-.9-.8 1.2-.1zm8 0 .5 1.1 1.2.1-.9.8.2 1.2-1-.6-1.1.6.2-1.2-.9-.8 1.2-.1z" fill="#007A3D"/></symbol>
+  <symbol id="f-ye" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67"/></symbol>
+  <symbol id="f-eg" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67"/><circle cx="15" cy="10" r="2.2" fill="#C09300"/></symbol>
+  <symbol id="f-iq" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#CE1126"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67"/><rect x="10" y="8.6" width="10" height="2.8" rx="1" fill="#007A3D"/></symbol>
+  <symbol id="f-sa" viewBox="0 0 30 20"><rect width="30" height="20" fill="#006C35"/><rect x="5" y="7" width="20" height="1.9" rx=".9" fill="#fff"/><rect x="5" y="11.6" width="20" height="1.5" rx=".75" fill="#fff"/></symbol>
   <symbol id="f-lb" viewBox="0 0 30 20"><rect width="30" height="5" fill="#CE1126"/><rect y="5" width="30" height="10" fill="#fff"/><rect y="15" width="30" height="5" fill="#CE1126"/><path d="m15 6 3.4 6h-6.8zM15 8.4l4.4 4.6h-8.8z" fill="#007A3D"/><rect x="14.3" y="12.4" width="1.4" height="1.8" fill="#007A3D"/></symbol>
-  <symbol id="f-om" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#fff"/><rect y="6.67" width="30" height="6.66" fill="#CE1126"/><rect y="13.33" width="30" height="6.67" fill="#007A3D"/><rect width="8" height="20" fill="#CE1126"/><path d="M4 3.2 5.1 5H2.9z" fill="#fff"/></symbol>
-  <symbol id="f-ae" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#007A3D"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#000"/><rect width="7.5" height="20" fill="#CE1126"/></symbol>
+  <symbol id="f-om" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#fff"/><rect y="6.67" width="30" height="6.66" fill="#CE1126"/><rect y="13.33" width="30" height="6.67" fill="#007A3D"/><rect width="8" height="20" fill="#CE1126"/></symbol>
+  <symbol id="f-ae" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#007A3D"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67"/><rect width="7.5" height="20" fill="#CE1126"/></symbol>
   <symbol id="f-qa" viewBox="0 0 30 20"><rect width="30" height="20" fill="#8A1538"/><path d="M0 0h9l3.5 1.25L9 2.5l3.5 1.25L9 5l3.5 1.25L9 7.5l3.5 1.25L9 10l3.5 1.25L9 12.5l3.5 1.25L9 15l3.5 1.25L9 17.5l3.5 1.25L9 20H0z" fill="#fff"/></symbol>
-  <symbol id="f-kw" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#007A3D"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#CE1126"/><path d="M0 0h8L6 6.67v6.66L8 20H0z" fill="#000"/></symbol>
-  <symbol id="f-ly" viewBox="0 0 30 20"><rect width="30" height="5" fill="#CE1126"/><rect y="5" width="30" height="10" fill="#000"/><rect y="15" width="30" height="5" fill="#007A3D"/><path d="M16.4 7.2a2.9 2.9 0 1 0 0 5.6 3.4 3.4 0 1 1 0-5.6z" fill="#fff"/><path d="m18.6 8.6.42.9.98.08-.74.66.2.97-.86-.5-.86.5.2-.97-.74-.66.98-.08z" fill="#fff"/></symbol>
-  <symbol id="f-us" viewBox="0 0 30 20">
-    <rect width="30" height="20" fill="#fff"/>
-    <g fill="#B22234"><rect width="30" height="1.54"/><rect y="3.08" width="30" height="1.54"/><rect y="6.15" width="30" height="1.54"/><rect y="9.23" width="30" height="1.54"/><rect y="12.31" width="30" height="1.54"/><rect y="15.38" width="30" height="1.54"/><rect y="18.46" width="30" height="1.54"/></g>
-    <rect width="12" height="10.77" fill="#3C3B6E"/>
-    <g fill="#fff"><circle cx="2" cy="2" r=".7"/><circle cx="5" cy="2" r=".7"/><circle cx="8" cy="2" r=".7"/><circle cx="3.5" cy="4" r=".7"/><circle cx="6.5" cy="4" r=".7"/><circle cx="9.5" cy="4" r=".7"/><circle cx="2" cy="6" r=".7"/><circle cx="5" cy="6" r=".7"/><circle cx="8" cy="6" r=".7"/><circle cx="3.5" cy="8.2" r=".7"/><circle cx="6.5" cy="8.2" r=".7"/><circle cx="9.5" cy="8.2" r=".7"/></g>
-  </symbol>
+  <symbol id="f-kw" viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#007A3D"/><rect y="6.67" width="30" height="6.66" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#CE1126"/><path d="M0 0h8L6 6.67v6.66L8 20H0z"/></symbol>
+  <symbol id="f-ly" viewBox="0 0 30 20"><rect width="30" height="5" fill="#CE1126"/><rect y="5" width="30" height="10"/><rect y="15" width="30" height="5" fill="#007A3D"/><path d="M16.4 7.2a2.9 2.9 0 1 0 0 5.6 3.4 3.4 0 1 1 0-5.6z" fill="#fff"/></symbol>
+  <symbol id="f-ma" viewBox="0 0 30 20"><rect width="30" height="20" fill="#C1272D"/><path d="M15 5.4l2.7 8.2-7-5.1h8.6l-7 5.1z" fill="none" stroke="#006233" stroke-width=".9"/></symbol>
+  <symbol id="f-dz" viewBox="0 0 30 20"><rect width="15" height="20" fill="#006233"/><rect x="15" width="15" height="20" fill="#fff"/><path d="M17.8 5.8a4.8 4.8 0 1 0 0 8.4 3.9 3.9 0 1 1 0-8.4z" fill="#D21034"/><path d="m19 8.6.5 1 1.1.1-.8.7.2 1.1-1-.5-1 .5.2-1.1-.8-.7 1.1-.1z" fill="#D21034"/></symbol>
+  <symbol id="f-uz" viewBox="0 0 30 20"><rect width="30" height="6.4" fill="#0099B5"/><rect y="6.4" width="30" height=".8" fill="#CE1126"/><rect y="7.2" width="30" height="5.6" fill="#fff"/><rect y="12.8" width="30" height=".8" fill="#CE1126"/><rect y="13.6" width="30" height="6.4" fill="#1EB53A"/><path d="M5.4 1.2a2.3 2.3 0 1 0 0 4 1.9 1.9 0 1 1 0-4z" fill="#fff"/><g fill="#fff"><circle cx="8.5" cy="2" r=".35"/><circle cx="9.7" cy="2" r=".35"/><circle cx="10.9" cy="2" r=".35"/><circle cx="8.5" cy="3.2" r=".35"/><circle cx="9.7" cy="3.2" r=".35"/><circle cx="10.9" cy="3.2" r=".35"/><circle cx="8.5" cy="4.4" r=".35"/><circle cx="9.7" cy="4.4" r=".35"/><circle cx="10.9" cy="4.4" r=".35"/></g></symbol>
+  <symbol id="f-us" viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><g fill="#B22234"><rect width="30" height="1.54"/><rect y="3.08" width="30" height="1.54"/><rect y="6.15" width="30" height="1.54"/><rect y="9.23" width="30" height="1.54"/><rect y="12.31" width="30" height="1.54"/><rect y="15.38" width="30" height="1.54"/><rect y="18.46" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#3C3B6E"/></symbol>
 </defs></svg>
 
 <header id="hdr">
+  <div class="evbar" id="evbar" hidden></div>
   <div class="nav">
-    <a href="#top" class="nav-logo">
-      <img src="assets/logo.png" width="700" height="306" alt="Samarqand" style="height:48px;width:auto">
-      <span data-i18n="brand">سمرقند</span>
+    <a href="#top" class="nav-logo" aria-label="Samarqand">
+      <img src="assets/logo.png" width="700" height="306" alt="">
     </a>
-    <nav>
-      <button class="burger" id="burger" aria-label="القائمة" aria-expanded="false" aria-controls="menu">
-        <svg aria-hidden="true"><use href="#u-menu"/></svg>
-      </button>
+    <nav aria-label="القائمة الرئيسية">
+      <button class="burger" id="burger" aria-label="القائمة" aria-expanded="false" aria-controls="menu"><svg aria-hidden="true"><use href="#u-menu"/></svg></button>
       <ul id="menu">
+        <li><a href="#brands" data-i18n="nav_brands">علاماتنا</a></li>
         <li><a href="#about" data-i18n="nav_about">من نحن</a></li>
-        <li><a href="#products" data-i18n="nav_products">منتجاتنا</a></li>
+        <li><a href="#events" data-i18n="nav_events">المعارض</a></li>
         <li><a href="#markets" data-i18n="nav_markets">أسواقنا</a></li>
-        <li><a href="#values" data-i18n="nav_values">لماذا سمرقند</a></li>
         <li><a href="#contact" class="nav-cta" data-i18n="nav_contact">تواصل معنا</a></li>
         <li><button class="lang-btn" id="langBtn" lang="en">English</button></li>
       </ul>
@@ -473,113 +485,154 @@ footer a:focus-visible{outline:3px solid var(--yellow)}
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
-  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
-  <img class="logo" src="assets/logo.png" width="700" height="306" fetchpriority="high"
-       alt="سمرقند للسكاكر وتوزيع الشوكولاتة">
-  <h1 data-i18n-html="hero_title">نكهة <em>تُروى</em> بجودة عمرها عقود</h1>
-  <p class="tag" data-i18n="hero_tag">شركة سمرقند للسكاكر وتوزيع الشوكولاتة — استيراد، تصدير، وتوزيع جملة لأفخر السكاكر والشوكولاتة في الأردن والشرق الأوسط.</p>
-  <p class="en-tag" data-i18n="hero_sub">SAMARQAND — A Taste Backed by Generations of Quality</p>
-  <div class="hero-btns">
-    <a href="#products" class="btn btn-primary" data-i18n="hero_btn1">اكتشف منتجاتنا</a>
-    <a href="#contact" class="btn btn-ghost" data-i18n="hero_btn2">اطلب عرض أسعار</a>
+  <div class="hero-cards" aria-hidden="true">
+    <div class="hc-wrap start" style="--x:3%;--y:15%"><div class="hc" style="--rz:-7deg;--dl:0s"><img src="assets/ig/chocobreak-sky-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
+    <div class="hc-wrap end" style="--x:4%;--y:12%"><div class="hc" style="--rz:6deg;--dl:-2s"><img src="assets/ig/stuns-smart-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
+    <div class="hc-wrap start" style="--x:15%;--y:48%"><div class="hc" style="--rz:5deg;--dl:-4s;--w:clamp(100px,10.5vw,170px)"><img src="assets/ig/texture-400.webp" width="400" height="500" alt=""></div></div>
+    <div class="hc-wrap end" style="--x:16%;--y:46%"><div class="hc" style="--rz:-5deg;--dl:-1s;--w:clamp(100px,10.5vw,170px)"><img src="assets/ig/chips-share-2-400.webp" width="400" height="500" alt=""></div></div>
+    <div class="hc-wrap start" style="--x:5%;--y:72%"><div class="hc" style="--rz:-3deg;--dl:-3s"><img src="assets/ig/frost-3x-400.webp" width="400" height="500" alt=""></div></div>
+    <div class="hc-wrap end" style="--x:6%;--y:70%"><div class="hc" style="--rz:8deg;--dl:-5s"><img src="assets/ig/cookies-400.webp" width="400" height="500" alt=""></div></div>
   </div>
-  <div class="scroll-hint" aria-hidden="true">
-    <span data-i18n="scroll">تصفّح</span>
-    <svg><use href="#u-down"/></svg>
+  <div class="hero-copy">
+    <a class="hero-pill" id="heroPill" href="#events" hidden></a>
+    <h1 data-i18n="hero_title">نكهة <em>تُروى</em> بجودة عمرها عقود</h1>
+    <p class="tag" data-i18n="hero_tag">استيراد وتصدير وتوزيع جملة لأحلى السكاكر والشوكولاتة — من عمّان إلى الشرق الأوسط والعالم.</p>
+    <div class="hero-btns">
+      <a href="#brands" class="btn btn-ink" data-i18n="hero_btn1">اكتشف علاماتنا</a>
+      <a href="#contact" class="btn btn-line" data-i18n="hero_btn2">اطلب عرض أسعار</a>
+    </div>
   </div>
 </section>
 
-<!-- ============ CONVEYOR — the signature element ============ -->
-<section class="belt-sec" aria-labelledby="belt-h">
-  <div class="belt-head">
-    <p id="belt-h" data-i18n="belt_title">من خط التوزيع — منتجات تتحرك كل يوم</p>
-    <button class="belt-pause" id="beltBtn" aria-pressed="false">
-      <svg aria-hidden="true"><use href="#u-pause" id="beltIcon"/></svg>
-      <span id="beltLbl" data-i18n="belt_pause">إيقاف الحركة</span>
-    </button>
+<!-- ============ BRAND STORY (signature) ============ -->
+<section class="story" id="brands" aria-labelledby="brands-h">
+  <div class="story-head">
+    <span class="eyebrow" style="background:var(--coral)" data-i18n="st_eyebrow">علاماتنا</span>
+    <h2 class="sec-title" id="brands-h" data-i18n="st_title">علامات بتعدّل المزاج</h2>
+    <p class="lede" data-i18n="st_lede">نوزّع علامات يحبها الناس في كل رف — وهاي بعض منها كما تظهر على صفحتنا.</p>
   </div>
-  <div class="belt-viewport">
-    <div class="belt" id="belt"></div>
+  <div class="story-body">
+    <div class="story-media" aria-hidden="true">
+      <img class="on" data-k="babyfox" src="assets/ig/babyfox-720.webp" srcset="assets/ig/babyfox-720.webp 720w, assets/ig/babyfox-1080.webp 1080w" sizes="(min-width:900px) 45vw, 90vw" width="720" height="900" alt="">
+      <img data-k="stuns" src="assets/ig/stuns-720.webp" srcset="assets/ig/stuns-720.webp 720w, assets/ig/stuns-1080.webp 1080w" sizes="(min-width:900px) 45vw, 90vw" width="720" height="900" alt="" loading="lazy">
+      <img data-k="chocobreak" src="assets/ig/chocobreak-happy-720.webp" srcset="assets/ig/chocobreak-happy-720.webp 720w, assets/ig/chocobreak-happy-1080.webp 1080w" sizes="(min-width:900px) 45vw, 90vw" width="720" height="900" alt="" loading="lazy">
+      <img data-k="dino" src="assets/ig/dino-720.webp" srcset="assets/ig/dino-720.webp 720w, assets/ig/dino-1080.webp 1080w" sizes="(min-width:900px) 45vw, 90vw" width="720" height="900" alt="" loading="lazy">
+      <img data-k="frostlab" src="assets/ig/frostlab-720.webp" srcset="assets/ig/frostlab-720.webp 720w, assets/ig/frostlab-1080.webp 1080w" sizes="(min-width:900px) 45vw, 90vw" width="720" height="900" alt="" loading="lazy">
+    </div>
+    <div class="story-panels">
+      <article class="sp" data-k="babyfox" style="--bg:#FF8AA2">
+        <img class="sp-img" src="assets/ig/babyfox-720.webp" width="720" height="900" loading="lazy" alt="Babyfox milk chocolate">
+        <p class="kicker" data-i18n="sp1_k">شوكولاتة بالحليب</p>
+        <h3 class="brand">Babyfox</h3>
+        <p class="line" data-i18n="sp1_l">السعادة بتبدأ من أول قضمة — مزيج الحليب والشوكولا اللي بيعدّل المزاج.</p>
+      </article>
+      <article class="sp" data-k="stuns" style="--bg:#12C6C6">
+        <img class="sp-img" src="assets/ig/stuns-720.webp" width="720" height="900" loading="lazy" alt="Stuns caramel and nougat bar">
+        <p class="kicker" data-i18n="sp2_k">كراميل طري ونوغا</p>
+        <h3 class="brand">Stuns</h3>
+        <p class="line" data-i18n="sp2_l">الحل الوحيد للجوع؟ قضمة وحدة من Stuns بتعدّل المزاج.</p>
+        <span class="slogan">Single. Taken. Hungry.</span>
+      </article>
+      <article class="sp" data-k="chocobreak" style="--bg:#FFD24E">
+        <img class="sp-img" src="assets/ig/chocobreak-happy-720.webp" width="720" height="900" loading="lazy" alt="Choco Break wafer">
+        <p class="kicker" data-i18n="sp3_k">ويفر بالكاكاو وجوز الهند والحليب</p>
+        <h3 class="brand">Choco Break</h3>
+        <p class="line" data-i18n="sp3_l">السعادة في كل قضمة — شوكو بريك، ألذ بريك ليومك.</p>
+        <span class="slogan">Happiness in every crunch</span>
+      </article>
+      <article class="sp" data-k="dino" style="--bg:#06A6D7">
+        <img class="sp-img" src="assets/ig/dino-720.webp" width="720" height="900" loading="lazy" alt="Dino potato chips">
+        <p class="kicker" data-i18n="sp4_k">شيبس بطاطا</p>
+        <h3 class="brand">Dino Chips</h3>
+        <p class="line" data-i18n="sp4_l">الطعم اللي بتدوّر عليه صار بين إيديك — قرمشة ما بتنشبع منها.</p>
+        <span class="slogan">The taste you've been looking for</span>
+      </article>
+      <article class="sp" data-k="frostlab" style="--bg:#06BA42">
+        <img class="sp-img" src="assets/ig/frostlab-720.webp" width="720" height="900" loading="lazy" alt="FrostLab sugar-free mints">
+        <p class="kicker" data-i18n="sp5_k">نعناع خالٍ من السكر</p>
+        <h3 class="brand">FrostLab</h3>
+        <p class="line" data-i18n="sp5_l">خليك واثق طول اليوم مع فروست لاب — انتعاش بسبع نكهات في علب معدنية أنيقة.</p>
+        <span class="slogan">Yes to fresh</span>
+      </article>
+    </div>
+  </div>
+  <div class="story-foot">
+    <a href="#products" class="btn btn-ink" data-i18n="st_more">شوف الكاتالوج كامل</a>
   </div>
 </section>
 
 <!-- ============ ABOUT ============ -->
 <section class="about" id="about">
-  <div class="wrap about-grid">
-    <div data-reveal>
-      <span class="eyebrow" data-i18n="about_eyebrow">نبذة عنا</span>
-      <h2 class="sec-title" data-i18n="about_title">امتداد حديث لمسيرة تجارية عريقة</h2>
-      <p data-i18n="about_p1">تُعدّ شركة سمرقند امتداداً حديثاً لمسيرة تجارية عريقة، حيث تُعتبر واحدة من فروع شركة محمد موسى عمرو (الفاخرة التجارية) التي تأسست عام 1955 في مدينة الطفيلة — الأردن، والتي تمتلك خبرة طويلة وسمعة راسخة في عالم التجارة والاستيراد.</p>
-      <p data-i18n="about_p2">تأسست سمرقند عام 2022 في العاصمة عمّان، لتكون الذراع المتخصص في استيراد وتصدير وتوزيع السكاكر والشوكولاتة في الشرق الأوسط، مع التزام قوي بالجودة والشفافية في العمل.</p>
-      <p data-i18n="about_p3">نتميّز باختيار أفضل المنتجات العالمية، وبناء علاقات موثوقة مع شركائنا، وتوفير حلول توزيع مرنة تستهدف جميع فئات المجتمع من الأفراد، التجّار، والموزعين.</p>
-    </div>
-    <div class="legacy" data-reveal style="--d:120ms">
-      <span class="year num">1955</span>
-      <div class="lbl" data-i18n="legacy_1">تأسيس الشركة الأم — الفاخرة التجارية</div>
-      <div class="rail" aria-hidden="true"><svg><use href="#u-down"/></svg></div>
-      <span class="year b num">2022</span>
-      <div class="lbl" data-i18n="legacy_2">انطلاق سمرقند من عمّان</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STATS ============ -->
-<section class="stats" aria-label="أرقام سمرقند">
   <div class="wrap">
-    <div class="stat" data-reveal><span class="num" data-count="70" data-suffix="+">70+</span><span class="txt" data-i18n="stat_1">عاماً من الإرث التجاري</span></div>
-    <div class="stat" data-reveal style="--d:90ms"><span class="num" data-count="100" data-suffix="+">100+</span><span class="txt" data-i18n="stat_2">منتج في كاتالوجنا</span></div>
-    <div class="stat" data-reveal style="--d:180ms"><span class="num" data-count="3" data-suffix="">3</span><span class="txt" data-i18n="stat_3">قطاعات نخدمها: أفراد، تجّار، موزعون</span></div>
-    <!-- 7, not 8: Jordan is the domestic market, the other 7 are export destinations -->
-    <div class="stat" data-reveal style="--d:270ms"><span class="num" data-count="7" data-suffix="+">7+</span><span class="txt" data-i18n="stat_4">دول نصدّر إليها حول العالم</span></div>
+    <div class="about-grid">
+      <div data-reveal>
+        <span class="eyebrow" data-i18n="about_eyebrow">نبذة عنا</span>
+        <h2 class="sec-title" data-i18n="about_title">امتداد حديث لمسيرة تجارية عريقة</h2>
+        <p data-i18n="about_p1">تُعدّ شركة سمرقند امتداداً حديثاً لمسيرة تجارية عريقة، فهي من فروع شركة محمد موسى عمرو (الفاخرة التجارية) التي تأسست عام 1955 في مدينة الطفيلة — الأردن، وتمتلك خبرة طويلة وسمعة راسخة في التجارة والاستيراد.</p>
+        <p data-i18n="about_p2">تأسست سمرقند عام 2022 في عمّان، لتكون الذراع المتخصص في استيراد وتصدير وتوزيع السكاكر والشوكولاتة في الشرق الأوسط، بالتزام قوي بالجودة والشفافية.</p>
+        <p data-i18n="about_p3">نختار أفضل المنتجات العالمية، ونبني علاقات موثوقة مع شركائنا، ونقدّم حلول توزيع مرنة للأفراد والتجّار والموزعين.</p>
+      </div>
+      <div class="legacy" data-reveal style="--d:120ms">
+        <span class="year a num">1955</span>
+        <div class="lbl" data-i18n="legacy_1">تأسيس الشركة الأم — الفاخرة التجارية</div>
+        <div class="rail" aria-hidden="true"></div>
+        <span class="year b num">2022</span>
+        <div class="lbl" data-i18n="legacy_2">انطلاق سمرقند من عمّان</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat" data-reveal><span class="num" data-count="70" data-suffix="+">70+</span><span class="txt" data-i18n="stat_1">عاماً من الإرث التجاري</span></div>
+      <div class="stat" data-reveal style="--d:90ms"><span class="num" data-count="100" data-suffix="+">100+</span><span class="txt" data-i18n="stat_2">منتج في كاتالوجنا</span></div>
+      <div class="stat" data-reveal style="--d:180ms"><span class="num" data-count="3" data-suffix="">3</span><span class="txt" data-i18n="stat_3">قطاعات: أفراد، تجّار، موزعون</span></div>
+      <!-- 7, not 8: Jordan is the domestic market, the other 7 are export destinations -->
+      <div class="stat" data-reveal style="--d:270ms"><span class="num" data-count="7" data-suffix="+">7+</span><span class="txt" data-i18n="stat_4">دول نصدّر إليها</span></div>
+    </div>
   </div>
 </section>
 
-<!-- ============ PRODUCTS ============ -->
-<section class="products" id="products">
-  <div class="wrap center">
-    <span class="eyebrow" style="background:var(--coral)" data-reveal data-i18n="prod_eyebrow">منتجاتنا</span>
-    <h2 class="sec-title" data-reveal data-i18n="prod_title">تشكيلة تُسعد الجميع</h2>
-    <p class="lede" data-reveal data-i18n="prod_intro">نستورد ونوزّع تشكيلة واسعة من أفخر العلامات العالمية — من الشوكولاتة الفاخرة إلى السكاكر المبتكرة.</p>
-    <div class="prod-grid">
-      <div class="card" data-reveal>
-        <svg class="ic" aria-hidden="true"><use href="#i-choc"/></svg>
-        <h3 data-i18n="cat1_t">شوكولاتة وويفر</h3>
-        <p data-i18n="cat1_p">تشكيلة واسعة من الشوكولاتة والويفر بالحليب والكاكاو وجوز الهند، بتعبئة مناسبة للتجزئة والجملة.</p>
-      </div>
-      <div class="card" data-reveal style="--d:90ms">
-        <svg class="ic" aria-hidden="true"><use href="#i-candy"/></svg>
-        <h3 data-i18n="cat2_t">سكاكر وحلويات</h3>
-        <p data-i18n="cat2_p">سكاكر ملوّنة ومبهجة بنكهات متنوعة تناسب الأطفال والعائلات، من مصانع عالمية موثوقة.</p>
-      </div>
-      <div class="card" data-reveal style="--d:180ms">
-        <svg class="ic" aria-hidden="true"><use href="#i-mint"/></svg>
-        <h3 data-i18n="cat3_t">FrostLab — نعناع خالٍ من السكر</h3>
-        <p data-i18n="cat3_p">خط سكاكر النعناع الخالية من السكر بسبع نكهات منعشة في علب معدنية أنيقة.</p>
-      </div>
-      <div class="card" data-reveal style="--d:270ms">
-        <svg class="ic" aria-hidden="true"><use href="#i-gift"/></svg>
-        <h3 data-i18n="cat4_t">حلوى مع ألعاب</h3>
-        <p data-i18n="cat4_p">منتجات مبتكرة تجمع الحلوى مع الألعاب والمفاجآت — الأكثر طلباً لدى الصغار.</p>
-      </div>
-    </div>
+<!-- ============ EVENTS ============ -->
+<section class="events" id="events" aria-labelledby="events-h">
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--mint)" data-i18n="ev_eyebrow">المعارض والفعاليات</span>
+    <h2 class="sec-title" id="events-h" data-i18n="ev_title">وين تلاقونا</h2>
+    <p class="lede" data-i18n="ev_lede">معارض الغذاء والحلويات في الأردن والخليج والمشرق وشمال أفريقيا وأوزبكستان — والمعارض اللي بنشارك فيها مميّزة.</p>
 
-    <h3 style="margin-block-start:var(--s6);font-size:1.5rem;color:var(--teal-deep)" data-reveal data-i18n="gal_title">من كاتالوج منتجاتنا</h3>
-    <p style="margin-block-start:6px;color:var(--ink-soft)" data-reveal data-i18n="gal_hint">اضغط على أي صورة لتكبيرها</p>
-    <div class="gallery" id="gallery"></div>
-    <a href="samarqand-catalog.pdf" target="_blank" rel="noopener" class="btn btn-primary"
-       style="margin-block-start:var(--s4)" data-reveal>
-      <svg aria-hidden="true"><use href="#u-book"/></svg>
-      <span data-i18n="gal_btn">حمّل الكاتالوج الكامل</span>
+    <article class="ev-feat" id="evFeat" hidden aria-live="polite"></article>
+
+    <div class="ev-filters" id="evFilters" role="group" aria-label="تصفية حسب المنطقة"></div>
+    <ol class="ev-list" id="evList"></ol>
+    <details class="ev-past" id="evPastWrap" hidden>
+      <summary data-i18n="ev_past">معارض سابقة</summary>
+      <ol class="ev-past-list" id="evPast"></ol>
+    </details>
+    <p class="ev-note" data-i18n="ev_note">المواعيد مأخوذة من المواقع الرسمية للمنظمين. المواعيد غير المؤكدة مُعلَّمة — تأكد منها قبل السفر.</p>
+    <noscript><p class="ev-empty">The Saudi Food Show — 27–29 September 2026, Jeddah Superdome. تواصلوا معنا لترتيب لقاء: +962 77 893 2185</p></noscript>
+  </div>
+</section>
+
+<!-- ============ CATALOGUE ============ -->
+<section class="catalog" id="products">
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--orange)" data-i18n="prod_eyebrow">منتجاتنا</span>
+    <h2 class="sec-title" data-i18n="prod_title">تشكيلة تُسعد الجميع</h2>
+    <p class="lede" data-i18n="prod_intro">نستورد ونوزّع تشكيلة واسعة من العلامات العالمية — من الشوكولاتة إلى السكاكر المبتكرة.</p>
+    <div class="cats">
+      <div class="cat" data-reveal><svg aria-hidden="true"><use href="#i-choc"/></svg><div><h3 data-i18n="cat1_t">شوكولاتة وويفر</h3><p data-i18n="cat1_p">بالحليب والكاكاو وجوز الهند، للتجزئة والجملة.</p></div></div>
+      <div class="cat" data-reveal style="--d:80ms"><svg aria-hidden="true"><use href="#i-candy"/></svg><div><h3 data-i18n="cat2_t">سكاكر وحلويات</h3><p data-i18n="cat2_p">نكهات مبهجة للأطفال والعائلات.</p></div></div>
+      <div class="cat" data-reveal style="--d:160ms"><svg aria-hidden="true"><use href="#i-mint"/></svg><div><h3 data-i18n="cat3_t">نعناع خالٍ من السكر</h3><p data-i18n="cat3_p">FrostLab بسبع نكهات منعشة.</p></div></div>
+      <div class="cat" data-reveal style="--d:240ms"><svg aria-hidden="true"><use href="#i-gift"/></svg><div><h3 data-i18n="cat4_t">حلوى مع ألعاب</h3><p data-i18n="cat4_p">مفاجآت الأكثر طلباً لدى الصغار.</p></div></div>
+    </div>
+    <div class="cat-row" id="catRow" tabindex="0" aria-label="صفحات من الكاتالوج"></div>
+    <a href="samarqand-catalog.pdf" target="_blank" rel="noopener" class="btn btn-ink" style="margin-block-start:var(--s3)">
+      <svg aria-hidden="true"><use href="#u-book"/></svg><span data-i18n="gal_btn">حمّل الكاتالوج الكامل (PDF)</span>
     </a>
   </div>
 </section>
 
 <dialog id="lb" aria-label="عارض الصور">
-  <!-- no src= until a product is chosen: an empty src resolves to the page URL and
-       makes the browser re-download this document as a phantom image -->
   <img id="lbImg" alt="">
   <div class="lb-bar">
-    <span class="lb-cap" id="lbCap"></span>
+    <span id="lbCap"></span>
     <div class="lb-nav">
       <button class="lb-btn" id="lbPrev" aria-label="السابق"><svg aria-hidden="true"><use href="#u-prev"/></svg></button>
       <button class="lb-btn" id="lbNext" aria-label="التالي"><svg aria-hidden="true"><use href="#u-next"/></svg></button>
@@ -588,383 +641,475 @@ footer a:focus-visible{outline:3px solid var(--yellow)}
   </div>
 </dialog>
 
-<!-- ============ VALUES ============ -->
-<section class="values" id="values">
-  <div class="wrap">
-    <span class="eyebrow" style="background:var(--mint)" data-reveal data-i18n="val_eyebrow">لماذا سمرقند؟</span>
-    <h2 class="sec-title" data-reveal data-i18n="val_title">قيم أصيلة من تاريخ الشركة الأم</h2>
-    <div class="val-grid">
-      <div class="val" data-reveal><div class="ic"><svg aria-hidden="true"><use href="#u-handshake"/></svg></div><div><h3 data-i18n="v1_t">الثقة والمصداقية</h3><p data-i18n="v1_p">علاقات طويلة الأمد مبنية على الشفافية مع شركائنا وعملائنا.</p></div></div>
-      <div class="val" data-reveal style="--d:90ms"><div class="ic"><svg aria-hidden="true"><use href="#u-star"/></svg></div><div><h3 data-i18n="v2_t">جودة عالمية</h3><p data-i18n="v2_p">نختار منتجاتنا من علامات ومصانع دولية موثوقة فقط.</p></div></div>
-      <div class="val" data-reveal style="--d:180ms"><div class="ic"><svg aria-hidden="true"><use href="#u-truck"/></svg></div><div><h3 data-i18n="v3_t">توزيع مرن وسريع</h3><p data-i18n="v3_p">أسطول توزيع وفريق مبيعات ميداني يغطي مناطق واسعة.</p></div></div>
-      <div class="val" data-reveal style="--d:270ms"><div class="ic"><svg aria-hidden="true"><use href="#u-heart"/></svg></div><div><h3 data-i18n="v4_t">خدمة لكل الفئات</h3><p data-i18n="v4_p">من الأفراد إلى كبار الموزعين — حلول تناسب الجميع.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CLIENTS ============ -->
-<section class="clients">
-  <div data-reveal>
-    <h2 data-i18n="cl_title">نخدم كل قنوات البيع</h2>
-    <p data-i18n="cl_p">سواء كنت صاحب سوبرماركت، محل حلويات، صيدلية، أو موزعاً إقليمياً — عندنا الحل المناسب لك.</p>
-    <div class="chips">
-      <span class="chip" data-i18n="ch1">سوبرماركت وبقالات</span>
-      <span class="chip" data-i18n="ch2">محلات حلويات</span>
-      <span class="chip" data-i18n="ch3">صيدليات</span>
-      <span class="chip" data-i18n="ch4">تجار جملة</span>
-      <span class="chip" data-i18n="ch5">موزعون إقليميون</span>
-    </div>
-  </div>
-</section>
-
 <!-- ============ MARKETS ============ -->
 <section class="markets" id="markets">
   <div class="wrap center">
-    <span class="eyebrow" style="background:var(--teal)" data-reveal data-i18n="mk_eyebrow">أسواقنا</span>
-    <h2 class="sec-title" data-reveal data-i18n="mk_title">منتجاتنا تصل إلى العالم</h2>
-    <p class="lede" data-reveal data-i18n="mk_p">من عمّان، نصدّر ونوزّع منتجاتنا إلى أسواق متعددة حول العالم:</p>
+    <span class="eyebrow" style="background:var(--teal)" data-i18n="mk_eyebrow">أسواقنا</span>
+    <h2 class="sec-title" data-i18n="mk_title">من عمّان إلى العالم</h2>
+    <p class="lede" data-i18n="mk_p">نصدّر ونوزّع منتجاتنا إلى أسواق متعددة:</p>
     <div class="flag-grid" id="mkNow"></div>
-    <div class="soon-title" data-reveal data-i18n="mk_soon">قريباً إن شاء الله</div>
+    <div class="soon-title" data-i18n="mk_soon">قريباً إن شاء الله</div>
     <div class="flag-grid" id="mkSoon"></div>
+  </div>
+</section>
+
+<!-- ============ VALUES ============ -->
+<section class="values" id="values">
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--mint)" data-i18n="val_eyebrow">لماذا سمرقند؟</span>
+    <h2 class="sec-title" data-i18n="val_title">قيم أصيلة من تاريخ الشركة الأم</h2>
+    <div class="val-grid">
+      <div class="val" data-reveal><div class="ic"><svg aria-hidden="true"><use href="#u-handshake"/></svg></div><h3 data-i18n="v1_t">الثقة والمصداقية</h3><p data-i18n="v1_p">علاقات طويلة الأمد مبنية على الشفافية.</p></div>
+      <div class="val" data-reveal style="--d:80ms"><div class="ic"><svg aria-hidden="true"><use href="#u-star"/></svg></div><h3 data-i18n="v2_t">جودة عالمية</h3><p data-i18n="v2_p">منتجات من علامات ومصانع دولية موثوقة فقط.</p></div>
+      <div class="val" data-reveal style="--d:160ms"><div class="ic"><svg aria-hidden="true"><use href="#u-truck"/></svg></div><h3 data-i18n="v3_t">توزيع مرن وسريع</h3><p data-i18n="v3_p">أسطول توزيع وفريق مبيعات ميداني يغطي مناطق واسعة.</p></div>
+      <div class="val" data-reveal style="--d:240ms"><div class="ic"><svg aria-hidden="true"><use href="#u-heart"/></svg></div><h3 data-i18n="v4_t">خدمة لكل الفئات</h3><p data-i18n="v4_p">من الأفراد إلى كبار الموزعين.</p></div>
+    </div>
+    <div class="channels" data-reveal>
+      <h3 data-i18n="cl_title">نخدم كل قنوات البيع</h3>
+      <p data-i18n="cl_p">سوبرماركت، محل حلويات، صيدلية، أو موزّع إقليمي — عندنا الحل المناسب لك.</p>
+      <div class="chips">
+        <span class="chip" data-i18n="ch1">سوبرماركت وبقالات</span>
+        <span class="chip" data-i18n="ch2">محلات حلويات</span>
+        <span class="chip" data-i18n="ch3">صيدليات</span>
+        <span class="chip" data-i18n="ch4">تجار جملة</span>
+        <span class="chip" data-i18n="ch5">موزعون إقليميون</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM ============ -->
+<section class="social" id="social">
+  <div class="wrap">
+    <div class="ig-head">
+      <div>
+        <span class="eyebrow" style="background:var(--pink)" data-i18n="ig_eyebrow">تابعونا</span>
+        <h2 class="sec-title" data-i18n="ig_title">من إنستغرام</h2>
+      </div>
+      <a class="btn btn-line" href="https://www.instagram.com/samarqand.mena/" target="_blank" rel="noopener">
+        <svg aria-hidden="true"><use href="#u-ig"/></svg><span class="num">@samarqand.mena</span>
+      </a>
+    </div>
+    <div class="ig-grid" id="igGrid"></div>
   </div>
 </section>
 
 <!-- ============ CONTACT ============ -->
 <section class="contact" id="contact">
   <div class="wrap center">
-    <span class="eyebrow" style="background:var(--orange)" data-reveal data-i18n="con_eyebrow">تواصل معنا</span>
-    <h2 class="sec-title" data-reveal data-i18n="con_title">جاهزون نخدمك</h2>
-    <p class="lede" data-reveal data-i18n="con_p">للاستفسار عن المنتجات، طلبات الجملة، أو فرص التوزيع — تواصل معنا مباشرة.</p>
+    <span class="eyebrow" style="background:var(--orange)" data-i18n="con_eyebrow">تواصل معنا</span>
+    <h2 class="sec-title" data-i18n="con_title">جاهزون نخدمك</h2>
+    <p class="lede" data-i18n="con_p">للاستفسار عن المنتجات، طلبات الجملة، أو فرص التوزيع — تواصل معنا مباشرة.</p>
     <div class="contact-grid">
-      <div class="c-card" data-reveal>
-        <svg class="ic" aria-hidden="true"><use href="#u-store"/></svg>
-        <h3 data-i18n="c1">رقم المعرض</h3>
-        <a class="tel" href="tel:+962781044022">+962 78 104 4022</a>
-      </div>
-      <div class="c-card" data-reveal style="--d:80ms">
-        <svg class="ic" aria-hidden="true"><use href="#u-phone"/></svg>
-        <h3 data-i18n="c2">المبيعات المحلية</h3>
-        <a class="tel" href="tel:+962781044001">+962 78 104 4001</a>
-      </div>
-      <div class="c-card" data-reveal style="--d:160ms">
-        <svg class="ic" aria-hidden="true"><use href="#u-globe"/></svg>
-        <h3 data-i18n="c3">المبيعات الخارجية</h3>
-        <a class="tel" href="tel:+962781044144">+962 78 104 4144</a>
-      </div>
-      <div class="c-card" data-reveal style="--d:240ms">
-        <svg class="ic" aria-hidden="true"><use href="#u-phone"/></svg>
-        <h3 data-i18n="c4">رقم الشركة</h3>
-        <a class="tel" href="tel:+962778932185">+962 77 893 2185</a>
-      </div>
-      <div class="c-card" data-reveal style="--d:320ms">
-        <svg class="ic" aria-hidden="true"><use href="#u-mail"/></svg>
-        <h3 data-i18n="c5">البريد الإلكتروني</h3>
-        <a href="mailto:info@samarqandsweets.com" dir="ltr">info@samarqandsweets.com</a>
-      </div>
-      <div class="c-card" data-reveal style="--d:400ms">
-        <svg class="ic" aria-hidden="true"><use href="#u-pin"/></svg>
-        <h3 data-i18n="c6">العنوان</h3>
-        <p data-i18n="c6_p">عمّان — الأردن</p>
-      </div>
+      <div class="c-card" data-reveal><svg class="ic" aria-hidden="true"><use href="#u-store"/></svg><h3 data-i18n="c1">رقم المعرض</h3><a class="tel" href="tel:+962781044022">+962 78 104 4022</a></div>
+      <div class="c-card" data-reveal style="--d:70ms"><svg class="ic" aria-hidden="true"><use href="#u-phone"/></svg><h3 data-i18n="c2">المبيعات المحلية</h3><a class="tel" href="tel:+962781044001">+962 78 104 4001</a></div>
+      <div class="c-card" data-reveal style="--d:140ms"><svg class="ic" aria-hidden="true"><use href="#u-globe"/></svg><h3 data-i18n="c3">المبيعات الخارجية</h3><a class="tel" href="tel:+962781044144">+962 78 104 4144</a></div>
+      <div class="c-card" data-reveal style="--d:210ms"><svg class="ic" aria-hidden="true"><use href="#u-phone"/></svg><h3 data-i18n="c4">رقم الشركة</h3><a class="tel" href="tel:+962778932185">+962 77 893 2185</a></div>
+      <div class="c-card" data-reveal style="--d:280ms"><svg class="ic" aria-hidden="true"><use href="#u-mail"/></svg><h3 data-i18n="c5">البريد الإلكتروني</h3><a href="mailto:info@samarqandsweets.com" dir="ltr">info@samarqandsweets.com</a></div>
+      <div class="c-card" data-reveal style="--d:350ms"><svg class="ic" aria-hidden="true"><use href="#u-pin"/></svg><h3 data-i18n="c6">العنوان</h3><p data-i18n="c6_p">عمّان — الأردن</p></div>
     </div>
-    <a class="wa-btn" href="https://wa.me/962778932185" target="_blank" rel="noopener">
-      <svg aria-hidden="true"><use href="#u-wa"/></svg>
-      <span data-i18n="wa">راسلنا على واتساب</span>
-    </a>
+    <div class="contact-acts">
+      <a class="btn wa-btn" href="https://wa.me/962778932185" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#u-wa"/></svg><span data-i18n="wa">راسلنا على واتساب</span></a>
+    </div>
   </div>
 </section>
 
 </main>
 
 <footer>
-  <img src="assets/logo.png" width="700" height="306" alt="" style="height:62px;width:auto" loading="lazy">
-  <nav class="links" aria-label="روابط التذييل">
-    <a href="#about" data-i18n="nav_about">من نحن</a>
-    <a href="#products" data-i18n="nav_products">منتجاتنا</a>
-    <a href="#markets" data-i18n="nav_markets">أسواقنا</a>
-    <a href="#values" data-i18n="nav_values">لماذا سمرقند</a>
-    <a href="#contact" data-i18n="nav_contact">تواصل معنا</a>
-  </nav>
-  <p data-i18n="foot_1">سمرقند — نكهة تُروى بجودة عمرها عقود</p>
+  <div class="foot">
+    <div>
+      <img src="assets/logo.png" width="700" height="306" alt="Samarqand" loading="lazy">
+      <p data-i18n="foot_1">سمرقند — نكهة تُروى بجودة عمرها عقود.</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/samarqand.mena/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#u-ig"/></svg></a>
+        <a href="https://www.facebook.com/p/%D8%B4%D8%B1%D9%83%D8%A9-%D8%B3%D9%85%D8%B1%D9%82%D9%86%D8%AF-%D9%84%D9%84%D8%B3%D9%83%D8%A7%D9%83%D8%B1-Samarqand-co-100091360552095/" target="_blank" rel="noopener" aria-label="Facebook"><svg aria-hidden="true"><use href="#u-fb"/></svg></a>
+        <a href="https://wa.me/962778932185" target="_blank" rel="noopener" aria-label="WhatsApp"><svg aria-hidden="true"><use href="#u-wa"/></svg></a>
+      </div>
+    </div>
+    <nav aria-label="روابط التذييل">
+      <a href="#brands" data-i18n="nav_brands">علاماتنا</a>
+      <a href="#about" data-i18n="nav_about">من نحن</a>
+      <a href="#events" data-i18n="nav_events">المعارض</a>
+      <a href="#markets" data-i18n="nav_markets">أسواقنا</a>
+      <a href="#contact" data-i18n="nav_contact">تواصل معنا</a>
+    </nav>
+  </div>
   <p class="fine" data-i18n="foot_2">© 2026 شركة سمرقند للسكاكر وتوزيع الشوكولاتة — جميع الحقوق محفوظة | فرع من شركة محمد موسى عمرو (الفاخرة التجارية)</p>
+  <div class="wordmark" aria-hidden="true">SAMARQAND</div>
 </footer>
 
-<script>
-/* ================= data ================= */
-const PRODUCTS = [
-  {f:'choco-break.jpg',      k:'g1'},
-  {f:'go-up.jpg',            k:'g2'},
-  {f:'jolly-bee.jpg',        k:'g3'},
-  {f:'stuns.jpg',            k:'g4'},
-  {f:'extra-wafer.jpg',      k:'g5'},
-  {f:'chocolate-balls.jpg',  k:'g6'},
-  {f:'plenty.jpg',           k:'g7'},
-  {f:'dino-chips.jpg',       k:'g8'}
-];
-const MK_NOW  = ['jo','us','sa','ps','lb','sy','ye','om'];
-const MK_SOON = ['eg','ae','qa','kw','iq','ly'];
+<script type="module">
+import { status, featured, ordered, ics } from './assets/events.js';
 
-/* ================= i18n ================= */
+/* ================= static data ================= */
+const CATALOG = [
+  {f:'choco-break.jpg',k:'g1'},{f:'go-up.jpg',k:'g2'},{f:'jolly-bee.jpg',k:'g3'},{f:'stuns.jpg',k:'g4'},
+  {f:'extra-wafer.jpg',k:'g5'},{f:'chocolate-balls.jpg',k:'g6'},{f:'plenty.jpg',k:'g7'},{f:'dino-chips.jpg',k:'g8'}
+];
+const IG = [ // image slug -> Instagram post
+  ['chocobreak-crunch','DctW9maCdbc'],['stuns-smart','DcbVcZKDQ_B'],['chips-share-1','Db8U-sqjfJp'],['teaser','DcTgJjTD0Fc'],
+  ['cookies','DcMDJHkj7yM'],['frost-3x','Dbav1SOCJH1'],['chocobreak-sky','Dc1MQ9bjPGo'],['texture','DbTIRd7GdiB']
+];
+const MK_NOW = ['jo','us','sa','ps','lb','sy','ye','om'];
+const MK_SOON = ['eg','ae','qa','kw','iq','ly'];
+const REGION = {JO:'jo',SA:'gcc',AE:'gcc',QA:'gcc',KW:'gcc',BH:'gcc',OM:'gcc',IQ:'levant',LB:'levant',SY:'levant',PS:'levant',
+  EG:'africa',MA:'africa',DZ:'africa',TN:'africa',LY:'africa',UZ:'asia',KZ:'asia'};
+const FLAGGED = new Set(['jo','ps','sy','ye','eg','iq','sa','lb','om','ae','qa','kw','ly','ma','dz','uz','us']);
+const ACCENTS = {teal:'var(--teal)',orange:'var(--orange)',coral:'var(--coral)',yellow:'var(--yellow)',mint:'var(--mint)',pink:'var(--pink)'};
+const WA = '962778932185';
+
+/* ================= strings ================= */
 const I18N = {
-  ar: {
-    skip:"تخطَّ إلى المحتوى", brand:"سمرقند",
-    nav_about:"من نحن", nav_products:"منتجاتنا", nav_markets:"أسواقنا", nav_values:"لماذا سمرقند", nav_contact:"تواصل معنا",
-    hero_title:"نكهة <em>تُروى</em> بجودة عمرها عقود",
-    hero_tag:"شركة سمرقند للسكاكر وتوزيع الشوكولاتة — استيراد، تصدير، وتوزيع جملة لأفخر السكاكر والشوكولاتة في الأردن والشرق الأوسط.",
-    hero_sub:"SAMARQAND — A Taste Backed by Generations of Quality",
-    hero_btn1:"اكتشف منتجاتنا", hero_btn2:"اطلب عرض أسعار", scroll:"تصفّح",
-    belt_title:"من خط التوزيع — منتجات تتحرك كل يوم",
-    belt_pause:"إيقاف الحركة", belt_play:"تشغيل الحركة",
-    about_eyebrow:"نبذة عنا", about_title:"امتداد حديث لمسيرة تجارية عريقة",
-    about_p1:"تُعدّ شركة سمرقند امتداداً حديثاً لمسيرة تجارية عريقة، حيث تُعتبر واحدة من فروع شركة محمد موسى عمرو (الفاخرة التجارية) التي تأسست عام 1955 في مدينة الطفيلة — الأردن، والتي تمتلك خبرة طويلة وسمعة راسخة في عالم التجارة والاستيراد.",
-    about_p2:"تأسست سمرقند عام 2022 في العاصمة عمّان، لتكون الذراع المتخصص في استيراد وتصدير وتوزيع السكاكر والشوكولاتة في الشرق الأوسط، مع التزام قوي بالجودة والشفافية في العمل.",
-    about_p3:"نتميّز باختيار أفضل المنتجات العالمية، وبناء علاقات موثوقة مع شركائنا، وتوفير حلول توزيع مرنة تستهدف جميع فئات المجتمع من الأفراد، التجّار، والموزعين.",
-    legacy_1:"تأسيس الشركة الأم — الفاخرة التجارية", legacy_2:"انطلاق سمرقند من عمّان",
-    stat_1:"عاماً من الإرث التجاري", stat_2:"منتج في كاتالوجنا", stat_3:"قطاعات نخدمها: أفراد، تجّار، موزعون", stat_4:"دول نصدّر إليها حول العالم",
-    mk_eyebrow:"أسواقنا", mk_title:"منتجاتنا تصل إلى العالم",
-    mk_p:"من عمّان، نصدّر ونوزّع منتجاتنا إلى أسواق متعددة حول العالم:",
-    mk_soon:"قريباً إن شاء الله",
-    jo:"الأردن", us:"أمريكا", sa:"السعودية", ps:"فلسطين", lb:"لبنان", sy:"سوريا", ye:"اليمن", om:"عُمان",
-    eg:"مصر", ae:"الإمارات", qa:"قطر", kw:"الكويت", iq:"العراق", ly:"ليبيا",
-    prod_eyebrow:"منتجاتنا", prod_title:"تشكيلة تُسعد الجميع",
-    prod_intro:"نستورد ونوزّع تشكيلة واسعة من أفخر العلامات العالمية — من الشوكولاتة الفاخرة إلى السكاكر المبتكرة.",
-    cat1_t:"شوكولاتة وويفر", cat1_p:"تشكيلة واسعة من الشوكولاتة والويفر بالحليب والكاكاو وجوز الهند، بتعبئة مناسبة للتجزئة والجملة.",
-    cat2_t:"سكاكر وحلويات", cat2_p:"سكاكر ملوّنة ومبهجة بنكهات متنوعة تناسب الأطفال والعائلات، من مصانع عالمية موثوقة.",
-    cat3_t:"FrostLab — نعناع خالٍ من السكر", cat3_p:"خط سكاكر النعناع الخالية من السكر بسبع نكهات منعشة في علب معدنية أنيقة.",
-    cat4_t:"حلوى مع ألعاب", cat4_p:"منتجات مبتكرة تجمع الحلوى مع الألعاب والمفاجآت — الأكثر طلباً لدى الصغار.",
-    gal_title:"من كاتالوج منتجاتنا", gal_hint:"اضغط على أي صورة لتكبيرها", gal_btn:"حمّل الكاتالوج الكامل",
-    zoom:"تكبير الصورة:",
-    g1:"Choco Break — كاكاو، جوز هند، حليب", g2:"Go Up — فستق، براوني، فول سوداني",
-    g3:"Jolly Bee — سكاكر جيلي بالفواكه", g4:"Stuns — كراميل ونوغا",
-    g5:"Extra — ويفر مقرمش بطبقات الكريمة", g6:"كرات شوكولاتة فاخرة للهدايا",
-    g7:"Plenty — كرات شوكولاتة بالفستق والبندق", g8:"Dino Chips — شيبس بأربع نكهات",
-    val_eyebrow:"لماذا سمرقند؟", val_title:"قيم أصيلة من تاريخ الشركة الأم",
-    v1_t:"الثقة والمصداقية", v1_p:"علاقات طويلة الأمد مبنية على الشفافية مع شركائنا وعملائنا.",
-    v2_t:"جودة عالمية", v2_p:"نختار منتجاتنا من علامات ومصانع دولية موثوقة فقط.",
-    v3_t:"توزيع مرن وسريع", v3_p:"أسطول توزيع وفريق مبيعات ميداني يغطي مناطق واسعة.",
-    v4_t:"خدمة لكل الفئات", v4_p:"من الأفراد إلى كبار الموزعين — حلول تناسب الجميع.",
-    cl_title:"نخدم كل قنوات البيع",
-    cl_p:"سواء كنت صاحب سوبرماركت، محل حلويات، صيدلية، أو موزعاً إقليمياً — عندنا الحل المناسب لك.",
-    ch1:"سوبرماركت وبقالات", ch2:"محلات حلويات", ch3:"صيدليات", ch4:"تجار جملة", ch5:"موزعون إقليميون",
-    con_eyebrow:"تواصل معنا", con_title:"جاهزون نخدمك",
-    con_p:"للاستفسار عن المنتجات، طلبات الجملة، أو فرص التوزيع — تواصل معنا مباشرة.",
-    c1:"رقم المعرض", c2:"المبيعات المحلية", c3:"المبيعات الخارجية", c4:"رقم الشركة",
-    c5:"البريد الإلكتروني", c6:"العنوان", c6_p:"عمّان — الأردن",
-    wa:"راسلنا على واتساب", menu:"القائمة",
-    foot_1:"سمرقند — نكهة تُروى بجودة عمرها عقود",
-    foot_2:"© 2026 شركة سمرقند للسكاكر وتوزيع الشوكولاتة — جميع الحقوق محفوظة | فرع من شركة محمد موسى عمرو (الفاخرة التجارية)"
-  },
-  en: {
-    skip:"Skip to content", brand:"Samarqand",
-    nav_about:"About Us", nav_products:"Our Products", nav_markets:"Our Markets", nav_values:"Why Samarqand", nav_contact:"Contact Us",
-    hero_title:"A Taste Backed by <em>Generations</em> of Quality",
-    hero_tag:"Samarqand Candy &amp; Chocolate Distribution Company — import, export and wholesale distribution of the finest candies and chocolates across Jordan and the Middle East.",
-    hero_sub:"سمرقند — نكهة تُروى بجودة عمرها عقود",
-    hero_btn1:"Discover Our Products", hero_btn2:"Request a Quote", scroll:"Scroll",
-    belt_title:"Straight off the line — product moving every day",
-    belt_pause:"Pause motion", belt_play:"Play motion",
-    about_eyebrow:"About Us", about_title:"A Modern Extension of a Long-Standing Legacy",
-    about_p1:"Samarqand is a modern extension of a long-standing commercial legacy. It is a branch of Mohammad Mousa Amro Company (Al Fakhira Trading), established in 1955 in Tafilah, Jordan, known for its excellence and credibility in the trade and import sectors.",
-    about_p2:"Founded in 2022 and based in Amman, Samarqand specializes in the import, export, and distribution of candies and chocolates across the Middle East, with a strong commitment to quality and transparency.",
-    about_p3:"We source only the finest products from trusted international brands, build reliable partnerships, and offer flexible distribution solutions serving all segments — individuals, retailers, and wholesalers.",
-    legacy_1:"Parent company founded — Al Fakhira Trading", legacy_2:"Samarqand launched in Amman",
-    stat_1:"years of commercial heritage", stat_2:"products in our catalog", stat_3:"segments served: individuals, retailers, wholesalers", stat_4:"countries we export to worldwide",
-    mk_eyebrow:"Our Markets", mk_title:"Our Products Reach the World",
-    mk_p:"From Amman, we export and distribute our products to markets around the world:",
-    mk_soon:"Coming Soon",
-    jo:"Jordan", us:"USA", sa:"Saudi Arabia", ps:"Palestine", lb:"Lebanon", sy:"Syria", ye:"Yemen", om:"Oman",
-    eg:"Egypt", ae:"UAE", qa:"Qatar", kw:"Kuwait", iq:"Iraq", ly:"Libya",
-    prod_eyebrow:"Our Products", prod_title:"A Selection That Delights Everyone",
-    prod_intro:"We import and distribute a wide range of premium international brands — from fine chocolate to innovative candies.",
-    cat1_t:"Chocolate &amp; Wafers", cat1_p:"A wide selection of chocolate and wafers with milk, cacao, and coconut — packed for both retail and wholesale.",
-    cat2_t:"Candies &amp; Sweets", cat2_p:"Colorful, joyful candies in a variety of flavors for children and families, from trusted international factories.",
-    cat3_t:"FrostLab — Sugar-Free Mints", cat3_p:"Our sugar-free mint candy line in seven refreshing flavors, packed in elegant decorative tins.",
-    cat4_t:"Candy with Toys", cat4_p:"Innovative products combining candy with toys and surprises — kids' absolute favorites.",
-    gal_title:"From Our Product Catalog", gal_hint:"Click any image to enlarge", gal_btn:"Download the Full Catalog",
-    zoom:"Enlarge image:",
-    g1:"Choco Break — cacao, coconut, milk", g2:"Go Up — pistachio, brownie, peanut",
-    g3:"Jolly Bee — fruity jelly candies", g4:"Stuns — caramel &amp; nougat",
-    g5:"Extra — crispy wafer with cream layers", g6:"Premium gift chocolate balls",
-    g7:"Plenty — chocolate balls with pistachio &amp; hazelnut", g8:"Dino Chips — four flavors",
-    val_eyebrow:"Why Samarqand?", val_title:"Values Rooted in Our Parent Company's Heritage",
-    v1_t:"Trust &amp; Credibility", v1_p:"Long-term relationships built on transparency with our partners and customers.",
-    v2_t:"World-Class Quality", v2_p:"We select our products only from trusted international brands and factories.",
-    v3_t:"Fast, Flexible Distribution", v3_p:"A distribution fleet and field sales team covering wide areas.",
-    v4_t:"Serving Every Segment", v4_p:"From individuals to major wholesalers — solutions that fit everyone.",
-    cl_title:"We Serve Every Sales Channel",
-    cl_p:"Whether you run a supermarket, a sweets shop, a pharmacy, or a regional distribution operation — we have the right solution for you.",
-    ch1:"Supermarkets &amp; Groceries", ch2:"Sweets Shops", ch3:"Pharmacies", ch4:"Wholesalers", ch5:"Regional Distributors",
-    con_eyebrow:"Contact Us", con_title:"Ready to Serve You",
-    con_p:"For product inquiries, wholesale orders, or distribution opportunities — reach out to us directly.",
-    c1:"Showroom", c2:"Local Sales", c3:"International Sales", c4:"Company Line",
-    c5:"Email", c6:"Address", c6_p:"Amman — Jordan",
-    wa:"Message Us on WhatsApp", menu:"Menu",
-    foot_1:"Samarqand — A Taste Backed by Generations of Quality",
-    foot_2:"© 2026 Samarqand Candy &amp; Chocolate Distribution Co. — All rights reserved | A branch of Mohammad Mousa Amro Company (Al Fakhira Trading)"
-  }
+ ar:{
+  skip:"تخطَّ إلى المحتوى", menu:"القائمة",
+  nav_brands:"علاماتنا", nav_about:"من نحن", nav_events:"المعارض", nav_markets:"أسواقنا", nav_contact:"تواصل معنا",
+  hero_title:"نكهة <em>تُروى</em> بجودة عمرها عقود",
+  hero_tag:"استيراد وتصدير وتوزيع جملة لأحلى السكاكر والشوكولاتة — من عمّان إلى الشرق الأوسط والعالم.",
+  hero_btn1:"اكتشف علاماتنا", hero_btn2:"اطلب عرض أسعار",
+  st_eyebrow:"علاماتنا", st_title:"علامات بتعدّل المزاج",
+  st_lede:"نوزّع علامات يحبها الناس في كل رف — وهاي بعض منها كما تظهر على صفحتنا.", st_more:"شوف الكاتالوج كامل",
+  sp1_k:"شوكولاتة بالحليب", sp1_l:"السعادة بتبدأ من أول قضمة — مزيج الحليب والشوكولا اللي بيعدّل المزاج.",
+  sp2_k:"كراميل طري ونوغا", sp2_l:"الحل الوحيد للجوع؟ قضمة وحدة من Stuns بتعدّل المزاج.",
+  sp3_k:"ويفر بالكاكاو وجوز الهند والحليب", sp3_l:"السعادة في كل قضمة — شوكو بريك، ألذ بريك ليومك.",
+  sp4_k:"شيبس بطاطا", sp4_l:"الطعم اللي بتدوّر عليه صار بين إيديك — قرمشة ما بتنشبع منها.",
+  sp5_k:"نعناع خالٍ من السكر", sp5_l:"خليك واثق طول اليوم مع فروست لاب — انتعاش بسبع نكهات في علب معدنية أنيقة.",
+  about_eyebrow:"نبذة عنا", about_title:"امتداد حديث لمسيرة تجارية عريقة",
+  about_p1:"تُعدّ شركة سمرقند امتداداً حديثاً لمسيرة تجارية عريقة، فهي من فروع شركة محمد موسى عمرو (الفاخرة التجارية) التي تأسست عام 1955 في مدينة الطفيلة — الأردن، وتمتلك خبرة طويلة وسمعة راسخة في التجارة والاستيراد.",
+  about_p2:"تأسست سمرقند عام 2022 في عمّان، لتكون الذراع المتخصص في استيراد وتصدير وتوزيع السكاكر والشوكولاتة في الشرق الأوسط، بالتزام قوي بالجودة والشفافية.",
+  about_p3:"نختار أفضل المنتجات العالمية، ونبني علاقات موثوقة مع شركائنا، ونقدّم حلول توزيع مرنة للأفراد والتجّار والموزعين.",
+  legacy_1:"تأسيس الشركة الأم — الفاخرة التجارية", legacy_2:"انطلاق سمرقند من عمّان",
+  stat_1:"عاماً من الإرث التجاري", stat_2:"منتج في كاتالوجنا", stat_3:"قطاعات: أفراد، تجّار، موزعون", stat_4:"دول نصدّر إليها",
+  ev_eyebrow:"المعارض والفعاليات", ev_title:"وين تلاقونا",
+  ev_lede:"معارض الغذاء والحلويات في الأردن والخليج والمشرق وشمال أفريقيا وأوزبكستان — والمعارض اللي بنشارك فيها مميّزة.",
+  ev_past:"معارض سابقة", ev_note:"المواعيد مأخوذة من المواقع الرسمية للمنظمين. المواعيد غير المؤكدة مُعلَّمة — تأكد منها قبل السفر.",
+  ev_all:"الكل", r_jo:"الأردن", r_gcc:"الخليج", r_levant:"العراق والمشرق", r_africa:"مصر وشمال أفريقيا", r_asia:"أوزبكستان",
+  ev_meet:"نلقاكم في", ev_live:"مباشر الآن — نحن في المعرض", ev_booth:"جناحنا", ev_book:"احجز موعداً معنا في المعرض",
+  ev_ics:"أضف إلى التقويم", ev_site:"الموقع الرسمي", ev_mine:"سنكون هناك", ev_went:"شاركنا", ev_live_b:"جارٍ الآن",
+  ev_unver:"الموعد غير مؤكد من المنظم", ev_tba:"الموعد لم يُعلن", ev_none:"لا توجد معارض في هذه المنطقة حالياً.",
+  ev_error:"تعذّر تحميل جدول المعارض. حدّث الصفحة أو تواصل معنا.", ev_to_open:"على الافتتاح",
+  ev_bar_up:"نلقاكم في {name} — {dates}", ev_bar_live:"نحن الآن في {name} · {city}", ev_bar_link:"التفاصيل",
+  ev_bar_up_s:"نلقاكم في {name}", ev_bar_live_s:"نحن الآن في {name}",
+  ev_wa:"مرحباً سمرقند، أودّ ترتيب لقاء معكم في {name} ({dates}).",
+  prod_eyebrow:"منتجاتنا", prod_title:"تشكيلة تُسعد الجميع",
+  prod_intro:"نستورد ونوزّع تشكيلة واسعة من العلامات العالمية — من الشوكولاتة إلى السكاكر المبتكرة.",
+  cat1_t:"شوكولاتة وويفر", cat1_p:"بالحليب والكاكاو وجوز الهند، للتجزئة والجملة.",
+  cat2_t:"سكاكر وحلويات", cat2_p:"نكهات مبهجة للأطفال والعائلات.",
+  cat3_t:"نعناع خالٍ من السكر", cat3_p:"FrostLab بسبع نكهات منعشة.",
+  cat4_t:"حلوى مع ألعاب", cat4_p:"مفاجآت الأكثر طلباً لدى الصغار.",
+  gal_btn:"حمّل الكاتالوج الكامل (PDF)", zoom:"تكبير:",
+  g1:"Choco Break — كاكاو، جوز هند، حليب", g2:"Go Up — فستق، براوني، فول سوداني", g3:"Jolly Bee — سكاكر جيلي بالفواكه",
+  g4:"Stuns — كراميل ونوغا", g5:"Extra — ويفر مقرمش بطبقات الكريمة", g6:"كرات شوكولاتة فاخرة للهدايا",
+  g7:"Plenty — كرات شوكولاتة بالفستق والبندق", g8:"Dino Chips — شيبس بأربع نكهات",
+  mk_eyebrow:"أسواقنا", mk_title:"من عمّان إلى العالم", mk_p:"نصدّر ونوزّع منتجاتنا إلى أسواق متعددة:", mk_soon:"قريباً إن شاء الله",
+  jo:"الأردن", us:"أمريكا", sa:"السعودية", ps:"فلسطين", lb:"لبنان", sy:"سوريا", ye:"اليمن", om:"عُمان",
+  eg:"مصر", ae:"الإمارات", qa:"قطر", kw:"الكويت", iq:"العراق", ly:"ليبيا", ma:"المغرب", dz:"الجزائر", tn:"تونس", uz:"أوزبكستان", bh:"البحرين",
+  val_eyebrow:"لماذا سمرقند؟", val_title:"قيم أصيلة من تاريخ الشركة الأم",
+  v1_t:"الثقة والمصداقية", v1_p:"علاقات طويلة الأمد مبنية على الشفافية.", v2_t:"جودة عالمية", v2_p:"منتجات من علامات ومصانع دولية موثوقة فقط.",
+  v3_t:"توزيع مرن وسريع", v3_p:"أسطول توزيع وفريق مبيعات ميداني يغطي مناطق واسعة.", v4_t:"خدمة لكل الفئات", v4_p:"من الأفراد إلى كبار الموزعين.",
+  cl_title:"نخدم كل قنوات البيع", cl_p:"سوبرماركت، محل حلويات، صيدلية، أو موزّع إقليمي — عندنا الحل المناسب لك.",
+  ch1:"سوبرماركت وبقالات", ch2:"محلات حلويات", ch3:"صيدليات", ch4:"تجار جملة", ch5:"موزعون إقليميون",
+  ig_eyebrow:"تابعونا", ig_title:"من إنستغرام", ig_open:"افتح المنشور على إنستغرام",
+  con_eyebrow:"تواصل معنا", con_title:"جاهزون نخدمك", con_p:"للاستفسار عن المنتجات، طلبات الجملة، أو فرص التوزيع — تواصل معنا مباشرة.",
+  c1:"رقم المعرض", c2:"المبيعات المحلية", c3:"المبيعات الخارجية", c4:"رقم الشركة", c5:"البريد الإلكتروني", c6:"العنوان", c6_p:"عمّان — الأردن",
+  wa:"راسلنا على واتساب",
+  foot_1:"سمرقند — نكهة تُروى بجودة عمرها عقود.",
+  foot_2:"© 2026 شركة سمرقند للسكاكر وتوزيع الشوكولاتة — جميع الحقوق محفوظة | فرع من شركة محمد موسى عمرو (الفاخرة التجارية)"
+ },
+ en:{
+  skip:"Skip to content", menu:"Menu",
+  nav_brands:"Our Brands", nav_about:"About", nav_events:"Events", nav_markets:"Markets", nav_contact:"Contact Us",
+  hero_title:"A Taste Backed by <em>Generations</em> of Quality",
+  hero_tag:"Import, export and wholesale distribution of the sweetest candy and chocolate — from Amman to the Middle East and beyond.",
+  hero_btn1:"Discover Our Brands", hero_btn2:"Request a Quote",
+  st_eyebrow:"Our Brands", st_title:"Brands That Make Your Day",
+  st_lede:"We distribute brands people reach for on every shelf — here are a few, straight from our feed.", st_more:"See the Full Catalogue",
+  sp1_k:"Milk chocolate", sp1_l:"Happiness starts with the first bite — milk and chocolate that lifts the mood.",
+  sp2_k:"Soft caramel & nougat", sp2_l:"The only cure for hunger? One bite of Stuns.",
+  sp3_k:"Cacao, coconut & milk wafer", sp3_l:"Happiness in every bite — Choco Break, the tastiest break of your day.",
+  sp4_k:"Potato chips", sp4_l:"The taste you've been looking for is in your hands — a crunch you can't get enough of.",
+  sp5_k:"Sugar-free mints", sp5_l:"Stay confident all day with FrostLab — seven fresh flavours in elegant tins.",
+  about_eyebrow:"About Us", about_title:"A Modern Extension of a Long-Standing Legacy",
+  about_p1:"Samarqand is a modern extension of a long-standing commercial legacy — a branch of Mohammad Mousa Amro Company (Al Fakhira Trading), established in 1955 in Tafilah, Jordan, and known for its credibility in trade and import.",
+  about_p2:"Founded in 2022 in Amman, Samarqand specialises in the import, export and distribution of candy and chocolate across the Middle East, with a strong commitment to quality and transparency.",
+  about_p3:"We source the finest international products, build reliable partnerships, and offer flexible distribution for individuals, retailers and wholesalers.",
+  legacy_1:"Parent company founded — Al Fakhira Trading", legacy_2:"Samarqand launched in Amman",
+  stat_1:"years of commercial heritage", stat_2:"products in our catalogue", stat_3:"segments: individuals, retailers, wholesalers", stat_4:"export countries",
+  ev_eyebrow:"Trade Shows & Events", ev_title:"Where to Meet Us",
+  ev_lede:"Food and confectionery trade shows across Jordan, the Gulf, the Levant, North Africa and Uzbekistan — the ones we exhibit at are highlighted.",
+  ev_past:"Past events", ev_note:"Dates are taken from the organisers' official websites. Unconfirmed dates are marked — please check before you travel.",
+  ev_all:"All", r_jo:"Jordan", r_gcc:"Gulf", r_levant:"Iraq & Levant", r_africa:"Egypt & North Africa", r_asia:"Uzbekistan",
+  ev_meet:"Meet us at", ev_live:"Live now — we're at the show", ev_booth:"Our stand", ev_book:"Book a meeting at the show",
+  ev_ics:"Add to calendar", ev_site:"Official website", ev_mine:"We'll be there", ev_went:"We exhibited", ev_live_b:"Happening now",
+  ev_unver:"Date not confirmed by organiser", ev_tba:"Dates not announced", ev_none:"No events in this region right now.",
+  ev_error:"Couldn't load the events calendar. Refresh the page or contact us.", ev_to_open:"to opening",
+  ev_bar_up:"Meet us at {name} — {dates}", ev_bar_live:"We're at {name} now · {city}", ev_bar_link:"Details",
+  ev_bar_up_s:"Meet us at {name}", ev_bar_live_s:"We're at {name} now",
+  ev_wa:"Hello Samarqand, I'd like to arrange a meeting with you at {name} ({dates}).",
+  prod_eyebrow:"Our Products", prod_title:"A Selection That Delights Everyone",
+  prod_intro:"We import and distribute a wide range of international brands — from fine chocolate to innovative candy.",
+  cat1_t:"Chocolate & Wafers", cat1_p:"Milk, cacao and coconut — for retail and wholesale.",
+  cat2_t:"Candy & Sweets", cat2_p:"Joyful flavours for children and families.",
+  cat3_t:"Sugar-free Mints", cat3_p:"FrostLab in seven fresh flavours.",
+  cat4_t:"Candy with Toys", cat4_p:"Surprises that kids ask for most.",
+  gal_btn:"Download the Full Catalogue (PDF)", zoom:"Enlarge:",
+  g1:"Choco Break — cacao, coconut, milk", g2:"Go Up — pistachio, brownie, peanut", g3:"Jolly Bee — fruity jelly candy",
+  g4:"Stuns — caramel & nougat", g5:"Extra — crispy wafer with cream layers", g6:"Premium gift chocolate balls",
+  g7:"Plenty — chocolate balls with pistachio & hazelnut", g8:"Dino Chips — four flavours",
+  mk_eyebrow:"Our Markets", mk_title:"From Amman to the World", mk_p:"We export and distribute to markets including:", mk_soon:"Coming Soon",
+  jo:"Jordan", us:"USA", sa:"Saudi Arabia", ps:"Palestine", lb:"Lebanon", sy:"Syria", ye:"Yemen", om:"Oman",
+  eg:"Egypt", ae:"UAE", qa:"Qatar", kw:"Kuwait", iq:"Iraq", ly:"Libya", ma:"Morocco", dz:"Algeria", tn:"Tunisia", uz:"Uzbekistan", bh:"Bahrain",
+  val_eyebrow:"Why Samarqand?", val_title:"Values Rooted in Our Heritage",
+  v1_t:"Trust & Credibility", v1_p:"Long-term relationships built on transparency.", v2_t:"World-Class Quality", v2_p:"Only trusted international brands and factories.",
+  v3_t:"Fast, Flexible Distribution", v3_p:"A distribution fleet and field sales team covering wide areas.", v4_t:"Serving Every Segment", v4_p:"From individuals to major wholesalers.",
+  cl_title:"We Serve Every Sales Channel", cl_p:"Supermarket, sweets shop, pharmacy or regional distributor — we have the right solution for you.",
+  ch1:"Supermarkets & Groceries", ch2:"Sweets Shops", ch3:"Pharmacies", ch4:"Wholesalers", ch5:"Regional Distributors",
+  ig_eyebrow:"Follow Us", ig_title:"From Instagram", ig_open:"Open post on Instagram",
+  con_eyebrow:"Contact Us", con_title:"Ready to Serve You", con_p:"For product enquiries, wholesale orders or distribution opportunities — reach out directly.",
+  c1:"Showroom", c2:"Local Sales", c3:"International Sales", c4:"Company Line", c5:"Email", c6:"Address", c6_p:"Amman — Jordan",
+  wa:"Message Us on WhatsApp",
+  foot_1:"Samarqand — a taste backed by generations of quality.",
+  foot_2:"© 2026 Samarqand Candy & Chocolate Distribution Co. — All rights reserved | A branch of Mohammad Mousa Amro Company (Al Fakhira Trading)"
+ }
 };
 
-const $  = (s,r=document)=>r.querySelector(s);
+const $ = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fill = (tpl, v) => tpl.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? '');
 
-/* ================= build repeated markup ================= */
-function t(k){ return I18N[lang][k] ?? k; }
+let lang = (()=>{ try{ return localStorage.getItem('sq-lang') || 'ar'; }catch(e){ return 'ar'; } })();
+const t = k => I18N[lang][k] ?? I18N.ar[k] ?? k;
 
-function buildGallery(){
-  // a <figure> is not valid inside a <button>, so the caption is a plain span
-  $('#gallery').innerHTML = PRODUCTS.map((p,i)=>`
-    <button type="button" data-i="${i}" data-reveal style="--d:${(i%4)*80}ms">
-      <img src="assets/${p.f}" width="900" height="637" loading="lazy" decoding="async" alt="" data-alt="${p.k}">
-      <span class="cap" data-i18n="${p.k}"></span>
-    </button>`).join('');
+// ?now=YYYY-MM-DD previews the site as it will look on that date (handy before a show)
+const NOW = (()=>{ const q = new URLSearchParams(location.search).get('now');
+  return q && /^\d{4}-\d{2}-\d{2}$/.test(q) ? new Date(q + 'T09:00:00Z') : new Date(); })();
+
+/* ================= build static lists ================= */
+function buildCatalog(){
+  $('#catRow').innerHTML = CATALOG.map((p,i)=>`
+    <button type="button" data-i="${i}"><img src="assets/${p.f}" width="900" height="637" loading="lazy" decoding="async" alt="" data-alt="${p.k}">
+    <span class="cap" data-i18n="${p.k}"></span></button>`).join('');
 }
-function buildBelt(){
-  const one = PRODUCTS.map(p=>`
-    <figure><img src="assets/${p.f}" width="900" height="637" loading="lazy" decoding="async" alt="">
-    <figcaption data-i18n="${p.k}"></figcaption></figure>`).join('');
-  // Duplicated track so the -50% keyframe lands exactly on the seam. Spacing comes from a
-  // margin on each figure (not flex `gap`) so the two halves are byte-for-byte equal width —
-  // with `gap` the track loses one trailing gap and the loop jumps ~9px each cycle.
-  // The clone is decorative: hidden from the a11y tree so products aren't announced twice.
-  $('#belt').innerHTML = one + one.replace(/<figure>/g, '<figure aria-hidden="true">');
+function buildIG(){
+  $('#igGrid').innerHTML = IG.map(([img,code],i)=>`
+    <a href="https://www.instagram.com/p/${code}/" target="_blank" rel="noopener" data-reveal style="--d:${(i%4)*70}ms" data-ig>
+    <img src="assets/ig/${img}-400.webp" width="400" height="500" loading="lazy" decoding="async" alt=""></a>`).join('');
 }
 function buildFlags(){
-  const cell = (c,soon)=>`
-    <div class="flag${soon?' soon':''}" data-reveal>
-      <svg viewBox="0 0 30 20" role="img" aria-hidden="true"><use href="#f-${c}"/></svg>
-      <span class="nm" data-i18n="${c}"></span>
-    </div>`;
-  $('#mkNow').innerHTML  = MK_NOW.map(c=>cell(c,false)).join('');
+  const cell = (c,soon)=>`<div class="flag${soon?' soon':''}" data-reveal><svg viewBox="0 0 30 20" aria-hidden="true"><use href="#f-${c}"/></svg><span class="nm" data-i18n="${c}"></span></div>`;
+  $('#mkNow').innerHTML = MK_NOW.map(c=>cell(c,false)).join('');
   $('#mkSoon').innerHTML = MK_SOON.map(c=>cell(c,true)).join('');
 }
 
-/* ================= i18n apply ================= */
-let lang = (()=>{ try{ return localStorage.getItem('sq-lang') || 'ar'; }catch(e){ return 'ar'; } })();
+/* ================= events ================= */
+let EVENTS = null, evError = false, region = 'all';
+const loc = () => lang === 'ar' ? 'ar-u-nu-latn' : 'en-GB';
+const utc = s => new Date(s + 'T00:00:00Z');
+function fmtRange(ev, opts = {day:'numeric', month:'long', year:'numeric'}){
+  if(!ev.start) return t('ev_tba');
+  const f = new Intl.DateTimeFormat(loc(), {...opts, timeZone:'UTC'});
+  return ev.start === ev.end ? f.format(utc(ev.start)) : f.formatRange(utc(ev.start), utc(ev.end));
+}
+const evName = ev => lang === 'ar' ? (ev.name_ar || ev.name_en) : ev.name_en;
+const evCity = ev => lang === 'ar' ? (ev.city_ar || ev.city_en) : ev.city_en;
+const country = ev => t(ev.country.toLowerCase());
+const flag = ev => FLAGGED.has(ev.country.toLowerCase()) ? `<svg viewBox="0 0 30 20" aria-hidden="true"><use href="#f-${ev.country.toLowerCase()}"/></svg>` : '';
 
+// Arabic has six plural forms; "4 days" is not one word shape for every number
+function dayUnit(n){
+  if(lang !== 'ar') return n === 1 ? 'day' : 'days';
+  return ({zero:'يوم',one:'يوم',two:'يومان',few:'أيام',many:'يوماً',other:'يوم'})[new Intl.PluralRules('ar').select(n)];
+}
+
+function waLink(ev){
+  return `https://wa.me/${WA}?text=` + encodeURIComponent(fill(t('ev_wa'), {name: evName(ev), dates: fmtRange(ev)}));
+}
+
+function renderFeatured(){
+  const box = $('#evFeat'), bar = $('#evbar'), pill = $('#heroPill');
+  const f = EVENTS && featured(EVENTS, NOW);
+  document.documentElement.dataset.event = f ? f.state : '';
+  if(!f){ box.hidden = bar.hidden = pill.hidden = true; return; }
+  const ev = f.ev, acc = ACCENTS[ev.accent] || ACCENTS.teal, live = f.state === 'live';
+  const dates = fmtRange(ev), name = evName(ev);
+  [box, bar, pill].forEach(el => el.style.setProperty('--acc', acc));
+
+  bar.innerHTML = `<span class="dot${live?' live':''}" aria-hidden="true"></span>
+    <span class="long">${esc(fill(t(live?'ev_bar_live':'ev_bar_up'), {name, dates, city: evCity(ev)}))}</span>
+    <span class="short">${esc(fill(t(live?'ev_bar_live_s':'ev_bar_up_s'), {name}))}</span>
+    <a href="#events">${t('ev_bar_link')}</a>`;
+  pill.innerHTML = `<span class="dot${live?' live':''}" aria-hidden="true"></span>${esc(live ? t('ev_live') : `${t('ev_meet')} ${name}`)}`;
+
+  const count = live
+    ? `<span class="n" aria-hidden="true">●</span><span class="u">${t('ev_live_b')}</span>`
+    : `<span class="n num">${f.days}</span><span class="u">${dayUnit(f.days)} ${t('ev_to_open')}</span>`;
+  const hours = lang === 'ar' ? ev.hours_ar : ev.hours_en;
+  box.innerHTML = `
+    <div class="ev-count">${count}</div>
+    <div>
+      <p class="kicker"><span class="dot${live?' live':''}" aria-hidden="true"></span>${live ? t('ev_live') : t('ev_meet')}</p>
+      <h3>${esc(name)}</h3>
+      <p class="meta">${esc(dates)} · ${esc(evCity(ev))}, ${esc(country(ev))}${ev.venue_en ? ` — <span dir="ltr">${esc(ev.venue_en)}</span>` : ''}</p>
+      ${hours ? `<p class="meta">${esc(hours)}</p>` : ''}
+      ${ev.booth ? `<p class="meta">${t('ev_booth')}: <span class="num">${esc(ev.booth)}</span></p>` : ''}
+      <div class="acts">
+        <a class="btn btn-ink" href="${waLink(ev)}" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#u-wa"/></svg>${t('ev_book')}</a>
+        <button class="btn btn-line" type="button" data-ics="${esc(ev.id)}"><svg aria-hidden="true"><use href="#u-cal"/></svg>${t('ev_ics')}</button>
+        ${ev.url ? `<a class="btn btn-line" href="${esc(ev.url)}" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#u-out"/></svg>${t('ev_site')}</a>` : ''}
+      </div>
+    </div>`;
+  box.hidden = bar.hidden = pill.hidden = false;
+}
+
+function evItem(ev){
+  const st = status(ev, NOW), past = st === 'past';
+  const badges = [];
+  if(ev.attending) badges.push(`<span class="badge mine">${past ? t('ev_went') : t('ev_mine')}${ev.booth ? ` · <span class="num">${esc(ev.booth)}</span>` : ''}</span>`);
+  if(st === 'live') badges.push(`<span class="badge live">${t('ev_live_b')}</span>`);
+  if(ev.confidence === 'unverified') badges.push(`<span class="badge soft">${t('ev_unver')}</span>`);
+  const dateBlock = ev.start
+    ? `<span class="d">${esc(fmtRange(ev, {day:'numeric', month:'short'}))}</span><span class="y num">${ev.start.slice(0,4)}</span>`
+    : `<span class="d">${t('ev_tba')}</span>`;
+  return `<li class="ev${ev.attending?' mine':''}" data-region="${REGION[ev.country] || 'other'}">
+    <div class="ev-date">${dateBlock}</div>
+    <div>
+      <h4>${esc(evName(ev))}</h4>
+      <p class="where">${flag(ev)}<span>${esc(evCity(ev))}, ${esc(country(ev))}</span></p>
+      ${badges.length ? `<div class="badges">${badges.join('')}</div>` : ''}
+    </div>
+    <div class="ev-acts">
+      ${ev.start && !past ? `<button class="icon-btn" type="button" data-ics="${esc(ev.id)}" aria-label="${t('ev_ics')}: ${esc(evName(ev))}"><svg aria-hidden="true"><use href="#u-cal"/></svg></button>` : ''}
+      ${ev.url ? `<a class="icon-btn" href="${esc(ev.url)}" target="_blank" rel="noopener" aria-label="${t('ev_site')}: ${esc(evName(ev))}"><svg aria-hidden="true"><use href="#u-out"/></svg></a>` : ''}
+    </div></li>`;
+}
+
+function renderEvents(){
+  if(evError){ $('#evList').innerHTML = `<li class="ev-empty">${t('ev_error')}</li>`; return; }
+  if(!EVENTS) return;
+  renderFeatured();
+  const all = ordered(EVENTS, NOW);
+  const upcoming = all.filter(e => status(e, NOW) !== 'past');
+  const past = all.filter(e => status(e, NOW) === 'past');
+  const regions = ['all','jo','gcc','levant','africa','asia'].filter(r => r === 'all' || upcoming.some(e => REGION[e.country] === r));
+  if(!regions.includes(region)) region = 'all';
+  $('#evFilters').innerHTML = regions.map(r => {
+    const n = r === 'all' ? upcoming.length : upcoming.filter(e => REGION[e.country] === r).length;
+    return `<button type="button" class="chip-btn" data-region="${r}" aria-pressed="${r === region}">${t(r === 'all' ? 'ev_all' : 'r_' + r)} <span class="c num">${n}</span></button>`;
+  }).join('');
+  const shown = upcoming.filter(e => region === 'all' || REGION[e.country] === region);
+  $('#evList').innerHTML = shown.length ? shown.map(evItem).join('') : `<li class="ev-empty">${t('ev_none')}</li>`;
+  $('#evPast').innerHTML = past.map(evItem).join('');
+  $('#evPastWrap').hidden = !past.length;
+}
+
+function downloadIcs(id){
+  const ev = EVENTS.find(e => e.id === id); if(!ev) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics(ev)], {type:'text/calendar'}));
+  a.download = `${ev.id}.ics`;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+
+/* ================= i18n ================= */
 function applyLang(){
   const d = I18N[lang];
   document.documentElement.lang = lang;
-  document.documentElement.dir  = lang === 'ar' ? 'rtl' : 'ltr';
-  $$('[data-i18n]').forEach(el=>{
-    const k = el.getAttribute('data-i18n');
-    if (d[k] !== undefined) el.innerHTML = d[k];
-  });
-  $$('[data-i18n-html]').forEach(el=>{
-    const k = el.getAttribute('data-i18n-html');
-    if (d[k] !== undefined) el.innerHTML = d[k];
-  });
-  // gallery images: alt text and the button's accessible name
-  $$('#gallery button').forEach(b=>{
-    const img = $('img',b), k = img.dataset.alt;
-    img.alt = d[k] || '';
-    b.setAttribute('aria-label', `${d.zoom} ${d[k] || ''}`);
-  });
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  $$('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if(d[k] !== undefined) el.innerHTML = d[k]; });
+  $$('#catRow button').forEach(b => { const img = $('img', b); img.alt = d[img.dataset.alt] || ''; b.setAttribute('aria-label', `${d.zoom} ${d[img.dataset.alt] || ''}`); });
+  $$('#igGrid a').forEach(a => a.setAttribute('aria-label', d.ig_open));
   $('#langBtn').textContent = lang === 'ar' ? 'English' : 'عربي';
   $('#langBtn').setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
   $('#burger').setAttribute('aria-label', d.menu);
-  document.title = lang === 'ar'
-    ? 'سمرقند للسكاكر وتوزيع الشوكولاتة | Samarqand Sweets'
-    : 'Samarqand Candy & Chocolate Distribution | سمرقند';
+  document.title = lang === 'ar' ? 'سمرقند للسكاكر وتوزيع الشوكولاتة | Samarqand Sweets' : 'Samarqand Candy & Chocolate Distribution | سمرقند';
+  renderEvents();
   try{ localStorage.setItem('sq-lang', lang); }catch(e){}
 }
 
-/* ================= reveal + counters ================= */
+/* ================= motion ================= */
 function initReveal(){
   const els = $$('[data-reveal]');
-  if (reduced.matches || !('IntersectionObserver' in window)){
-    els.forEach(e=>e.classList.add('in')); return;
-  }
-  const io = new IntersectionObserver((ents,obs)=>{
-    ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
-  // expand the root 200px past the fold so content is already fading in by the time
-  // it scrolls into view — a negative/zero margin leaves fast scrollers staring at blanks
-  },{rootMargin:'200px 0px 200px 0px',threshold:0});
-  els.forEach(e=>io.observe(e));
-  // Safety net: a tab that is backgrounded during load may never dispatch intersection
-  // callbacks. Nothing may stay invisible, so reveal anything still hidden after 2.5s.
-  setTimeout(()=>els.forEach(e=>e.classList.add('in')), 2500);
+  if(reduced.matches || !('IntersectionObserver' in window)){ els.forEach(e => e.classList.add('in')); return; }
+  const io = new IntersectionObserver((ents, obs) => ents.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } }),
+    {rootMargin:'200px 0px 200px 0px', threshold:0});
+  els.forEach(e => io.observe(e));
+  // a backgrounded tab may never dispatch intersections — nothing may stay hidden
+  setTimeout(() => els.forEach(e => e.classList.add('in')), 2500);
 }
 function initCounters(){
-  const nums = $$('[data-count]');
-  if (reduced.matches || !('IntersectionObserver' in window)) return; // final value already in the HTML
-  const io = new IntersectionObserver((ents,obs)=>{
-    ents.forEach(e=>{
-      if(!e.isIntersecting) return;
-      obs.unobserve(e.target);
-      const el = e.target, target = +el.dataset.count, sfx = el.dataset.suffix || '';
-      const dur = 1100, t0 = performance.now();
-      (function step(now){
-        const p = Math.min(1,(now-t0)/dur);
-        el.textContent = Math.round(target * (1-Math.pow(1-p,3))) + sfx;
-        if(p<1) requestAnimationFrame(step);
-      })(t0);
-    });
-  },{threshold:.5});
-  nums.forEach(n=>io.observe(n));
+  if(reduced.matches || !('IntersectionObserver' in window)) return;   // final values are already in the HTML
+  const io = new IntersectionObserver((ents, obs) => ents.forEach(e => {
+    if(!e.isIntersecting) return; obs.unobserve(e.target);
+    const el = e.target, to = +el.dataset.count, sfx = el.dataset.suffix || '', t0 = performance.now();
+    (function step(now){ const p = Math.min(1, (now - t0) / 1100);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + sfx; if(p < 1) requestAnimationFrame(step); })(t0);
+  }), {threshold:.5});
+  $$('[data-count]').forEach(n => io.observe(n));
+}
+// brand story: whichever panel crosses the middle of the viewport sets the section colour
+function initStory(){
+  const story = $('#brands'), media = $$('.story-media img');
+  if(!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(ents => ents.forEach(e => {
+    if(!e.isIntersecting) return;
+    const k = e.target.dataset.k;
+    story.style.setProperty('--story-bg', e.target.style.getPropertyValue('--bg'));
+    media.forEach(m => m.classList.toggle('on', m.dataset.k === k));
+  }), {rootMargin:'-45% 0px -45% 0px'});
+  $$('.sp').forEach(p => io.observe(p));
 }
 
-/* ================= lightbox (native <dialog>) ================= */
+/* ================= lightbox ================= */
 let lbIndex = 0;
 function openLB(i){
-  lbIndex = (i + PRODUCTS.length) % PRODUCTS.length;
-  const p = PRODUCTS[lbIndex], cap = t(p.k);
-  $('#lbImg').src = 'assets/' + p.f;
-  $('#lbImg').alt = cap;
-  $('#lbCap').textContent = cap;
-  const dlg = $('#lb');
-  if(!dlg.open) dlg.showModal();          // native focus trap + Esc
+  lbIndex = (i + CATALOG.length) % CATALOG.length;
+  const p = CATALOG[lbIndex];
+  $('#lbImg').src = 'assets/' + p.f; $('#lbImg').alt = t(p.k); $('#lbCap').textContent = t(p.k);
+  if(!$('#lb').open) $('#lb').showModal();
 }
 
 /* ================= boot ================= */
-buildGallery(); buildBelt(); buildFlags(); applyLang();
-initReveal(); initCounters();
+buildCatalog(); buildIG(); buildFlags(); applyLang();
+initReveal(); initCounters(); initStory();
 
-$('#langBtn').addEventListener('click', ()=>{ lang = lang==='ar'?'en':'ar'; applyLang(); });
+fetch('events.json', {cache:'no-cache'})
+  .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(d => { EVENTS = d.events; renderEvents(); })
+  .catch(() => { evError = true; renderEvents(); });
 
-$('#gallery').addEventListener('click', e=>{
-  const b = e.target.closest('button[data-i]');
-  if(b) openLB(+b.dataset.i);
+$('#langBtn').addEventListener('click', () => { lang = lang === 'ar' ? 'en' : 'ar'; applyLang(); });
+document.addEventListener('click', e => {
+  const ic = e.target.closest('[data-ics]'); if(ic){ downloadIcs(ic.dataset.ics); return; }
+  const rb = e.target.closest('#evFilters [data-region]'); if(rb){ region = rb.dataset.region; renderEvents(); return; }
+  const cb = e.target.closest('#catRow button[data-i]'); if(cb){ openLB(+cb.dataset.i); }
 });
-$('#lbClose').addEventListener('click', ()=>$('#lb').close());
-$('#lbPrev').addEventListener('click', ()=>openLB(lbIndex-1));
-$('#lbNext').addEventListener('click', ()=>openLB(lbIndex+1));
-$('#lb').addEventListener('click', e=>{ if(e.target.id==='lb') $('#lb').close(); });
-$('#lb').addEventListener('keydown', e=>{
-  // in RTL the on-screen arrow directions are mirrored
-  const rtl = document.documentElement.dir === 'rtl';
-  if(e.key==='ArrowLeft')  openLB(lbIndex + (rtl?-1:1));
-  if(e.key==='ArrowRight') openLB(lbIndex + (rtl?1:-1));
+$('#lbClose').addEventListener('click', () => $('#lb').close());
+$('#lbPrev').addEventListener('click', () => openLB(lbIndex - 1));
+$('#lbNext').addEventListener('click', () => openLB(lbIndex + 1));
+$('#lb').addEventListener('click', e => { if(e.target.id === 'lb') $('#lb').close(); });
+$('#lb').addEventListener('keydown', e => {
+  const rtl = document.documentElement.dir === 'rtl';   // on-screen arrow directions mirror in RTL
+  if(e.key === 'ArrowLeft') openLB(lbIndex + (rtl ? 1 : -1));
+  if(e.key === 'ArrowRight') openLB(lbIndex + (rtl ? -1 : 1));
 });
 
-/* burger */
 const burger = $('#burger'), menu = $('#menu');
-burger.addEventListener('click', ()=>{
-  const open = menu.classList.toggle('open');
-  burger.setAttribute('aria-expanded', String(open));
-});
-$$('#menu a').forEach(a=>a.addEventListener('click',()=>{
-  menu.classList.remove('open'); burger.setAttribute('aria-expanded','false');
-}));
+burger.addEventListener('click', () => burger.setAttribute('aria-expanded', String(menu.classList.toggle('open'))));
+$$('#menu a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }));
 
-/* conveyor pause — WCAG requires a stop control for auto-moving content */
-const belt = $('#belt'), beltBtn = $('#beltBtn');
-beltBtn.addEventListener('click', ()=>{
-  const paused = belt.classList.toggle('paused');
-  beltBtn.setAttribute('aria-pressed', String(paused));
-  $('#beltIcon').setAttribute('href', paused ? '#u-play' : '#u-pause');
-  $('#beltLbl').textContent = paused ? t('belt_play') : t('belt_pause');
-});
+// header height changes when the event bar shows; keep anchors and the mobile menu below it
+const hdr = $('#hdr');
+new ResizeObserver(() => document.documentElement.style.setProperty('--header-h', hdr.offsetHeight + 'px')).observe(hdr);
 
-/* scroll progress + sticky header shadow */
-const bar = $('#bar'), hdr = $('#hdr');
-let ticking = false;
-addEventListener('scroll', ()=>{
-  if(ticking) return;
-  ticking = true;
-  requestAnimationFrame(()=>{
+const bar = $('#bar'); let ticking = false;
+addEventListener('scroll', () => {
+  if(ticking) return; ticking = true;
+  requestAnimationFrame(() => {
     const max = document.documentElement.scrollHeight - innerHeight;
-    bar.style.transform = `scaleX(${max>0 ? scrollY/max : 0})`;
+    bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
     hdr.classList.toggle('stuck', scrollY > 8);
     ticking = false;
   });
