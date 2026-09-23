@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>سمرقند للسكاكر وتوزيع الشوكولاتة | Samarqand Sweets</title>
 <meta name="description" content="شركة سمرقند للسكاكر وتوزيع الشوكولاتة — استيراد وتصدير وتوزيع الجملة في الأردن والشرق الأوسط. Samarqand Candy &amp; Chocolate Distribution — import, export and wholesale across Jordan and the Middle East.">
-<meta name="theme-color" content="#4BA89D">
+<meta name="theme-color" content="#FEEED7">
 <link rel="canonical" href="https://www.samarqandsweets.com/">
 <link rel="icon" href="assets/logo.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/logo.png">
@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://www.samarqandsweets.com/">
 <meta property="og:site_name" content="Samarqand Sweets">
 <meta property="og:title" content="سمرقند للسكاكر وتوزيع الشوكولاتة | Samarqand Sweets">
-<meta property="og:description" content="استيراد، تصدير، وتوزيع جملة لأفخر السكاكر والشوكولاتة في الأردن والشرق الأوسط — بإرث تجاري منذ 1955.">
+<meta property="og:description" content="طعم خيالي — استيراد، تصدير، وتوزيع جملة لأفخر السكاكر والشوكولاتة في الأردن والشرق الأوسط، بإرث تجاري منذ 1955.">
 <meta property="og:image" content="https://www.samarqandsweets.com/assets/logo.png">
 <meta property="og:locale" content="ar_JO">
 <meta property="og:locale:alternate" content="en_US">
@@ -21,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;600;700;800&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&family=Baloo+Bhaijaan+2:wght@500;600&family=Jost:wght@300;400&display=swap" rel="stylesheet">
 <link rel="modulepreload" href="assets/events.js">
 
 <script type="application/ld+json">
@@ -46,123 +46,130 @@
 <script>document.documentElement.className+=' js';</script>
 <style>
 /* ============================================================
-   Tokens. Brand FILLS are exactly the values in قايد لاين سمرقند
-   (2026-07) and must not be altered. Where a brand colour carries
-   TEXT, a darker shade of the same hue is used (ratio in comment).
-   Story colours are sampled from each Instagram post and lightened
-   (same hue) until ink text reaches 4.6:1.
+   Tokens. The seven fills are the palette in قايد لاين سمرقند
+   (July 2026), verbatim. Text is one near-black ink; brand colours
+   are never used as text on light surfaces (none of them reach 3:1
+   there), only as fills — and as type on the dark footer.
    ============================================================ */
 :root{
-  --teal:#4BA89D; --teal-deep:#2E7A70; --mint:#A2DBD5;
-  --orange:#EA8A34; --yellow:#F8C311; --coral:#FE7C7C; --pink:#EBA09D;
-  --cream:#FEEED7; --cream-lt:#FFF8EC; --white:#FFFFFF;
+  --coral:#FE7C7C; --pink:#EBA09D; --orange:#EA8A34; --yellow:#F8C311;
+  --cream:#FEEED7; --mint:#A2DBD5; --teal:#4BA89D; --white:#FFFFFF;
 
-  --teal-text:#367870;     /* 4.52:1 on cream    */
-  --teal-solid:#3A827A;    /* white on it 4.51:1 */
-  --orange-text:#B55F13;   /* 4.55:1 on white    */
-  --orange-deep:#A85811;   /* 4.53:1 on cream-lt */
-  --wa-solid:#188842;      /* white on it 4.53:1 */
-  --footer-bg:#215A53;     /* white 7.92, mint 5.14 */
+  --ink:#1F2D2B;           /* 12.5:1 on cream, 5.0:1 on teal, 5.3:1 on orange */
+  --muted:#465755;         /* 6.7:1 on cream, 4.9 on mint — cream/white/mint only */
 
-  --ink:#3A2E2A;           /* 11.49:1 on cream   */
-  --ink-soft:#5B4F4A;      /* 7.89:1 on white    */
+  --page:var(--cream);     /* the whole page's background; JS eases it per section */
+  --blob-a:var(--pink);    /* two soft colour fields that drift with scroll + pointer */
+  --blob-b:var(--mint);
 
   --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem; --s5:3rem; --s6:4.5rem; --s7:7rem;
-  --radius:28px; --radius-sm:18px;
-  --shadow:0 10px 30px rgba(58,46,42,.10);
-  --shadow-lift:0 24px 60px rgba(58,46,42,.18);
+  --r:24px; --r-sm:16px;
+  --shadow:0 18px 50px rgba(31,45,43,.14);
   --ease:cubic-bezier(.2,.7,.2,1);
   --header-h:72px;
-  --dir:1;                 /* +1 in RTL, -1 in LTR: "outward from inline-start" */
+  --dir:1;
+  --mx:0; --my:0; --sy:0;  /* pointer (-1..1) and scroll (px), set by JS */
 }
 html[dir="ltr"]{--dir:-1}
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 12px);-webkit-text-size-adjust:100%}
-body{font-family:'Cairo',system-ui,'Segoe UI',sans-serif;color:var(--ink);background:var(--cream);
-  line-height:1.8;overflow-x:hidden;font-size:clamp(1rem,.96rem + .2vw,1.075rem)}
-h1,h2,h3,h4,.disp{font-family:'Baloo Bhaijaan 2','Cairo',sans-serif;line-height:1.2}
+body{font-family:'Almarai',system-ui,'Segoe UI',sans-serif;font-weight:400;color:var(--ink);
+  background-color:var(--page);transition:background-color 1s var(--ease);
+  line-height:1.85;overflow-x:hidden;font-size:clamp(1rem,.96rem + .2vw,1.075rem)}
+h1,h2,h3,h4{font-family:'Baloo Bhaijaan 2','Almarai',sans-serif;font-weight:500;line-height:1.15}
+.latin{font-family:'Jost','Almarai',sans-serif;font-weight:300;letter-spacing:.08em;text-transform:uppercase;
+  direction:ltr;unicode-bidi:isolate}
 img{max-width:100%;display:block}
 button{font:inherit;color:inherit}
 :where(a,button,summary):focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
-
-/* numerals inside Arabic prose must be isolated or bidi reorders them */
 .num,.tel{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
 
+/* strong fills can't carry muted text; sections on them fall back to ink */
+[data-bg="teal"],[data-bg="orange"],[data-bg="coral"],[data-bg="pink"],[data-bg="yellow"]{--muted:var(--ink)}
+
 .skip{position:absolute;inset-inline-start:-9999px;inset-block-start:0;z-index:300;background:var(--ink);color:#fff;
-  padding:12px 20px;border-radius:0 0 12px 12px;font-weight:600;text-decoration:none}
+  padding:12px 20px;border-radius:0 0 12px 12px;text-decoration:none}
 .skip:focus{inset-inline-start:0}
 
-#bar{position:fixed;inset-block-start:0;inset-inline:0;height:3px;z-index:120;
-  background:linear-gradient(90deg,var(--coral),var(--orange),var(--yellow),var(--teal));transform:scaleX(0);transform-origin:right center}
-html[dir="ltr"] #bar{transform-origin:left center}
+/* ---------- living background: two colour fields + the logo pattern ---------- */
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blobs i{position:absolute;inline-size:70vmax;block-size:70vmax;border-radius:50%;opacity:.55;
+  transition:background 1.2s var(--ease);will-change:transform}
+.blobs .a{inset-block-start:-25vmax;inset-inline-start:-20vmax;
+  background:radial-gradient(closest-side,var(--blob-a),transparent 72%);
+  transform:translate3d(calc(var(--mx)*40px),calc(var(--my)*30px - var(--sy)*.05px),0)}
+.blobs .b{inset-block-end:-30vmax;inset-inline-end:-20vmax;
+  background:radial-gradient(closest-side,var(--blob-b),transparent 72%);
+  transform:translate3d(calc(var(--mx)*-50px),calc(var(--my)*-35px + var(--sy)*.03px),0)}
+main,header,footer{position:relative;z-index:1}
+
+.pattern{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.pattern::before{content:"";position:absolute;inset:-20% -50%;background:url(assets/pattern.webp) 0 0/288px 276px repeat;
+  opacity:.16;animation:drift 90s linear infinite;
+  -webkit-mask:radial-gradient(70% 60% at 50% 50%,transparent 30%,#000 80%);mask:radial-gradient(70% 60% at 50% 50%,transparent 30%,#000 80%)}
+@keyframes drift{to{transform:translate3d(288px,276px,0)}}
 
 /* ---------- header + event bar ---------- */
-header{position:fixed;inset-block-start:0;inset-inline:0;z-index:100;background:rgba(254,238,215,.82);
-  backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
-  border-block-end:1px solid rgba(58,46,42,.08);transition:box-shadow .3s var(--ease)}
-header.stuck{box-shadow:0 6px 24px rgba(58,46,42,.10)}
-.evbar{background:var(--acc,var(--teal));color:var(--ink);font-weight:700;font-size:.9rem;text-align:center;
+header{position:fixed;inset-block-start:0;inset-inline:0;z-index:100;
+  background:color-mix(in srgb,var(--page) 72%,white 0%);
+  backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);
+  transition:background-color 1s var(--ease),box-shadow .3s var(--ease)}
+@supports not (background:color-mix(in srgb,red,blue)){header{background:rgba(254,238,215,.82)}}
+header.stuck{box-shadow:0 4px 30px rgba(31,45,43,.08)}
+.evbar{background:var(--acc,var(--teal));color:var(--ink);font-size:.92rem;text-align:center;
   padding:7px 16px;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
 .evbar[hidden]{display:none}
 .evbar a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .evbar .short{display:none}
 .nav{max-width:1240px;margin-inline:auto;padding:8px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-deep)}
-.nav-logo img{height:44px;width:auto}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.nav-logo img{height:46px;width:auto}
 nav ul{display:flex;gap:2px;list-style:none;align-items:center}
-nav a{text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;padding:9px 14px;border-radius:999px;
-  transition:background .2s var(--ease)}
-nav a:hover{background:rgba(162,219,213,.7)}
+nav a{text-decoration:none;color:var(--ink);font-size:.98rem;padding:9px 14px;border-radius:999px;transition:background .25s var(--ease)}
+nav a:hover{background:rgba(255,255,255,.55)}
 .nav-cta{background:var(--ink);color:#fff !important}
-.nav-cta:hover{background:var(--teal-deep) !important}
-.lang-btn{background:transparent;border:2px solid var(--ink);cursor:pointer;font-family:'Baloo Bhaijaan 2';font-weight:700;
-  font-size:.92rem;padding:6px 16px;border-radius:999px;min-height:40px}
+.nav-cta:hover{background:var(--teal) !important;color:var(--ink) !important}
+.lang-btn{background:transparent;border:1.5px solid var(--ink);cursor:pointer;font-family:'Jost';font-weight:400;
+  font-size:.9rem;letter-spacing:.06em;padding:6px 16px;border-radius:999px;min-height:40px}
 .lang-btn:hover{background:var(--ink);color:#fff}
 .burger{display:none;background:none;border:none;cursor:pointer;color:var(--ink);inline-size:44px;block-size:44px;
   align-items:center;justify-content:center;border-radius:12px}
 .burger svg{inline-size:26px;block-size:26px}
 
-/* ---------- hero: headline inside a 3D cluster of Instagram posts ---------- */
+/* ---------- hero ---------- */
 .hero{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;
-  padding:calc(var(--header-h) + var(--s5)) 20px var(--s6);background:
-   radial-gradient(60% 50% at 50% 45%,var(--cream-lt) 0,transparent 70%),var(--cream)}
+  padding:calc(var(--header-h) + var(--s5)) 20px var(--s6)}
 .hero-cards{position:absolute;inset:0;perspective:1100px;pointer-events:none;z-index:-1}
 .hc-wrap{position:absolute;inset-block-start:var(--y);--out:calc(var(--side)*var(--dir))}
 .hc-wrap.start{inset-inline-start:var(--x);--side:1}
 .hc-wrap.end{inset-inline-end:var(--x);--side:-1}
 .hc{inline-size:var(--w,clamp(120px,13vw,210px));aspect-ratio:4/5;border-radius:22px;overflow:hidden;
-  box-shadow:0 30px 60px rgba(58,46,42,.22),0 6px 14px rgba(58,46,42,.10);
+  box-shadow:0 24px 50px rgba(31,45,43,.16);
   transform:rotateY(calc(var(--out)*-14deg)) rotateZ(var(--rz,0deg));animation:bob 7s ease-in-out infinite;animation-delay:var(--dl,0s)}
 .hc img{inline-size:100%;block-size:100%;object-fit:cover}
 @keyframes bob{0%,100%{translate:0 0}50%{translate:0 -14px}}
-
-.hero-copy{text-align:center;max-width:980px}
+.hero-copy{text-align:center;max-width:900px}
 .hero-pill{display:inline-flex;align-items:center;gap:10px;background:var(--acc,var(--teal));color:var(--ink);
-  font-weight:700;font-size:.92rem;padding:8px 18px;border-radius:999px;text-decoration:none;margin-block-end:var(--s3);
-  box-shadow:var(--shadow)}
+  font-size:.95rem;padding:8px 18px;border-radius:999px;text-decoration:none;margin-block-end:var(--s3)}
 .hero-pill[hidden]{display:none}
-.dot{inline-size:10px;block-size:10px;border-radius:50%;background:var(--ink);flex:none}
-.dot.live{background:#C8102E;box-shadow:0 0 0 0 rgba(200,16,46,.6);animation:pulse 1.6s infinite}
+.dot{inline-size:9px;block-size:9px;border-radius:50%;background:var(--ink);flex:none}
+.dot.live{background:#C8102E;box-shadow:0 0 0 0 rgba(200,16,46,.55);animation:pulse 1.6s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 10px rgba(200,16,46,0)}100%{box-shadow:0 0 0 0 rgba(200,16,46,0)}}
-.hero h1{font-size:clamp(2.7rem,1.3rem + 5.6vw,6.4rem);font-weight:800;color:var(--ink);letter-spacing:-.015em;
-  line-height:1.05;text-wrap:balance}
-.hero h1 em{font-style:normal;color:var(--orange-text)}
-.hero .tag{font-size:clamp(1.05rem,.98rem + .5vw,1.3rem);margin:var(--s3) auto 0;max-width:46ch;color:var(--ink-soft);text-wrap:pretty}
+.hero h1{font-size:clamp(3rem,1.6rem + 6.5vw,7.5rem);font-weight:500;line-height:1.05;text-wrap:balance}
+.hero .tag{font-weight:300;font-size:clamp(1.15rem,1.02rem + .6vw,1.5rem);margin:var(--s3) auto 0;max-width:40ch;color:var(--muted);text-wrap:pretty}
 .hero-btns{margin-block-start:var(--s4);display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;font-weight:700;
-  font-family:'Baloo Bhaijaan 2';padding:13px 30px;border-radius:999px;font-size:1.05rem;min-height:50px;cursor:pointer;
-  border:2px solid transparent;transition:transform .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;font-weight:400;
+  padding:13px 28px;border-radius:999px;font-size:1.02rem;min-height:50px;cursor:pointer;border:1.5px solid transparent;
+  transition:transform .2s var(--ease),background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease)}
 .btn:active{transform:scale(.97)}
 .btn-ink{background:var(--ink);color:#fff}
-.btn-ink:hover{background:var(--teal-deep);transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.btn-ink:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
 .btn-line{background:transparent;color:var(--ink);border-color:var(--ink)}
 .btn-line:hover{background:var(--ink);color:#fff}
 .btn svg{inline-size:20px;block-size:20px;flex:none}
 
-/* scroll-driven hero: cards drift outward and the copy lifts away. Native scroll
-   timelines only — browsers without them simply keep the static composition. */
 @supports (animation-timeline: scroll()){
   @media (prefers-reduced-motion:no-preference){
     .hc-wrap{animation:hc-out linear both;animation-timeline:scroll(root);animation-range:0 95vh}
@@ -172,140 +179,129 @@ nav a:hover{background:rgba(162,219,213,.7)}
 @keyframes hc-out{to{transform:translate3d(calc(var(--out)*18vw),-14vh,0) rotate(calc(var(--out)*12deg)) scale(1.15);opacity:0}}
 @keyframes copy-out{to{transform:translateY(-9vh) scale(.94);opacity:0}}
 
-/* ---------- common section chrome ---------- */
-section{padding:var(--s7) 22px}
+/* ---------- section chrome ---------- */
+section{padding:var(--s7) 22px;position:relative}
 .wrap{max-width:1240px;margin-inline:auto}
 .center{text-align:center}
-.eyebrow{display:inline-block;font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:.9rem;padding:6px 16px;
-  border-radius:999px;background:var(--yellow);color:var(--ink);margin-block-end:var(--s2)}
-h2.sec-title{font-size:clamp(2rem,1.3rem + 3vw,3.6rem);font-weight:800;color:var(--ink);margin-block-end:var(--s2);
-  text-wrap:balance;letter-spacing:-.01em}
-.lede{max-width:60ch;color:var(--ink-soft);text-wrap:pretty}
+/* the guideline's brush-stroke label */
+.eyebrow{position:relative;display:inline-block;font-family:'Jost';font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+  font-size:.82rem;padding:7px 22px;margin-block-end:var(--s2);color:var(--ink);direction:ltr}
+.eyebrow[lang="ar"]{font-family:'Almarai';letter-spacing:0;text-transform:none;font-size:.95rem;direction:rtl}
+.eyebrow svg{position:absolute;inset:0;inline-size:100%;block-size:100%;fill:var(--lbl,var(--teal));z-index:-1}
+h2.sec-title{font-size:clamp(2rem,1.3rem + 3vw,3.4rem);font-weight:500;margin-block-end:var(--s2);text-wrap:balance}
+.lede{max-width:58ch;color:var(--muted);font-weight:300;font-size:1.12rem;text-wrap:pretty}
 .center .lede{margin-inline:auto}
 
-.js [data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);
-  transition-delay:var(--d,0ms)}
+.js [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0ms)}
 .js [data-reveal].in{opacity:1;transform:none}
 
-/* ---------- brand story (signature): the section takes each product's colour ---------- */
-.story{padding:var(--s7) 0 0;background-color:var(--story-bg,var(--cream-lt));transition:background-color .8s var(--ease)}
+/* ---------- brand story: sticky image stack, each panel recolours the page ---------- */
+.story{padding-block:var(--s7) 0}
 .story-head{max-width:1240px;margin-inline:auto;padding:0 22px var(--s4)}
-.story-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);
-  max-width:1240px;margin-inline:auto;padding:0 22px}
-.story-media{position:sticky;inset-block-start:calc(var(--header-h) + 4svh);block-size:calc(100svh - var(--header-h) - 8svh);
-  display:grid;place-items:center}
+.story-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);max-width:1240px;margin-inline:auto;padding:0 22px}
+.story-media{position:sticky;inset-block-start:calc(var(--header-h) + 4svh);block-size:calc(100svh - var(--header-h) - 8svh);display:grid;place-items:center}
 .story-media img{grid-area:1/1;inline-size:min(100%,calc((100svh - var(--header-h) - 8svh)*.8));aspect-ratio:4/5;object-fit:cover;
-  border-radius:var(--radius);box-shadow:0 40px 80px rgba(58,46,42,.25);opacity:0;transform:scale(.92) rotate(calc(var(--dir)*-3deg));
+  border-radius:var(--r);box-shadow:0 30px 70px rgba(31,45,43,.2);opacity:0;transform:scale(.94) rotate(calc(var(--dir)*-3deg));
   transition:opacity .6s var(--ease),transform .9s var(--ease)}
 .story-media img.on{opacity:1;transform:none}
 .sp{min-block-size:88svh;display:flex;flex-direction:column;justify-content:center;padding-block:8svh}
 .sp-img{display:none}
-.sp .kicker{font-weight:700;font-size:.95rem;letter-spacing:.02em;margin-block-end:var(--s1)}
-.sp .brand{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:clamp(3rem,1.6rem + 5.4vw,6rem);line-height:1;
-  direction:ltr;unicode-bidi:isolate;text-align:start}
-.sp .line{font-size:clamp(1.15rem,1rem + .7vw,1.55rem);font-weight:600;margin-block-start:var(--s3);max-width:30ch;text-wrap:pretty}
-.sp .slogan{display:inline-block;margin-block-start:var(--s3);font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:1.05rem;
-  direction:ltr;unicode-bidi:isolate;border:2px solid var(--ink);border-radius:999px;padding:4px 16px}
+.sp .kicker{font-size:.95rem;color:var(--ink);margin-block-end:var(--s1)}
+.sp .brand{font-size:clamp(2.6rem,1.4rem + 4.6vw,5.4rem);line-height:1;text-align:start}
+.sp .line{font-size:clamp(1.15rem,1rem + .7vw,1.5rem);font-weight:300;margin-block-start:var(--s3);max-width:30ch;text-wrap:pretty}
+.sp .slogan{display:inline-block;margin-block-start:var(--s3);font-family:'Jost';font-weight:400;font-size:.9rem;letter-spacing:.1em;
+  text-transform:uppercase;direction:ltr;unicode-bidi:isolate;border:1.5px solid var(--ink);border-radius:999px;padding:5px 16px}
 .story-foot{padding:var(--s5) 22px var(--s6);text-align:center}
 
 /* ---------- about + stats ---------- */
-.about{background:var(--white)}
 .about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s6);align-items:center}
 .about p{margin-block-end:var(--s2);max-width:62ch;text-wrap:pretty}
-.legacy{background:var(--cream);border-radius:var(--radius);padding:var(--s5) var(--s4);text-align:center}
-.legacy .year{font-family:'Baloo Bhaijaan 2';font-size:clamp(3rem,2.2rem + 2.4vw,4.4rem);font-weight:800;line-height:1;display:block}
-.legacy .year.a{color:var(--orange-text)}
-.legacy .year.b{color:var(--teal-text)}
-.legacy .lbl{font-weight:600;color:var(--teal-text);font-size:.98rem;margin-block-start:6px}
-.legacy .rail{block-size:56px;inline-size:3px;margin:var(--s3) auto;background:repeating-linear-gradient(180deg,var(--pink) 0 8px,transparent 8px 16px)}
+.legacy{border:1.5px solid var(--ink);border-radius:var(--r);padding:var(--s5) var(--s4);text-align:center}
+.legacy .year{font-family:'Jost';font-weight:300;font-size:clamp(3.4rem,2.4rem + 3vw,5.2rem);line-height:1;display:block}
+.legacy .lbl{font-size:.98rem;color:var(--muted);margin-block-start:6px}
+.legacy .rail{block-size:56px;inline-size:2px;margin:var(--s3) auto;background:repeating-linear-gradient(180deg,var(--ink) 0 6px,transparent 6px 14px)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-block-start:var(--s6);text-align:center}
-.stat{border-block-start:3px solid var(--ink);padding-block-start:var(--s2)}
-.stat .num{font-family:'Baloo Bhaijaan 2';font-size:clamp(2.4rem,1.8rem + 2vw,3.6rem);font-weight:800;display:block;line-height:1.1}
-.stat .txt{font-weight:600;font-size:.95rem;color:var(--ink-soft)}
+.stat{border-block-start:1.5px solid var(--ink);padding-block-start:var(--s2)}
+.stat .num{font-family:'Jost';font-weight:300;font-size:clamp(2.6rem,1.8rem + 2.4vw,4rem);display:block;line-height:1.1}
+.stat .txt{font-size:.95rem;color:var(--muted)}
 
 /* ---------- events ---------- */
-.events{background:var(--cream)}
-.ev-feat{--acc:var(--teal);background:var(--acc);border-radius:var(--radius);padding:clamp(1.5rem,1rem + 2.5vw,3rem);
-  display:grid;grid-template-columns:auto 1fr;gap:clamp(1.5rem,1rem + 3vw,3.5rem);align-items:center;margin-block:var(--s4) var(--s5);
-  box-shadow:var(--shadow-lift)}
+.ev-feat{--acc:var(--teal);background:var(--white);border-radius:var(--r);overflow:hidden;
+  display:grid;grid-template-columns:auto 1fr;margin-block:var(--s4) var(--s5);box-shadow:var(--shadow)}
 .ev-feat[hidden]{display:none}
-.ev-count{text-align:center;min-inline-size:9rem}
-.ev-count .n{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:clamp(4rem,3rem + 4vw,7rem);line-height:.9;display:block}
-.ev-count .u{font-weight:700;font-size:1.05rem}
-.ev-feat .kicker{font-weight:700;display:flex;align-items:center;gap:8px}
-.ev-feat h3{font-size:clamp(1.8rem,1.3rem + 2.2vw,3rem);font-weight:800;margin-block:6px 10px}
-.ev-feat .meta{font-weight:600;line-height:1.7}
+.ev-count{background:var(--acc);text-align:center;min-inline-size:11rem;display:grid;place-content:center;padding:var(--s4) var(--s3)}
+.ev-count .n{font-family:'Jost';font-weight:300;font-size:clamp(4.5rem,3rem + 4vw,7.5rem);line-height:.9;display:block}
+.ev-count .u{font-size:1rem}
+.ev-body{padding:clamp(1.5rem,1rem + 2.5vw,3rem)}
+.ev-feat .kicker{display:flex;align-items:center;gap:8px;font-size:.95rem}
+.ev-feat h3{font-size:clamp(1.8rem,1.3rem + 2.2vw,3rem);font-weight:500;margin-block:6px 10px}
+.ev-feat .meta{color:var(--muted);line-height:1.7}
 .ev-feat .acts{display:flex;flex-wrap:wrap;gap:10px;margin-block-start:var(--s3)}
 .ev-feat .btn{font-size:.98rem;padding:10px 22px;min-height:46px}
-.ev-feat .btn-line{border-color:var(--ink)}
 
 .ev-filters{display:flex;flex-wrap:wrap;gap:8px;margin-block:var(--s3)}
-.chip-btn{border:2px solid var(--ink);background:transparent;border-radius:999px;padding:6px 16px;min-height:42px;cursor:pointer;
-  font-weight:600;font-size:.92rem}
+.chip-btn{border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:6px 16px;min-height:42px;cursor:pointer;font-size:.92rem}
 .chip-btn[aria-pressed="true"]{background:var(--ink);color:#fff}
-.chip-btn .c{opacity:.75;font-size:.85em}
+.chip-btn .c{opacity:.7;font-size:.85em}
 .ev-list,.ev-past-list{list-style:none;display:grid;gap:10px}
 @media (min-width:1000px){.ev-list,.ev-past-list{grid-template-columns:1fr 1fr}}
 .ev{display:grid;grid-template-columns:7.5rem 1fr auto;gap:var(--s3);align-items:center;background:var(--white);
-  border-radius:var(--radius-sm);padding:16px 20px;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+  border-radius:var(--r-sm);padding:16px 20px;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 .ev:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.ev.mine{box-shadow:inset 0 0 0 3px var(--ink)}
-.ev-date{font-family:'Baloo Bhaijaan 2';line-height:1.15;text-align:center}
-.ev-date .d{font-weight:800;font-size:1.2rem;display:block}
-.ev-date .y{font-size:.85rem;color:var(--ink-soft)}
-.ev h4{font-size:1.1rem;font-weight:700;margin-block-end:2px}
-.ev .where{font-size:.92rem;color:var(--ink-soft);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ev .where svg{inline-size:21px;block-size:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(58,46,42,.15)}
+.ev.mine{box-shadow:inset 0 0 0 2px var(--ink)}
+.ev-date{font-family:'Jost';line-height:1.15;text-align:center;direction:ltr}
+.ev-date .d{font-weight:400;font-size:1.05rem;display:block}
+.ev-date .y{font-size:.85rem;color:var(--muted)}
+.ev h4{font-size:1.1rem;font-weight:500;margin-block-end:2px}
+.ev .where{font-size:.92rem;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ev .where svg{inline-size:21px;block-size:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(31,45,43,.15)}
 .badges{display:flex;gap:6px;flex-wrap:wrap;margin-block-start:6px}
-.badge{font-size:.78rem;font-weight:700;border-radius:999px;padding:2px 10px;background:var(--cream)}
+.badge{font-size:.8rem;border-radius:999px;padding:2px 10px;background:var(--cream);color:var(--ink)}
 .badge.mine{background:var(--ink);color:#fff}
-.badge.live{background:#FDE2E6;color:#8A0A1F}
-.badge.soft{background:transparent;border:1px dashed var(--ink-soft);color:var(--ink-soft)}
+.badge.live{background:var(--coral)}
+.badge.soft{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
 .ev-acts{display:flex;gap:6px}
-.icon-btn{inline-size:44px;block-size:44px;border-radius:50%;border:2px solid var(--ink);background:transparent;cursor:pointer;
+.icon-btn{inline-size:44px;block-size:44px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;cursor:pointer;
   display:grid;place-items:center;color:var(--ink);text-decoration:none}
 .icon-btn:hover{background:var(--ink);color:#fff}
 .icon-btn svg{inline-size:19px;block-size:19px}
 .ev-past{margin-block-start:var(--s4)}
-.ev-past summary{cursor:pointer;font-weight:700;padding:10px 0;min-height:44px}
-.ev-past .ev{opacity:.8}
-.ev-note{margin-block-start:var(--s3);font-size:.88rem;color:var(--ink-soft)}
-.ev-empty{padding:var(--s3);background:var(--white);border-radius:var(--radius-sm)}
+.ev-past summary{cursor:pointer;padding:10px 0;min-height:44px}
+.ev-past .ev{opacity:.85}
+.ev-note{margin-block-start:var(--s3);font-size:.88rem;color:var(--muted)}
+.ev-empty{padding:var(--s3);background:var(--white);border-radius:var(--r-sm)}
 
-/* ---------- catalogue row ---------- */
-.catalog{background:var(--white)}
+/* ---------- catalogue ---------- */
 .cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s2);margin-block:var(--s4)}
-.cat{background:var(--cream);border-radius:var(--radius-sm);padding:var(--s3);display:flex;gap:14px;align-items:flex-start}
+.cat{background:var(--white);border-radius:var(--r-sm);padding:var(--s3);display:flex;gap:14px;align-items:flex-start}
 .cat svg{inline-size:46px;block-size:46px;flex:none}
 .cat h3{font-size:1.05rem}
-.cat p{font-size:.9rem;color:var(--ink-soft)}
+.cat p{font-size:.9rem;color:var(--muted)}
 .cat-row{display:grid;grid-auto-flow:column;grid-auto-columns:min(78vw,320px);gap:18px;overflow-x:auto;overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;padding:6px 2px 22px;scrollbar-width:thin}
-.cat-row button{scroll-snap-align:start;border:none;background:var(--cream);border-radius:var(--radius-sm);overflow:hidden;
+.cat-row button{scroll-snap-align:start;border:none;background:var(--white);border-radius:var(--r-sm);overflow:hidden;
   cursor:zoom-in;text-align:start;padding:0;transition:transform .25s var(--ease)}
 .cat-row button:hover{transform:translateY(-4px)}
 .cat-row img{inline-size:100%;block-size:auto;aspect-ratio:900/637;object-fit:cover}
-.cat-row .cap{display:block;padding:10px 14px;font-weight:600;font-size:.9rem}
+.cat-row .cap{display:block;padding:10px 14px;font-size:.9rem}
 dialog#lb{border:none;padding:0;background:transparent;max-width:96vw;max-height:96vh;margin:auto}
-dialog#lb::backdrop{background:rgba(58,46,42,.9);backdrop-filter:blur(4px)}
-dialog#lb img{max-width:96vw;max-height:84vh;width:auto;border-radius:var(--radius-sm)}
+dialog#lb::backdrop{background:rgba(31,45,43,.9);backdrop-filter:blur(4px)}
+dialog#lb img{max-width:96vw;max-height:84vh;width:auto;border-radius:var(--r-sm)}
 .lb-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-block-start:12px;color:#fff}
 .lb-nav{display:flex;gap:8px}
-.lb-btn{background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.6);color:#fff;cursor:pointer;border-radius:999px;
+.lb-btn{background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.6);color:#fff;cursor:pointer;border-radius:999px;
   min-inline-size:44px;min-block-size:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px 12px}
 .lb-btn svg{inline-size:20px;block-size:20px}
 
 /* ---------- markets ---------- */
-.markets{background:var(--cream-lt)}
 .flag-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-block-start:var(--s4)}
-.flag{background:#fff;border-radius:16px;padding:14px 20px;text-align:center;min-inline-size:124px;box-shadow:var(--shadow)}
-.flag svg{inline-size:42px;block-size:28px;margin-inline:auto;border-radius:4px;box-shadow:0 1px 4px rgba(58,46,42,.3)}
-.flag .nm{font-weight:600;font-size:.95rem;margin-block-start:8px;display:block}
-.flag.soon{background:transparent;border:2px dashed var(--pink);box-shadow:none}
-.soon-title{margin-block-start:var(--s5);font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:1.2rem;color:var(--orange-deep)}
+.flag{background:var(--white);border-radius:16px;padding:14px 20px;text-align:center;min-inline-size:124px}
+.flag svg{inline-size:42px;block-size:28px;margin-inline:auto;border-radius:4px;box-shadow:0 1px 4px rgba(31,45,43,.3)}
+.flag .nm{font-size:.95rem;margin-block-start:8px;display:block}
+.flag.soon{background:transparent;border:1.5px dashed var(--ink)}
+.soon-title{margin-block-start:var(--s5);font-size:1.15rem}
 
 /* ---------- values ---------- */
-.values{background:var(--white)}
 .val-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3);margin-block-start:var(--s4)}
 .val .ic{inline-size:56px;block-size:56px;border-radius:18px;display:grid;place-items:center;background:var(--mint);margin-block-end:var(--s2)}
 .val:nth-child(2) .ic{background:var(--yellow)}
@@ -313,88 +309,78 @@ dialog#lb img{max-width:96vw;max-height:84vh;width:auto;border-radius:var(--radi
 .val:nth-child(4) .ic{background:var(--orange)}
 .val .ic svg{inline-size:26px;block-size:26px;color:var(--ink)}
 .val h3{font-size:1.15rem;margin-block-end:4px}
-.val p{font-size:.95rem;color:var(--ink-soft)}
-.channels{margin-block-start:var(--s6);padding:var(--s5) var(--s4);border-radius:var(--radius);background:var(--orange);text-align:center}
-.channels h3{font-size:clamp(1.5rem,1.1rem + 1.8vw,2.3rem);font-weight:800}
-.channels p{max-width:60ch;margin:6px auto 0}
+.val p{font-size:.95rem;color:var(--muted)}
+.channels{margin-block-start:var(--s6);padding:var(--s5) var(--s4);border-radius:var(--r);background:var(--white);text-align:center}
+.channels h3{font-size:clamp(1.5rem,1.1rem + 1.8vw,2.3rem);font-weight:500}
+.channels p{max-width:60ch;margin:6px auto 0;color:var(--muted)}
 .chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-block-start:var(--s3)}
-.chip{background:rgba(255,255,255,.65);border-radius:999px;padding:8px 18px;font-weight:600;font-size:.95rem}
+.chip{border:1.5px solid var(--ink);border-radius:999px;padding:8px 18px;font-size:.95rem}
 
 /* ---------- instagram ---------- */
-.social{background:var(--cream-lt)}
 .ig-head{display:flex;justify-content:space-between;align-items:end;gap:var(--s3);flex-wrap:wrap}
 .ig-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-block-start:var(--s4)}
-.ig-grid a{display:block;border-radius:var(--radius-sm);overflow:hidden;position:relative;aspect-ratio:4/5;background:var(--cream)}
+.ig-grid a{display:block;border-radius:var(--r-sm);overflow:hidden;position:relative;aspect-ratio:4/5;background:var(--white)}
 .ig-grid img{inline-size:100%;block-size:100%;object-fit:cover;transition:transform .6s var(--ease)}
 .ig-grid a:hover img{transform:scale(1.05)}
 
 /* ---------- contact ---------- */
-.contact{background:var(--cream)}
 .contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-block-start:var(--s4)}
-.c-card{background:#fff;border-radius:var(--radius-sm);padding:var(--s4) var(--s3);text-align:center}
-.c-card .ic{inline-size:38px;block-size:38px;margin:0 auto var(--s1);color:var(--teal-deep)}
-.c-card h3{font-size:1.02rem;margin-block-end:2px}
-.c-card a{color:var(--orange-text);font-weight:700;text-decoration:none;display:inline-block;min-height:44px;line-height:44px;padding-inline:6px}
-.c-card a:hover{text-decoration:underline}
-.c-card p{color:var(--ink-soft)}
+.c-card{background:var(--white);border-radius:var(--r-sm);padding:var(--s4) var(--s3);text-align:center}
+.c-card .ic{inline-size:36px;block-size:36px;margin:0 auto var(--s1);color:var(--ink)}
+.c-card h3{font-size:1rem;margin-block-end:2px;color:var(--muted);font-family:'Almarai';font-weight:400}
+.c-card a{color:var(--ink);font-family:'Jost';font-weight:400;font-size:1.1rem;text-decoration:none;display:inline-block;min-height:44px;line-height:44px;padding-inline:6px}
+.c-card a:hover{text-decoration:underline;text-underline-offset:4px}
+.c-card p{color:var(--ink)}
 .contact-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-block-start:var(--s4)}
-.wa-btn{background:var(--wa-solid);color:#fff}
-.wa-btn:hover{background:#127036;transform:translateY(-2px)}
 
-/* ---------- footer with giant wordmark ---------- */
-footer{background:var(--footer-bg);color:#fff;padding:var(--s6) 22px 0;overflow:hidden}
+/* ---------- footer: the one place brand colours are type ---------- */
+footer{background:var(--ink);color:#fff;padding:var(--s6) 22px 0;overflow:hidden;position:relative}
+footer .pattern::before{opacity:.22;-webkit-mask:linear-gradient(#000,transparent 70%);mask:linear-gradient(#000,transparent 70%)}
 .foot{max-width:1240px;margin-inline:auto;display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;align-items:flex-start}
 .foot img{height:56px;width:auto}
-.foot p{font-size:.93rem;margin-block-start:var(--s1);max-width:44ch}
+.foot p{font-size:.95rem;font-weight:300;margin-block-start:var(--s1);max-width:44ch;color:var(--cream)}
 .foot nav{display:flex;flex-wrap:wrap;gap:4px 16px}
-.foot nav a{color:var(--mint);text-decoration:none;font-weight:600;min-height:44px;line-height:44px}
-.foot nav a:hover{color:var(--yellow);text-decoration:underline}
+.foot nav a{color:var(--mint);text-decoration:none;min-height:44px;line-height:44px}   /* 9.6:1 */
+.foot nav a:hover{color:var(--yellow)}                                              /* 8.9:1 */
 .socials{display:flex;gap:10px;margin-block-start:var(--s2)}
-.socials a{inline-size:44px;block-size:44px;border-radius:50%;border:2px solid rgba(255,255,255,.7);display:grid;place-items:center;color:#fff}
-.socials a:hover{background:#fff;color:var(--footer-bg)}
+.socials a{inline-size:44px;block-size:44px;border-radius:50%;border:1.5px solid var(--coral);display:grid;place-items:center;color:var(--coral)}
+.socials a:hover{background:var(--coral);color:var(--ink)}
 .socials svg{inline-size:20px;block-size:20px}
-.fine{max-width:1240px;margin:var(--s4) auto 0;font-size:.82rem;color:rgba(255,255,255,.85)}
-.wordmark{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:clamp(4rem,19vw,19rem);line-height:.78;letter-spacing:-.03em;
-  color:var(--teal);text-align:center;margin-block-start:var(--s4);direction:ltr;user-select:none;white-space:nowrap}
+.fine{max-width:1240px;margin:var(--s4) auto 0;font-size:.82rem;font-weight:300;color:var(--cream)}
+.wordmark{font-family:'Jost';font-weight:300;font-size:clamp(3.4rem,15.5vw,15rem);line-height:.85;letter-spacing:.06em;
+  color:var(--teal);text-align:center;margin-block-start:var(--s4);direction:ltr;user-select:none;white-space:nowrap;text-transform:uppercase}
 footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 
 /* ---------- responsive ---------- */
 @media (max-width:1000px){
-  .cats,.val-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cats,.val-grid,.contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:900px){
   .burger{display:flex}
-  nav ul{position:fixed;inset-block-start:var(--header-h);inset-inline:0;background:var(--cream-lt);flex-direction:column;
-    padding:var(--s2);gap:6px;display:none;box-shadow:0 12px 24px rgba(58,46,42,.12)}
+  nav ul{position:fixed;inset-block-start:var(--header-h);inset-inline:0;background:var(--page);flex-direction:column;
+    padding:var(--s2);gap:6px;display:none;box-shadow:0 12px 24px rgba(31,45,43,.12)}
   nav ul.open{display:flex}
   nav ul li{inline-size:100%}
   nav ul a,.lang-btn{inline-size:100%;text-align:center;display:block}
-
-  /* hero: the cluster becomes a fan above the headline */
-  .hero{place-items:start center;padding-block-start:calc(var(--header-h) + var(--s3))}
+  .hero{display:flex;flex-direction:column;align-items:center;padding-block-start:calc(var(--header-h) + var(--s3))}
   .hero-cards{position:relative;inset:auto;display:flex;justify-content:center;perspective:none;block-size:190px;margin-block-end:var(--s3)}
   .hc-wrap{position:relative;inset:auto !important;margin-inline:-18px}
   .hc-wrap:nth-child(n+6){display:none}
   .hc{--w:118px;transform:rotateZ(var(--rz,0deg))}
-  .hero{display:flex;flex-direction:column;align-items:center}
-
-  /* story: stacked full-bleed colour bands, each with its own post */
-  .story{padding-block-start:var(--s6);background-color:var(--cream-lt)}
   .story-body{display:block;padding:0}
   .story-media{display:none}
-  .sp{min-block-size:0;padding:var(--s5) 22px;background:var(--bg)}
+  .sp{min-block-size:0;padding:var(--s5) 22px}
   .sp-img{display:block;inline-size:min(100%,420px);aspect-ratio:4/5;object-fit:cover;border-radius:22px;margin-block-end:var(--s3);
-    box-shadow:0 24px 50px rgba(58,46,42,.22)}
+    box-shadow:0 24px 50px rgba(31,45,43,.2)}
   .about-grid{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
-  .ev-feat{grid-template-columns:1fr;text-align:start}
-  .ev-count{text-align:start}
+  .ev-feat{grid-template-columns:1fr}
+  .ev-count{min-inline-size:0;padding:var(--s3)}
   .ig-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:600px){
   section{padding:var(--s6) 18px}
-  .evbar{font-size:.84rem;padding-block:6px}
+  .evbar{font-size:.86rem;padding-block:6px}
   .evbar .long{display:none}
   .evbar .short{display:inline}
   .hc-wrap:nth-child(n+5){display:none}
@@ -407,37 +393,38 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
   .js [data-reveal]{opacity:1 !important;transform:none !important}
+  .blobs i{transform:none !important}
 }
-@media (prefers-contrast:more){ .chip{background:#fff} }
 </style>
 </head>
 <body>
 
 <a class="skip" href="#main" data-i18n="skip">تخطَّ إلى المحتوى</a>
-<div id="bar" aria-hidden="true"></div>
+<div class="blobs" aria-hidden="true"><i class="a"></i><i class="b"></i></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="brush" viewBox="0 0 200 48" preserveAspectRatio="none"><path d="M9 26c-3-9 5-16 16-17 38-4 108-5 152-2 12 1 20 6 19 15-1 9-7 14-18 15-42 4-106 5-152 2-10-1-15-6-17-13z"/></symbol>
   <symbol id="i-choc" viewBox="0 0 48 48"><rect x="9" y="7" width="30" height="34" rx="5" fill="#8A5A2B"/><rect x="13" y="11" width="10" height="12" rx="2" fill="#B07C43"/><rect x="25" y="11" width="10" height="12" rx="2" fill="#B07C43"/><rect x="13" y="25" width="10" height="12" rx="2" fill="#B07C43"/><rect x="25" y="25" width="10" height="12" rx="2" fill="#B07C43"/></symbol>
   <symbol id="i-candy" viewBox="0 0 48 48"><circle cx="24" cy="24" r="11" fill="#FE7C7C"/><circle cx="24" cy="24" r="5.5" fill="#F8C311"/><path d="M13 24 4 16v16z" fill="#EBA09D"/><path d="M35 24l9-8v16z" fill="#EBA09D"/></symbol>
-  <symbol id="i-mint" viewBox="0 0 48 48"><ellipse cx="24" cy="30" rx="13" ry="10" fill="#A2DBD5"/><ellipse cx="24" cy="27" rx="13" ry="10" fill="#4BA89D"/><ellipse cx="24" cy="27" rx="7" ry="5" fill="#FFF8EC"/><path d="M24 16c0-5 4-8 8-8 0 5-3 8-8 8z" fill="#2E7A70"/></symbol>
+  <symbol id="i-mint" viewBox="0 0 48 48"><ellipse cx="24" cy="30" rx="13" ry="10" fill="#A2DBD5"/><ellipse cx="24" cy="27" rx="13" ry="10" fill="#4BA89D"/><ellipse cx="24" cy="27" rx="7" ry="5" fill="#FEEED7"/><path d="M24 16c0-5 4-8 8-8 0 5-3 8-8 8z" fill="#1F2D2B"/></symbol>
   <symbol id="i-gift" viewBox="0 0 48 48"><rect x="8" y="20" width="32" height="21" rx="4" fill="#EA8A34"/><rect x="6" y="13" width="36" height="9" rx="3" fill="#F8C311"/><rect x="21" y="13" width="6" height="28" fill="#FE7C7C"/><path d="M24 13c-3-7-11-6-11-1 0 3 6 3 11 1zm0 0c3-7 11-6 11-1 0 3-6 3-11 1z" fill="#FE7C7C"/></symbol>
-  <symbol id="u-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17 9.4 15.4M14 14l-2-2M3 10l4-4 5 2 5-2 4 4-4 7-5-3-5 3z"/></symbol>
-  <symbol id="u-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
-  <symbol id="u-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h11v9H2zM13 10h4l3 3v3h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></symbol>
-  <symbol id="u-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></symbol>
-  <symbol id="u-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 4.5 4h15L21 9M4 9v11h16V9M4 9h16"/><path d="M9 20v-6h6v6"/></symbol>
-  <symbol id="u-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2.2 2A16 16 0 0 1 4 5.2 2 2 0 0 1 6 3z"/></symbol>
-  <symbol id="u-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
-  <symbol id="u-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
-  <symbol id="u-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></symbol>
-  <symbol id="u-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-  <symbol id="u-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
-  <symbol id="u-prev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
-  <symbol id="u-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
-  <symbol id="u-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></symbol>
-  <symbol id="u-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
-  <symbol id="u-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h5v18H6a2 2 0 0 1-2-2zM20 5a2 2 0 0 0-2-2h-5v18h5a2 2 0 0 0 2-2z"/></symbol>
-  <symbol id="u-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="u-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17 9.4 15.4M14 14l-2-2M3 10l4-4 5 2 5-2 4 4-4 7-5-3-5 3z"/></symbol>
+  <symbol id="u-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+  <symbol id="u-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h11v9H2zM13 10h4l3 3v3h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></symbol>
+  <symbol id="u-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></symbol>
+  <symbol id="u-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 4.5 4h15L21 9M4 9v11h16V9M4 9h16"/><path d="M9 20v-6h6v6"/></symbol>
+  <symbol id="u-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2.2 2A16 16 0 0 1 4 5.2 2 2 0 0 1 6 3z"/></symbol>
+  <symbol id="u-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
+  <symbol id="u-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="u-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="u-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="u-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="u-prev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="u-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="u-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></symbol>
+  <symbol id="u-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="u-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h5v18H6a2 2 0 0 1-2-2zM20 5a2 2 0 0 0-2-2h-5v18h5a2 2 0 0 0 2-2z"/></symbol>
+  <symbol id="u-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
   <symbol id="u-fb" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5a.5.5 0 0 1 .5-.5z"/></symbol>
   <symbol id="u-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9a9.8 9.8 0 0 0 1.35 4.96L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01A9.9 9.9 0 0 0 22 11.92 9.9 9.9 0 0 0 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.12.07-1.81-.11a16.6 16.6 0 0 1-1.64-.6c-2.89-1.25-4.77-4.16-4.92-4.35-.14-.2-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39a1.05 1.05 0 0 1 .76-.35h.54c.17 0 .41-.07.64.49.24.57.8 1.98.87 2.13.07.14.12.31.02.5-.1.2-.15.32-.29.49l-.43.5c-.14.14-.29.3-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2 1.27 2.3 1.42.28.14.45.12.62-.07.17-.2.71-.83.9-1.12.19-.28.38-.24.64-.14.26.1 1.66.78 1.95.92.28.15.47.22.54.34.07.12.07.68-.17 1.35z"/></symbol>
 
@@ -464,9 +451,7 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 <header id="hdr">
   <div class="evbar" id="evbar" hidden></div>
   <div class="nav">
-    <a href="#top" class="nav-logo" aria-label="Samarqand">
-      <img src="assets/logo.png" width="700" height="306" alt="">
-    </a>
+    <a href="#top" class="nav-logo" aria-label="Samarqand"><img src="assets/logo.png" width="700" height="306" alt=""></a>
     <nav aria-label="القائمة الرئيسية">
       <button class="burger" id="burger" aria-label="القائمة" aria-expanded="false" aria-controls="menu"><svg aria-hidden="true"><use href="#u-menu"/></svg></button>
       <ul id="menu">
@@ -484,7 +469,8 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 <main id="main">
 
 <!-- ============ HERO ============ -->
-<section class="hero" id="top">
+<section class="hero" id="top" data-bg="cream">
+  <div class="pattern" aria-hidden="true"></div>
   <div class="hero-cards" aria-hidden="true">
     <div class="hc-wrap start" style="--x:3%;--y:15%"><div class="hc" style="--rz:-7deg;--dl:0s"><img src="assets/ig/chocobreak-sky-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
     <div class="hc-wrap end" style="--x:4%;--y:12%"><div class="hc" style="--rz:6deg;--dl:-2s"><img src="assets/ig/stuns-smart-400.webp" width="400" height="500" alt="" fetchpriority="high"></div></div>
@@ -495,8 +481,8 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   </div>
   <div class="hero-copy">
     <a class="hero-pill" id="heroPill" href="#events" hidden></a>
-    <h1 data-i18n="hero_title">نكهة <em>تُروى</em> بجودة عمرها عقود</h1>
-    <p class="tag" data-i18n="hero_tag">استيراد وتصدير وتوزيع جملة لأحلى السكاكر والشوكولاتة — من عمّان إلى الشرق الأوسط والعالم.</p>
+    <h1 data-i18n="hero_title">طعم خيالي</h1>
+    <p class="tag" data-i18n="hero_tag">سكاكر وشوكولاتة نستوردها ونوزّعها بحب — من عمّان إلى كل رفّ في الشرق الأوسط.</p>
     <div class="hero-btns">
       <a href="#brands" class="btn btn-ink" data-i18n="hero_btn1">اكتشف علاماتنا</a>
       <a href="#contact" class="btn btn-line" data-i18n="hero_btn2">اطلب عرض أسعار</a>
@@ -504,10 +490,10 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   </div>
 </section>
 
-<!-- ============ BRAND STORY (signature) ============ -->
+<!-- ============ BRAND STORY ============ -->
 <section class="story" id="brands" aria-labelledby="brands-h">
-  <div class="story-head">
-    <span class="eyebrow" style="background:var(--coral)" data-i18n="st_eyebrow">علاماتنا</span>
+  <div class="story-head" data-bg="cream">
+    <span class="eyebrow" lang="ar" style="--lbl:var(--coral)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="st_eyebrow">علاماتنا</span></span>
     <h2 class="sec-title" id="brands-h" data-i18n="st_title">علامات بتعدّل المزاج</h2>
     <p class="lede" data-i18n="st_lede">نوزّع علامات يحبها الناس في كل رف — وهاي بعض منها كما تظهر على صفحتنا.</p>
   </div>
@@ -520,63 +506,63 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
       <img data-k="frostlab" src="assets/ig/frostlab-720.webp" srcset="assets/ig/frostlab-720.webp 720w, assets/ig/frostlab-1080.webp 1080w" sizes="(min-width:900px) 45vw, 90vw" width="720" height="900" alt="" loading="lazy">
     </div>
     <div class="story-panels">
-      <article class="sp" data-k="babyfox" style="--bg:#FF8AA2">
+      <article class="sp" data-k="babyfox" data-bg="pink">
         <img class="sp-img" src="assets/ig/babyfox-720.webp" width="720" height="900" loading="lazy" alt="Babyfox milk chocolate">
         <p class="kicker" data-i18n="sp1_k">شوكولاتة بالحليب</p>
-        <h3 class="brand">Babyfox</h3>
+        <h3 class="brand latin">Babyfox</h3>
         <p class="line" data-i18n="sp1_l">السعادة بتبدأ من أول قضمة — مزيج الحليب والشوكولا اللي بيعدّل المزاج.</p>
       </article>
-      <article class="sp" data-k="stuns" style="--bg:#12C6C6">
+      <article class="sp" data-k="stuns" data-bg="yellow">
         <img class="sp-img" src="assets/ig/stuns-720.webp" width="720" height="900" loading="lazy" alt="Stuns caramel and nougat bar">
         <p class="kicker" data-i18n="sp2_k">كراميل طري ونوغا</p>
-        <h3 class="brand">Stuns</h3>
+        <h3 class="brand latin">Stuns</h3>
         <p class="line" data-i18n="sp2_l">الحل الوحيد للجوع؟ قضمة وحدة من Stuns بتعدّل المزاج.</p>
         <span class="slogan">Single. Taken. Hungry.</span>
       </article>
-      <article class="sp" data-k="chocobreak" style="--bg:#FFD24E">
+      <article class="sp" data-k="chocobreak" data-bg="coral">
         <img class="sp-img" src="assets/ig/chocobreak-happy-720.webp" width="720" height="900" loading="lazy" alt="Choco Break wafer">
         <p class="kicker" data-i18n="sp3_k">ويفر بالكاكاو وجوز الهند والحليب</p>
-        <h3 class="brand">Choco Break</h3>
+        <h3 class="brand latin">Choco Break</h3>
         <p class="line" data-i18n="sp3_l">السعادة في كل قضمة — شوكو بريك، ألذ بريك ليومك.</p>
         <span class="slogan">Happiness in every crunch</span>
       </article>
-      <article class="sp" data-k="dino" style="--bg:#06A6D7">
+      <article class="sp" data-k="dino" data-bg="teal">
         <img class="sp-img" src="assets/ig/dino-720.webp" width="720" height="900" loading="lazy" alt="Dino potato chips">
         <p class="kicker" data-i18n="sp4_k">شيبس بطاطا</p>
-        <h3 class="brand">Dino Chips</h3>
+        <h3 class="brand latin">Dino Chips</h3>
         <p class="line" data-i18n="sp4_l">الطعم اللي بتدوّر عليه صار بين إيديك — قرمشة ما بتنشبع منها.</p>
         <span class="slogan">The taste you've been looking for</span>
       </article>
-      <article class="sp" data-k="frostlab" style="--bg:#06BA42">
+      <article class="sp" data-k="frostlab" data-bg="mint">
         <img class="sp-img" src="assets/ig/frostlab-720.webp" width="720" height="900" loading="lazy" alt="FrostLab sugar-free mints">
         <p class="kicker" data-i18n="sp5_k">نعناع خالٍ من السكر</p>
-        <h3 class="brand">FrostLab</h3>
+        <h3 class="brand latin">FrostLab</h3>
         <p class="line" data-i18n="sp5_l">خليك واثق طول اليوم مع فروست لاب — انتعاش بسبع نكهات في علب معدنية أنيقة.</p>
         <span class="slogan">Yes to fresh</span>
       </article>
     </div>
   </div>
-  <div class="story-foot">
+  <div class="story-foot" data-bg="mint">
     <a href="#products" class="btn btn-ink" data-i18n="st_more">شوف الكاتالوج كامل</a>
   </div>
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section class="about" id="about">
+<section class="about" id="about" data-bg="white">
   <div class="wrap">
     <div class="about-grid">
       <div data-reveal>
-        <span class="eyebrow" data-i18n="about_eyebrow">نبذة عنا</span>
+        <span class="eyebrow" lang="ar" style="--lbl:var(--yellow)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="about_eyebrow">نبذة عنا</span></span>
         <h2 class="sec-title" data-i18n="about_title">امتداد حديث لمسيرة تجارية عريقة</h2>
         <p data-i18n="about_p1">تُعدّ شركة سمرقند امتداداً حديثاً لمسيرة تجارية عريقة، فهي من فروع شركة محمد موسى عمرو (الفاخرة التجارية) التي تأسست عام 1955 في مدينة الطفيلة — الأردن، وتمتلك خبرة طويلة وسمعة راسخة في التجارة والاستيراد.</p>
         <p data-i18n="about_p2">تأسست سمرقند عام 2022 في عمّان، لتكون الذراع المتخصص في استيراد وتصدير وتوزيع السكاكر والشوكولاتة في الشرق الأوسط، بالتزام قوي بالجودة والشفافية.</p>
         <p data-i18n="about_p3">نختار أفضل المنتجات العالمية، ونبني علاقات موثوقة مع شركائنا، ونقدّم حلول توزيع مرنة للأفراد والتجّار والموزعين.</p>
       </div>
       <div class="legacy" data-reveal style="--d:120ms">
-        <span class="year a num">1955</span>
+        <span class="year num">1955</span>
         <div class="lbl" data-i18n="legacy_1">تأسيس الشركة الأم — الفاخرة التجارية</div>
         <div class="rail" aria-hidden="true"></div>
-        <span class="year b num">2022</span>
+        <span class="year num">2022</span>
         <div class="lbl" data-i18n="legacy_2">انطلاق سمرقند من عمّان</div>
       </div>
     </div>
@@ -591,14 +577,12 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 </section>
 
 <!-- ============ EVENTS ============ -->
-<section class="events" id="events" aria-labelledby="events-h">
+<section class="events" id="events" aria-labelledby="events-h" data-bg="cream">
   <div class="wrap">
-    <span class="eyebrow" style="background:var(--mint)" data-i18n="ev_eyebrow">المعارض والفعاليات</span>
+    <span class="eyebrow" lang="ar" style="--lbl:var(--mint)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="ev_eyebrow">المعارض والفعاليات</span></span>
     <h2 class="sec-title" id="events-h" data-i18n="ev_title">وين تلاقونا</h2>
     <p class="lede" data-i18n="ev_lede">معارض الغذاء والحلويات في الأردن والخليج والمشرق وشمال أفريقيا وأوزبكستان — والمعارض اللي بنشارك فيها مميّزة.</p>
-
     <article class="ev-feat" id="evFeat" hidden aria-live="polite"></article>
-
     <div class="ev-filters" id="evFilters" role="group" aria-label="تصفية حسب المنطقة"></div>
     <ol class="ev-list" id="evList"></ol>
     <details class="ev-past" id="evPastWrap" hidden>
@@ -611,9 +595,9 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 </section>
 
 <!-- ============ CATALOGUE ============ -->
-<section class="catalog" id="products">
+<section class="catalog" id="products" data-bg="white">
   <div class="wrap">
-    <span class="eyebrow" style="background:var(--orange)" data-i18n="prod_eyebrow">منتجاتنا</span>
+    <span class="eyebrow" lang="ar" style="--lbl:var(--orange)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="prod_eyebrow">منتجاتنا</span></span>
     <h2 class="sec-title" data-i18n="prod_title">تشكيلة تُسعد الجميع</h2>
     <p class="lede" data-i18n="prod_intro">نستورد ونوزّع تشكيلة واسعة من العلامات العالمية — من الشوكولاتة إلى السكاكر المبتكرة.</p>
     <div class="cats">
@@ -642,9 +626,9 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 </dialog>
 
 <!-- ============ MARKETS ============ -->
-<section class="markets" id="markets">
+<section class="markets" id="markets" data-bg="yellow">
   <div class="wrap center">
-    <span class="eyebrow" style="background:var(--teal)" data-i18n="mk_eyebrow">أسواقنا</span>
+    <span class="eyebrow" lang="ar" style="--lbl:var(--white)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="mk_eyebrow">أسواقنا</span></span>
     <h2 class="sec-title" data-i18n="mk_title">من عمّان إلى العالم</h2>
     <p class="lede" data-i18n="mk_p">نصدّر ونوزّع منتجاتنا إلى أسواق متعددة:</p>
     <div class="flag-grid" id="mkNow"></div>
@@ -654,9 +638,9 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 </section>
 
 <!-- ============ VALUES ============ -->
-<section class="values" id="values">
+<section class="values" id="values" data-bg="cream">
   <div class="wrap">
-    <span class="eyebrow" style="background:var(--mint)" data-i18n="val_eyebrow">لماذا سمرقند؟</span>
+    <span class="eyebrow" lang="ar" style="--lbl:var(--mint)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="val_eyebrow">لماذا سمرقند؟</span></span>
     <h2 class="sec-title" data-i18n="val_title">قيم أصيلة من تاريخ الشركة الأم</h2>
     <div class="val-grid">
       <div class="val" data-reveal><div class="ic"><svg aria-hidden="true"><use href="#u-handshake"/></svg></div><h3 data-i18n="v1_t">الثقة والمصداقية</h3><p data-i18n="v1_p">علاقات طويلة الأمد مبنية على الشفافية.</p></div>
@@ -679,11 +663,11 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 </section>
 
 <!-- ============ INSTAGRAM ============ -->
-<section class="social" id="social">
+<section class="social" id="social" data-bg="pink">
   <div class="wrap">
     <div class="ig-head">
       <div>
-        <span class="eyebrow" style="background:var(--pink)" data-i18n="ig_eyebrow">تابعونا</span>
+        <span class="eyebrow" lang="ar" style="--lbl:var(--white)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="ig_eyebrow">تابعونا</span></span>
         <h2 class="sec-title" data-i18n="ig_title">من إنستغرام</h2>
       </div>
       <a class="btn btn-line" href="https://www.instagram.com/samarqand.mena/" target="_blank" rel="noopener">
@@ -695,9 +679,9 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 </section>
 
 <!-- ============ CONTACT ============ -->
-<section class="contact" id="contact">
+<section class="contact" id="contact" data-bg="white">
   <div class="wrap center">
-    <span class="eyebrow" style="background:var(--orange)" data-i18n="con_eyebrow">تواصل معنا</span>
+    <span class="eyebrow" lang="ar" style="--lbl:var(--orange)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="con_eyebrow">تواصل معنا</span></span>
     <h2 class="sec-title" data-i18n="con_title">جاهزون نخدمك</h2>
     <p class="lede" data-i18n="con_p">للاستفسار عن المنتجات، طلبات الجملة، أو فرص التوزيع — تواصل معنا مباشرة.</p>
     <div class="contact-grid">
@@ -709,18 +693,19 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
       <div class="c-card" data-reveal style="--d:350ms"><svg class="ic" aria-hidden="true"><use href="#u-pin"/></svg><h3 data-i18n="c6">العنوان</h3><p data-i18n="c6_p">عمّان — الأردن</p></div>
     </div>
     <div class="contact-acts">
-      <a class="btn wa-btn" href="https://wa.me/962778932185" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#u-wa"/></svg><span data-i18n="wa">راسلنا على واتساب</span></a>
+      <a class="btn btn-ink" href="https://wa.me/962778932185" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#u-wa"/></svg><span data-i18n="wa">راسلنا على واتساب</span></a>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer>
+<footer data-bg="cream">
+  <div class="pattern" aria-hidden="true"></div>
   <div class="foot">
     <div>
       <img src="assets/logo.png" width="700" height="306" alt="Samarqand" loading="lazy">
-      <p data-i18n="foot_1">سمرقند — نكهة تُروى بجودة عمرها عقود.</p>
+      <p data-i18n="foot_1">سمرقند — طعم خيالي، من عمّان إلى العالم.</p>
       <div class="socials">
         <a href="https://www.instagram.com/samarqand.mena/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#u-ig"/></svg></a>
         <a href="https://www.facebook.com/p/%D8%B4%D8%B1%D9%83%D8%A9-%D8%B3%D9%85%D8%B1%D9%82%D9%86%D8%AF-%D9%84%D9%84%D8%B3%D9%83%D8%A7%D9%83%D8%B1-Samarqand-co-100091360552095/" target="_blank" rel="noopener" aria-label="Facebook"><svg aria-hidden="true"><use href="#u-fb"/></svg></a>
@@ -736,7 +721,7 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
     </nav>
   </div>
   <p class="fine" data-i18n="foot_2">© 2026 شركة سمرقند للسكاكر وتوزيع الشوكولاتة — جميع الحقوق محفوظة | فرع من شركة محمد موسى عمرو (الفاخرة التجارية)</p>
-  <div class="wordmark" aria-hidden="true">SAMARQAND</div>
+  <div class="wordmark" aria-hidden="true">Samarqand</div>
 </footer>
 
 <script type="module">
@@ -764,8 +749,8 @@ const I18N = {
  ar:{
   skip:"تخطَّ إلى المحتوى", menu:"القائمة",
   nav_brands:"علاماتنا", nav_about:"من نحن", nav_events:"المعارض", nav_markets:"أسواقنا", nav_contact:"تواصل معنا",
-  hero_title:"نكهة <em>تُروى</em> بجودة عمرها عقود",
-  hero_tag:"استيراد وتصدير وتوزيع جملة لأحلى السكاكر والشوكولاتة — من عمّان إلى الشرق الأوسط والعالم.",
+  hero_title:"طعم خيالي",
+  hero_tag:"سكاكر وشوكولاتة نستوردها ونوزّعها بحب — من عمّان إلى كل رفّ في الشرق الأوسط.",
   hero_btn1:"اكتشف علاماتنا", hero_btn2:"اطلب عرض أسعار",
   st_eyebrow:"علاماتنا", st_title:"علامات بتعدّل المزاج",
   st_lede:"نوزّع علامات يحبها الناس في كل رف — وهاي بعض منها كما تظهر على صفحتنا.", st_more:"شوف الكاتالوج كامل",
@@ -813,14 +798,14 @@ const I18N = {
   con_eyebrow:"تواصل معنا", con_title:"جاهزون نخدمك", con_p:"للاستفسار عن المنتجات، طلبات الجملة، أو فرص التوزيع — تواصل معنا مباشرة.",
   c1:"رقم المعرض", c2:"المبيعات المحلية", c3:"المبيعات الخارجية", c4:"رقم الشركة", c5:"البريد الإلكتروني", c6:"العنوان", c6_p:"عمّان — الأردن",
   wa:"راسلنا على واتساب",
-  foot_1:"سمرقند — نكهة تُروى بجودة عمرها عقود.",
+  foot_1:"سمرقند — طعم خيالي، من عمّان إلى العالم.",
   foot_2:"© 2026 شركة سمرقند للسكاكر وتوزيع الشوكولاتة — جميع الحقوق محفوظة | فرع من شركة محمد موسى عمرو (الفاخرة التجارية)"
  },
  en:{
   skip:"Skip to content", menu:"Menu",
   nav_brands:"Our Brands", nav_about:"About", nav_events:"Events", nav_markets:"Markets", nav_contact:"Contact Us",
-  hero_title:"A Taste Backed by <em>Generations</em> of Quality",
-  hero_tag:"Import, export and wholesale distribution of the sweetest candy and chocolate — from Amman to the Middle East and beyond.",
+  hero_title:"A Taste Out of This World",
+  hero_tag:"Candy and chocolate we import and distribute with love — from Amman to every shelf in the Middle East.",
   hero_btn1:"Discover Our Brands", hero_btn2:"Request a Quote",
   st_eyebrow:"Our Brands", st_title:"Brands That Make Your Day",
   st_lede:"We distribute brands people reach for on every shelf — here are a few, straight from our feed.", st_more:"See the Full Catalogue",
@@ -868,7 +853,7 @@ const I18N = {
   con_eyebrow:"Contact Us", con_title:"Ready to Serve You", con_p:"For product enquiries, wholesale orders or distribution opportunities — reach out directly.",
   c1:"Showroom", c2:"Local Sales", c3:"International Sales", c4:"Company Line", c5:"Email", c6:"Address", c6_p:"Amman — Jordan",
   wa:"Message Us on WhatsApp",
-  foot_1:"Samarqand — a taste backed by generations of quality.",
+  foot_1:"Samarqand — a taste out of this world, from Amman to everywhere.",
   foot_2:"© 2026 Samarqand Candy & Chocolate Distribution Co. — All rights reserved | A branch of Mohammad Mousa Amro Company (Al Fakhira Trading)"
  }
 };
@@ -922,7 +907,6 @@ function dayUnit(n){
   if(lang !== 'ar') return n === 1 ? 'day' : 'days';
   return ({zero:'يوم',one:'يوم',two:'يومان',few:'أيام',many:'يوماً',other:'يوم'})[new Intl.PluralRules('ar').select(n)];
 }
-
 function waLink(ev){
   return `https://wa.me/${WA}?text=` + encodeURIComponent(fill(t('ev_wa'), {name: evName(ev), dates: fmtRange(ev)}));
 }
@@ -948,7 +932,7 @@ function renderFeatured(){
   const hours = lang === 'ar' ? ev.hours_ar : ev.hours_en;
   box.innerHTML = `
     <div class="ev-count">${count}</div>
-    <div>
+    <div class="ev-body">
       <p class="kicker"><span class="dot${live?' live':''}" aria-hidden="true"></span>${live ? t('ev_live') : t('ev_meet')}</p>
       <h3>${esc(name)}</h3>
       <p class="meta">${esc(dates)} · ${esc(evCity(ev))}, ${esc(country(ev))}${ev.venue_en ? ` — <span dir="ltr">${esc(ev.venue_en)}</span>` : ''}</p>
@@ -1021,6 +1005,7 @@ function applyLang(){
   $$('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if(d[k] !== undefined) el.innerHTML = d[k]; });
   $$('#catRow button').forEach(b => { const img = $('img', b); img.alt = d[img.dataset.alt] || ''; b.setAttribute('aria-label', `${d.zoom} ${d[img.dataset.alt] || ''}`); });
   $$('#igGrid a').forEach(a => a.setAttribute('aria-label', d.ig_open));
+  $$('.eyebrow').forEach(e => e.setAttribute('lang', lang));   // Latin labels get the tracked-caps Jost treatment
   $('#langBtn').textContent = lang === 'ar' ? 'English' : 'عربي';
   $('#langBtn').setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
   $('#burger').setAttribute('aria-label', d.menu);
@@ -1036,8 +1021,7 @@ function initReveal(){
   const io = new IntersectionObserver((ents, obs) => ents.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } }),
     {rootMargin:'200px 0px 200px 0px', threshold:0});
   els.forEach(e => io.observe(e));
-  // a backgrounded tab may never dispatch intersections — nothing may stay hidden
-  setTimeout(() => els.forEach(e => e.classList.add('in')), 2500);
+  setTimeout(() => els.forEach(e => e.classList.add('in')), 2500);   // a backgrounded tab may never dispatch intersections
 }
 function initCounters(){
   if(reduced.matches || !('IntersectionObserver' in window)) return;   // final values are already in the HTML
@@ -1049,17 +1033,30 @@ function initCounters(){
   }), {threshold:.5});
   $$('[data-count]').forEach(n => io.observe(n));
 }
-// brand story: whichever panel crosses the middle of the viewport sets the section colour
-function initStory(){
-  const story = $('#brands'), media = $$('.story-media img');
+
+// The page background: whichever [data-bg] block crosses the middle of the viewport owns the colour.
+// The two colour fields take the previous and next block's colours so the drift reads as a journey.
+function initPage(){
+  const blocks = $$('[data-bg]'), media = $$('.story-media img'), root = document.documentElement;
   if(!('IntersectionObserver' in window)) return;
   const io = new IntersectionObserver(ents => ents.forEach(e => {
     if(!e.isIntersecting) return;
-    const k = e.target.dataset.k;
-    story.style.setProperty('--story-bg', e.target.style.getPropertyValue('--bg'));
-    media.forEach(m => m.classList.toggle('on', m.dataset.k === k));
+    const i = blocks.indexOf(e.target), c = n => `var(--${n.dataset.bg})`;
+    root.style.setProperty('--page', c(e.target));
+    root.style.setProperty('--blob-a', c(blocks[Math.max(0, i - 1)]));
+    root.style.setProperty('--blob-b', c(blocks[Math.min(blocks.length - 1, i + 1)]));
+    if(e.target.dataset.k) media.forEach(m => m.classList.toggle('on', m.dataset.k === e.target.dataset.k));
   }), {rootMargin:'-45% 0px -45% 0px'});
-  $$('.sp').forEach(p => io.observe(p));
+  blocks.forEach(b => io.observe(b));
+}
+// pointer + scroll feed the colour fields through two CSS variables, lerped so the motion is lazy
+function initBlobs(){
+  if(reduced.matches || matchMedia('(hover: none)').matches) return;
+  const root = document.documentElement; let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+  const tick = () => { x += (tx - x) * .06; y += (ty - y) * .06;
+    root.style.setProperty('--mx', x.toFixed(3)); root.style.setProperty('--my', y.toFixed(3));
+    raf = (Math.abs(tx - x) > .002 || Math.abs(ty - y) > .002) ? requestAnimationFrame(tick) : 0; };
+  addEventListener('pointermove', e => { tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; if(!raf) raf = requestAnimationFrame(tick); }, {passive:true});
 }
 
 /* ================= lightbox ================= */
@@ -1073,7 +1070,7 @@ function openLB(i){
 
 /* ================= boot ================= */
 buildCatalog(); buildIG(); buildFlags(); applyLang();
-initReveal(); initCounters(); initStory();
+initReveal(); initCounters(); initPage(); initBlobs();
 
 fetch('events.json', {cache:'no-cache'})
   .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
@@ -1104,12 +1101,11 @@ $$('#menu a').forEach(a => a.addEventListener('click', () => { menu.classList.re
 const hdr = $('#hdr');
 new ResizeObserver(() => document.documentElement.style.setProperty('--header-h', hdr.offsetHeight + 'px')).observe(hdr);
 
-const bar = $('#bar'); let ticking = false;
+let ticking = false;
 addEventListener('scroll', () => {
   if(ticking) return; ticking = true;
   requestAnimationFrame(() => {
-    const max = document.documentElement.scrollHeight - innerHeight;
-    bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    document.documentElement.style.setProperty('--sy', scrollY);
     hdr.classList.toggle('stuck', scrollY > 8);
     ticking = false;
   });

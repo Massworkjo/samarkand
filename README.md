@@ -46,15 +46,26 @@ Colours and personality follow **`قايد لاين سمرقند`** (July 2026),
 Google Drive under *05 - Brand, Design and Marketing*. An older 2024 guideline in the same folder
 specifies a chocolate/gold palette and is **superseded** — do not design from it.
 
-The guideline forbids altering the primary colours, so every brand fill in `:root` is exactly the
-approved value. Because those fills are light and saturated, **white text fails WCAG AA on all of
-them**; the site therefore puts ink `#3A2E2A` on brand fills, and where a brand colour has to carry
-text it uses a darker shade of the *same* hue (`--orange-text`, `--teal-text`, `--teal-solid`,
-`--orange-deep`, `--wa-solid`). Each of those carries its measured contrast ratio in a comment.
-Keep that arrangement when editing: change a fill and the text on it needs re-checking.
+The guideline forbids altering the primary colours, so the seven fills in `:root` are exactly the
+approved values and **nothing else is used as a surface colour**. Three rules follow from that:
 
-The brand-story section colours (`--bg` on each `.sp` panel) are sampled from the Instagram post
-borders and lightened in the same hue until ink reaches ≥4.6:1. They are not brand tokens.
+1. **Text is one ink, `#1F2D2B`.** Every brand colour is too light to be text on cream or white
+   (none reaches 3:1, even at headline size), and darker "same-hue" shades read as muddy — the
+   owner rejected them on 2026-09-23. `--muted` (`#465755`) is allowed only on cream, white, mint
+   and yellow; sections on the stronger fills reset it to ink via `[data-bg]`.
+2. **Brand colours become type only on the dark footer**, where each one passes ≥5:1 on ink.
+3. **The page background is the palette.** `body` paints `--page`; every block with `data-bg`
+   hands its colour to the page when it crosses the middle of the viewport, and the two fixed
+   colour fields (`.blobs`) take the previous and next block's colours. Add a section by giving
+   it `data-bg="<token>"` — never a `background` of its own.
+
+Typography follows the guideline's own weight: Almarai 300/400 for text, Baloo Bhaijaan 2 at
+**500** for Arabic display (600 nowhere), Jost 300 tracked caps for Latin names and numbers (the
+Stylus BT feel). Bold is reserved for nothing; hierarchy comes from size and space.
+
+`assets/pattern.webp` is the logo pattern from the guideline, cut to its 288×276 repeat with the
+white made transparent; it drifts behind the hero and footer. The brush-stroke section labels are
+the `#brush` symbol filled with a brand colour.
 
 ## Things that will bite you
 
