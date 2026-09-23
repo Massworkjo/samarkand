@@ -1,0 +1,10 @@
+# local preview tooling
+.claude/
+
+# pre-redesign snapshot of the single-file build, kept on disk only
+index.original.backup.html
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store
