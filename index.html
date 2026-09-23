@@ -254,40 +254,8 @@ h2.sec-title{font-size:clamp(2rem,1.3rem + 3vw,3.4rem);font-weight:500;margin-bl
 .ev-feat .acts{display:flex;flex-wrap:wrap;gap:10px;margin-block-start:var(--s3)}
 .ev-feat .btn{font-size:.98rem;padding:10px 22px;min-height:46px}
 
-.ev-filters{display:flex;flex-wrap:wrap;gap:8px;margin-block:var(--s3)}
-.chip-btn{border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:6px 16px;min-height:42px;cursor:pointer;font-size:.92rem}
-.chip-btn[aria-pressed="true"]{background:var(--ink);color:#fff}
-.chip-btn .c{opacity:.7;font-size:.85em}
-.ev-list,.ev-past-list{list-style:none;display:grid;gap:10px}
-@media (min-width:1000px){.ev-list,.ev-past-list{grid-template-columns:1fr 1fr}}
-.ev-month{grid-column:1/-1;font-family:'Jost';font-weight:400;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;
-  color:var(--muted);padding:var(--s3) 4px 2px;direction:ltr;text-align:start}
-html[dir="rtl"] .ev-month{direction:rtl;font-family:'Almarai';letter-spacing:0;text-transform:none;font-size:.9rem}
-.ev{display:grid;grid-template-columns:7.5rem 1fr auto;gap:var(--s3);align-items:center;background:var(--white);
-  border-radius:var(--r-sm);padding:16px 20px;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
-.ev:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.ev.mine{box-shadow:inset 0 0 0 2px var(--ink)}
-.ev-date{font-family:'Jost';line-height:1.15;text-align:center;direction:ltr}
-.ev-date .d{font-weight:400;font-size:1.05rem;display:block}
-.ev-date .y{font-size:.85rem;color:var(--muted)}
-.ev h4{font-size:1.1rem;font-weight:500;margin-block-end:2px}
-.ev .where{font-size:.92rem;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ev .where svg{inline-size:21px;block-size:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(31,45,43,.15)}
-.badges{display:flex;gap:6px;flex-wrap:wrap;margin-block-start:6px}
-.badge{font-size:.8rem;border-radius:999px;padding:2px 10px;background:var(--cream);color:var(--ink)}
-.badge.mine{background:var(--ink);color:#fff}
-.badge.live{background:var(--coral)}
-.badge.soft{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
-.ev-acts{display:flex;gap:6px}
-.icon-btn{inline-size:44px;block-size:44px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;cursor:pointer;
-  display:grid;place-items:center;color:var(--ink);text-decoration:none}
-.icon-btn:hover{background:var(--ink);color:#fff}
-.icon-btn svg{inline-size:19px;block-size:19px}
-.ev-past{margin-block-start:var(--s4)}
-.ev-past summary{cursor:pointer;padding:10px 0;min-height:44px}
-.ev-past .ev{opacity:.85}
-.ev-note{margin-block-start:var(--s3);font-size:.88rem;color:var(--muted)}
-.ev-empty{padding:var(--s3);background:var(--white);border-radius:var(--r-sm)}
+.ev-empty{padding:var(--s3);background:var(--white);border-radius:var(--r-sm);margin-block-start:var(--s3)}
+.ev-empty[hidden],section[hidden],li[hidden]{display:none}
 
 /* ---------- catalogue ---------- */
 .cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s2);margin-block:var(--s4)}
@@ -406,8 +374,6 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   .hc{--w:104px}
   .hc-wrap{margin-inline:-14px}
   .cats,.val-grid,.contact-grid{grid-template-columns:1fr}
-  .ev{grid-template-columns:5.5rem 1fr;row-gap:8px}
-  .ev-acts{grid-column:1/-1;justify-content:flex-end}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
@@ -600,15 +566,9 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   <div class="wrap">
     <span class="eyebrow" lang="ar" style="--lbl:var(--mint)"><svg aria-hidden="true"><use href="#brush"/></svg><span data-i18n="ev_eyebrow">المعارض والفعاليات</span></span>
     <h2 class="sec-title" id="events-h" data-i18n="ev_title">وين تلاقونا</h2>
-    <p class="lede" data-i18n="ev_lede">معارض الغذاء والحلويات في الأردن والخليج والمشرق وشمال أفريقيا وأوزبكستان — والمعارض اللي بنشارك فيها مميّزة.</p>
+    <p class="lede" data-i18n="ev_lede">معرضنا القادم — تعالوا نتعرّف ونتذوّق سوا.</p>
     <article class="ev-feat" id="evFeat" hidden aria-live="polite"></article>
-    <div class="ev-filters" id="evFilters" role="group" aria-label="تصفية حسب المنطقة"></div>
-    <ol class="ev-list" id="evList"></ol>
-    <details class="ev-past" id="evPastWrap" hidden>
-      <summary data-i18n="ev_past">معارض سابقة</summary>
-      <ol class="ev-past-list" id="evPast"></ol>
-    </details>
-    <p class="ev-note" data-i18n="ev_note">المواعيد مأخوذة من المواقع الرسمية للمنظمين. المواعيد غير المؤكدة مُعلَّمة — تأكد منها قبل السفر.</p>
+    <p class="ev-empty" id="evError" hidden></p>
     <noscript><p class="ev-empty">The Saudi Food Show — 27–29 September 2026, Jeddah Superdome. تواصلوا معنا لترتيب لقاء: +962 77 893 2185</p></noscript>
   </div>
 </section>
@@ -744,7 +704,7 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 </footer>
 
 <script type="module">
-import { status, featured, ordered, ics } from './assets/events.js';
+import { featured, ics } from './assets/events.js';
 
 /* ================= static data ================= */
 const CATALOG = [
@@ -757,9 +717,6 @@ const IG = [ // image slug -> Instagram post
 ];
 const MK_NOW = ['jo','us','sa','ps','lb','sy','ye','om'];
 const MK_SOON = ['eg','ae','qa','kw','iq','ly'];
-const REGION = {JO:'jo',SA:'gcc',AE:'gcc',QA:'gcc',KW:'gcc',BH:'gcc',OM:'gcc',IQ:'levant',LB:'levant',SY:'levant',PS:'levant',
-  EG:'africa',MA:'africa',DZ:'africa',TN:'africa',LY:'africa',UZ:'asia',KZ:'asia'};
-const FLAGGED = new Set(['jo','ps','sy','ye','eg','iq','sa','lb','om','ae','qa','kw','ly','ma','dz','uz','us']);
 const ACCENTS = {teal:'var(--teal)',orange:'var(--orange)',coral:'var(--coral)',yellow:'var(--yellow)',mint:'var(--mint)',pink:'var(--pink)'};
 const WA = '962778932185';
 
@@ -784,14 +741,10 @@ const I18N = {
   about_p3:"نختار أفضل المنتجات العالمية، ونبني علاقات موثوقة مع شركائنا، ونقدّم حلول توزيع مرنة للأفراد والتجّار والموزعين.",
   legacy_1:"تأسيس الشركة الأم — الفاخرة التجارية", legacy_2:"انطلاق سمرقند من عمّان",
   stat_1:"عاماً من الإرث التجاري", stat_2:"منتج في كاتالوجنا", stat_3:"قطاعات: أفراد، تجّار، موزعون", stat_4:"دول نصدّر إليها",
-  ev_eyebrow:"المعارض والفعاليات", ev_title:"وين تلاقونا",
-  ev_lede:"معارض الغذاء والحلويات في الأردن والخليج والمشرق وشمال أفريقيا وأوزبكستان — والمعارض اللي بنشارك فيها مميّزة.",
-  ev_past:"معارض سابقة", ev_note:"المواعيد مأخوذة من المواقع الرسمية للمنظمين. المواعيد غير المؤكدة مُعلَّمة — تأكد منها قبل السفر.",
-  ev_all:"الكل", r_jo:"الأردن", r_gcc:"الخليج", r_levant:"العراق والمشرق", r_africa:"مصر وشمال أفريقيا", r_asia:"أوزبكستان",
+  ev_eyebrow:"المعارض والفعاليات", ev_title:"وين تلاقونا", ev_lede:"معرضنا القادم — تعالوا نتعرّف ونتذوّق سوا.",
   ev_meet:"نلقاكم في", ev_live:"مباشر الآن — نحن في المعرض", ev_booth:"جناحنا", ev_book:"احجز موعداً معنا في المعرض",
-  ev_ics:"أضف إلى التقويم", ev_site:"الموقع الرسمي", ev_mine:"سنكون هناك", ev_went:"شاركنا", ev_live_b:"جارٍ الآن",
-  ev_unver:"الموعد غير مؤكد من المنظم", ev_tba:"الموعد لم يُعلن", ev_none:"لا توجد معارض في هذه المنطقة حالياً.",
-  ev_error:"تعذّر تحميل جدول المعارض. حدّث الصفحة أو تواصل معنا.", ev_to_open:"على الافتتاح",
+  ev_ics:"أضف إلى التقويم", ev_site:"الموقع الرسمي", ev_live_b:"جارٍ الآن",
+  ev_error:"تعذّر تحميل بيانات المعرض. حدّث الصفحة أو تواصل معنا.", ev_to_open:"على الافتتاح",
   ev_bar_up:"نلقاكم في {name} — {dates}", ev_bar_live:"نحن الآن في {name} · {city}", ev_bar_link:"التفاصيل",
   ev_bar_up_s:"نلقاكم في {name}", ev_bar_live_s:"نحن الآن في {name}",
   ev_wa:"مرحباً سمرقند، أودّ ترتيب لقاء معكم في {name} ({dates}).",
@@ -839,14 +792,10 @@ const I18N = {
   about_p3:"We source the finest international products, build reliable partnerships, and offer flexible distribution for individuals, retailers and wholesalers.",
   legacy_1:"Parent company founded — Al Fakhira Trading", legacy_2:"Samarqand launched in Amman",
   stat_1:"years of commercial heritage", stat_2:"products in our catalogue", stat_3:"segments: individuals, retailers, wholesalers", stat_4:"export countries",
-  ev_eyebrow:"Trade Shows & Events", ev_title:"Where to Meet Us",
-  ev_lede:"Food and confectionery trade shows across Jordan, the Gulf, the Levant, North Africa and Uzbekistan — the ones we exhibit at are highlighted.",
-  ev_past:"Past events", ev_note:"Dates are taken from the organisers' official websites. Unconfirmed dates are marked — please check before you travel.",
-  ev_all:"All", r_jo:"Jordan", r_gcc:"Gulf", r_levant:"Iraq & Levant", r_africa:"Egypt & North Africa", r_asia:"Uzbekistan",
+  ev_eyebrow:"Trade Shows & Events", ev_title:"Where to Meet Us", ev_lede:"Our next show — come say hello and taste with us.",
   ev_meet:"Meet us at", ev_live:"Live now — we're at the show", ev_booth:"Our stand", ev_book:"Book a meeting at the show",
-  ev_ics:"Add to calendar", ev_site:"Official website", ev_mine:"We'll be there", ev_went:"We exhibited", ev_live_b:"Happening now",
-  ev_unver:"Date not confirmed by organiser", ev_tba:"Dates not announced", ev_none:"No events in this region right now.",
-  ev_error:"Couldn't load the events calendar. Refresh the page or contact us.", ev_to_open:"to opening",
+  ev_ics:"Add to calendar", ev_site:"Official website", ev_live_b:"Happening now",
+  ev_error:"Couldn't load the show details. Refresh the page or contact us.", ev_to_open:"to opening",
   ev_bar_up:"Meet us at {name} — {dates}", ev_bar_live:"We're at {name} now · {city}", ev_bar_link:"Details",
   ev_bar_up_s:"Meet us at {name}", ev_bar_live_s:"We're at {name} now",
   ev_wa:"Hello Samarqand, I'd like to arrange a meeting with you at {name} ({dates}).",
@@ -908,18 +857,16 @@ function buildFlags(){
 }
 
 /* ================= events ================= */
-let EVENTS = null, evError = false, region = 'all';
+let EVENTS = null, evError = false;
 const loc = () => lang === 'ar' ? 'ar-u-nu-latn' : 'en-GB';
 const utc = s => new Date(s + 'T00:00:00Z');
-function fmtRange(ev, opts = {day:'numeric', month:'long', year:'numeric'}){
-  if(!ev.start) return t('ev_tba');
-  const f = new Intl.DateTimeFormat(loc(), {...opts, timeZone:'UTC'});
+function fmtRange(ev){
+  const f = new Intl.DateTimeFormat(loc(), {day:'numeric', month:'long', year:'numeric', timeZone:'UTC'});
   return ev.start === ev.end ? f.format(utc(ev.start)) : f.formatRange(utc(ev.start), utc(ev.end));
 }
 const evName = ev => lang === 'ar' ? (ev.name_ar || ev.name_en) : ev.name_en;
 const evCity = ev => lang === 'ar' ? (ev.city_ar || ev.city_en) : ev.city_en;
 const country = ev => t(ev.country.toLowerCase());
-const flag = ev => FLAGGED.has(ev.country.toLowerCase()) ? `<svg viewBox="0 0 30 20" aria-hidden="true"><use href="#f-${ev.country.toLowerCase()}"/></svg>` : '';
 
 // Arabic has six plural forms; "4 days" is not one word shape for every number
 function dayUnit(n){
@@ -930,10 +877,15 @@ function waLink(ev){
   return `https://wa.me/${WA}?text=` + encodeURIComponent(fill(t('ev_wa'), {name: evName(ev), dates: fmtRange(ev)}));
 }
 
-function renderFeatured(){
-  const box = $('#evFeat'), bar = $('#evbar'), pill = $('#heroPill');
+// The only event UI: the attended show that is live or opening within 45 days. With none,
+// the section and its nav link disappear — the site never shows an empty calendar.
+function renderEvents(){
+  const box = $('#evFeat'), bar = $('#evbar'), pill = $('#heroPill'), sec = $('#events'), err = $('#evError');
+  const navLi = $('#menu a[href="#events"]').closest('li'), footA = $('footer nav a[href="#events"]');
   const f = EVENTS && featured(EVENTS, NOW);
   document.documentElement.dataset.event = f ? f.state : '';
+  err.hidden = !evError; if(evError) err.textContent = t('ev_error');
+  if(EVENTS || evError) sec.hidden = navLi.hidden = footA.hidden = !(f || evError);   // stay visible until we know, so #events links can land
   if(!f){ box.hidden = bar.hidden = pill.hidden = true; return; }
   const ev = f.ev, acc = ACCENTS[ev.accent] || ACCENTS.teal, live = f.state === 'live';
   const dates = fmtRange(ev), name = evName(ev);
@@ -964,51 +916,6 @@ function renderFeatured(){
       </div>
     </div>`;
   box.hidden = bar.hidden = pill.hidden = false;
-}
-
-function evItem(ev){
-  const st = status(ev, NOW), past = st === 'past';
-  const badges = [];
-  if(ev.attending) badges.push(`<span class="badge mine">${past ? t('ev_went') : t('ev_mine')}${ev.booth ? ` · <span class="num">${esc(ev.booth)}</span>` : ''}</span>`);
-  if(st === 'live') badges.push(`<span class="badge live">${t('ev_live_b')}</span>`);
-  if(ev.confidence === 'unverified') badges.push(`<span class="badge soft">${t('ev_unver')}</span>`);
-  const dateBlock = ev.start
-    ? `<span class="d">${esc(fmtRange(ev, {day:'numeric', month:'short'}))}</span><span class="y num">${ev.start.slice(0,4)}</span>`
-    : `<span class="d">${t('ev_tba')}</span>`;
-  return `<li class="ev${ev.attending?' mine':''}" data-region="${REGION[ev.country] || 'other'}">
-    <div class="ev-date">${dateBlock}</div>
-    <div>
-      <h4>${esc(evName(ev))}</h4>
-      <p class="where">${flag(ev)}<span>${esc(evCity(ev))}, ${esc(country(ev))}</span></p>
-      ${badges.length ? `<div class="badges">${badges.join('')}</div>` : ''}
-    </div>
-    <div class="ev-acts">
-      ${ev.start && !past ? `<button class="icon-btn" type="button" data-ics="${esc(ev.id)}" aria-label="${t('ev_ics')}: ${esc(evName(ev))}"><svg aria-hidden="true"><use href="#u-cal"/></svg></button>` : ''}
-      ${ev.url ? `<a class="icon-btn" href="${esc(ev.url)}" target="_blank" rel="noopener" aria-label="${t('ev_site')}: ${esc(evName(ev))}"><svg aria-hidden="true"><use href="#u-out"/></svg></a>` : ''}
-    </div></li>`;
-}
-
-function renderEvents(){
-  if(evError){ $('#evList').innerHTML = `<li class="ev-empty">${t('ev_error')}</li>`; return; }
-  if(!EVENTS) return;
-  renderFeatured();
-  const all = ordered(EVENTS, NOW);
-  const upcoming = all.filter(e => status(e, NOW) !== 'past');
-  const past = all.filter(e => status(e, NOW) === 'past');
-  const regions = ['all','jo','gcc','levant','africa','asia'].filter(r => r === 'all' || upcoming.some(e => REGION[e.country] === r));
-  if(!regions.includes(region)) region = 'all';
-  $('#evFilters').innerHTML = regions.map(r => {
-    const n = r === 'all' ? upcoming.length : upcoming.filter(e => REGION[e.country] === r).length;
-    return `<button type="button" class="chip-btn" data-region="${r}" aria-pressed="${r === region}">${t(r === 'all' ? 'ev_all' : 'r_' + r)} <span class="c num">${n}</span></button>`;
-  }).join('');
-  const shown = upcoming.filter(e => region === 'all' || REGION[e.country] === region);
-  // month headers give the long list a rhythm; TBA events share one header
-  const monthOf = e => e.start ? new Intl.DateTimeFormat(loc(), {month:'long', year:'numeric', timeZone:'UTC'}).format(utc(e.start)) : t('ev_tba');
-  let last = null, html = '';
-  for(const e of shown){ const m = monthOf(e); if(m !== last){ html += `<li class="ev-month" aria-hidden="true">${esc(m)}</li>`; last = m; } html += evItem(e); }
-  $('#evList').innerHTML = shown.length ? html : `<li class="ev-empty">${t('ev_none')}</li>`;
-  $('#evPast').innerHTML = past.map(evItem).join('');
-  $('#evPastWrap').hidden = !past.length;
 }
 
 function downloadIcs(id){
@@ -1115,7 +1022,6 @@ fetch('events.json', {cache:'no-cache'})
 $('#langBtn').addEventListener('click', () => { lang = lang === 'ar' ? 'en' : 'ar'; applyLang(); });
 document.addEventListener('click', e => {
   const ic = e.target.closest('[data-ics]'); if(ic){ downloadIcs(ic.dataset.ics); return; }
-  const rb = e.target.closest('#evFilters [data-region]'); if(rb){ region = rb.dataset.region; renderEvents(); return; }
   const cb = e.target.closest('#catRow button[data-i]'); if(cb){ openLB(+cb.dataset.i); }
 });
 $('#lbClose').addEventListener('click', () => $('#lb').close());

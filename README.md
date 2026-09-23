@@ -18,9 +18,12 @@ Preview over HTTP (`python -m http.server 5178`); opening from `file://` blocks 
 and the `events.json` fetch. Run `node tests/events.test.mjs` before pushing — it exits non-zero
 on any failure.
 
-## The event calendar
+## The event feature
 
-The site changes itself around the shows Samarqand attends. `events.json` is the only input:
+The site changes itself around the shows Samarqand attends — and shows **nothing else**. The
+full calendar list (filters, month groups, past shows) was removed on 2026-09-24 at the owner's
+request ("not the nicest"); the data stays in `events.json` because the featured-show logic reads
+it. `events.json` is the only input:
 
 | field | meaning |
 |---|---|
@@ -33,9 +36,10 @@ The site changes itself around the shows Samarqand attends. `events.json` is the
 
 Behaviour: a **live** attended show wins; otherwise the soonest attended show opening within
 45 days gets a countdown. "Live" is decided on the calendar day in the event's time zone, so a
-Riyadh show opens at Riyadh midnight, not the visitor's. Past shows drop into a collapsed
-"معارض سابقة" list. Preview any date with `?now=YYYY-MM-DD`
-(e.g. `/?now=2026-09-28` shows live mode for the Saudi Food Show).
+Riyadh show opens at Riyadh midnight, not the visitor's. When nothing qualifies, the header
+bar, hero pill, the "وين تلاقونا" section and its nav links all hide. Preview any date with
+`?now=YYYY-MM-DD` (e.g. `/?now=2026-09-28` shows live mode; `/?now=2026-12-01` shows the
+site with no show).
 
 Dates in `events.json` come from organiser sites; the `source_url` on each entry is where to
 re-check. Do not guess dates — mark them `unverified` or leave them `null`.
