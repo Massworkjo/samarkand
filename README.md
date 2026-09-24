@@ -91,4 +91,6 @@ the `#brush` symbol filled with a brand colour.
   missed. Remove either and a backgrounded tab or a script error can leave the page blank.
 - **Copy lives in `I18N`**, not in the markup — the Arabic in the HTML is only the pre-JS fallback.
   Edit both, or edit `I18N` and mirror it.
-- `7+` countries counts **exports**; Jordan is the domestic market and is not one of them.
+- The export-countries stat counts `MK_NOW` **minus Jordan** (domestic). Moving a country from
+  `MK_SOON` to `MK_NOW` means updating the stat and the schema.org `areaServed` too.
+- Choco Break leads the brand story because it is the company's #1 seller (owner, 2026-09-24).

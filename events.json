@@ -67,7 +67,7 @@
    "source_url": "https://www.thesaudifoodshow.com/",
    "confidence": "verified",
    "attending": true,
-   "booth": null,
+   "booth": "12B",
    "accent": "teal",
    "hours_ar": "الأحد والاثنين 1–8 مساءً، الثلاثاء 1–7 مساءً",
    "hours_en": "Sun & Mon 1–8 PM, Tue 1–7 PM"
