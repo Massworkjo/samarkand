@@ -9,9 +9,10 @@ index.html          the whole site — markup, tokens, styles and behaviour
 events.json         the trade-show calendar (edit this to change what the site says)
 assets/events.js    pure event logic (status, featured show, ordering, .ics) — no DOM
 assets/ig/          Instagram post artwork, WebP, three widths; _colors.json = sampled colours
-assets/             logo + catalogue product photography
+assets/catalog/     14 pages of the 2026 catalogue rendered to WebP (the gallery strip)
+assets/chocobreak/  the six Choco Break packs, cut out
 tests/events.test.mjs
-samarqand-catalog.pdf
+samarqand-catalog.pdf   Samarqand_Catalog_2026_v10, image-optimised (19.8 -> 14 MB)
 ```
 
 Preview over HTTP (`python -m http.server 5178`); opening from `file://` blocks the module script
@@ -85,7 +86,14 @@ the `#brush` symbol filled with a brand colour.
   it get the static composition, not a broken one.
 - **The brand story uses two layouts.** ≥900px: sticky image stack + one background that morphs
   per panel (IntersectionObserver with a `-45%` root margin picks the panel in the middle of the
-  viewport). <900px: each panel is its own colour band with its own image, no sticky.
+  viewport). <900px: the panels become a horizontal snap-scrolled row of cards, each painted its
+  own brand colour; `initPage` excludes them from the page-colour observer there, otherwise the
+  cards side by side would fight over `--page`.
+- **Images inside flex/grid columns need `block-size:auto; min-block-size:0`.** Without it the
+  item's minimum height is the image's intrinsic height (720–900px) and the layout explodes — it
+  happened twice (the pack tiles on iOS, the brand cards in Chromium).
+- The tagline is the catalogue's **"الطعم العنجد / Seriously Sweet"** (2026 catalogue cover and
+  back page); the earlier "طعم خيالي" was the guideline's type sample, not a tagline.
 - **Reveal-on-scroll is progressive enhancement.** `[data-reveal]` is only hidden under `.js`,
   which an inline `<head>` script adds, and a 2.5s timer reveals anything the IntersectionObserver
   missed. Remove either and a backgrounded tab or a script error can leave the page blank.

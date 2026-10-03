@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://www.samarqandsweets.com/">
 <meta property="og:site_name" content="Samarqand Sweets">
 <meta property="og:title" content="سمرقند للسكاكر وتوزيع الشوكولاتة | Samarqand Sweets">
-<meta property="og:description" content="طعم خيالي — استيراد، تصدير، وتوزيع جملة لأفخر السكاكر والشوكولاتة في الأردن والشرق الأوسط، بإرث تجاري منذ 1955.">
+<meta property="og:description" content="الطعم العنجد — استيراد، تصدير، وتوزيع جملة لأفخر السكاكر والشوكولاتة في الأردن والشرق الأوسط، بإرث تجاري منذ 1955.">
 <meta property="og:image" content="https://www.samarqandsweets.com/assets/logo.png">
 <meta property="og:locale" content="ar_JO">
 <meta property="og:locale:alternate" content="en_US">
@@ -367,11 +367,27 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   .hc-wrap{position:relative;inset:auto !important;margin-inline:-18px}
   .hc-wrap:nth-child(n+6){display:none}
   .hc{--w:118px;transform:rotateZ(var(--rz,0deg))}
+  /* story on phones: a swipeable row of brand cards, each in its own brand colour */
+  .story{padding-block-start:var(--s5)}
+  .story-head{padding-block-end:var(--s3)}
   .story-body{display:block;padding:0}
   .story-media{display:none}
-  .sp{min-block-size:0;padding:var(--s5) 22px}
-  .sp-img{display:block;inline-size:min(100%,420px);aspect-ratio:4/4.4;object-fit:cover;object-position:50% 12%;border-radius:22px;margin-block-end:var(--s3);
-    box-shadow:0 24px 50px rgba(31,45,43,.2)}
+  .story-panels{display:grid;grid-auto-flow:column;grid-auto-columns:82vw;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;scroll-padding-inline:22px;padding:4px 22px 16px;scrollbar-width:none}
+  .story-panels::-webkit-scrollbar{display:none}
+  .sp{min-block-size:0;padding:16px 16px 20px;scroll-snap-align:start;border-radius:var(--r);background:var(--bg);--muted:var(--ink)}
+  .sp[data-bg="pink"]{--bg:var(--pink)} .sp[data-bg="yellow"]{--bg:var(--yellow)} .sp[data-bg="coral"]{--bg:var(--coral)}
+  .sp[data-bg="teal"]{--bg:var(--teal)} .sp[data-bg="mint"]{--bg:var(--mint)}
+  /* block-size:auto + min-block-size:0: a flex-column image otherwise keeps its intrinsic 900px as its minimum */
+  .sp-img{display:block;inline-size:100%;block-size:auto;min-block-size:0;flex:none;aspect-ratio:4/3.4;object-fit:cover;object-position:50% 12%;border-radius:16px;margin-block-end:var(--s2)}
+  .sp .kicker{font-size:.85rem}
+  .sp .brand{font-size:1.9rem}
+  .sp .line{font-size:1rem;margin-block-start:var(--s1);max-width:none}
+  .sp .slogan{margin-block-start:var(--s2);font-size:.78rem}
+  .flavours{max-width:none;gap:6px 4px;font-size:.74rem;margin-block-start:var(--s2)}
+  .story-foot{padding-block:var(--s2) var(--s5)}
+  .hero{min-height:auto;padding-block-end:var(--s5)}
+  .wordmark{font-size:clamp(2.4rem,12.5vw,15rem)}
   .about-grid{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
   .ev-feat{grid-template-columns:1fr}
@@ -379,14 +395,33 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   .ig-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:600px){
-  section{padding:var(--s6) 18px}
+  section{padding:var(--s5) 18px}
+  .flag-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-block-start:var(--s3)}
+  .flag{min-inline-size:0;padding:10px 6px}
+  .flag svg{inline-size:34px;block-size:23px}
+  .flag .nm{font-size:.85rem;margin-block-start:6px}
+  .soon-title{margin-block-start:var(--s4)}
+  .cats{grid-template-columns:1fr 1fr;gap:10px}
+  .cat{flex-direction:column;gap:8px;padding:14px}
+  .cat svg{inline-size:36px;block-size:36px}
+  .cat h3{font-size:.95rem}
+  .cat p{font-size:.82rem}
+  .val-grid{grid-template-columns:1fr 1fr;gap:var(--s3) var(--s2)}
+  .val .ic{inline-size:44px;block-size:44px;border-radius:14px}
+  .val .ic svg{inline-size:22px;block-size:22px}
+  .val h3{font-size:1rem}
+  .val p{font-size:.86rem}
+  .channels{padding:var(--s4) var(--s3)}
+  .stats{margin-block-start:var(--s5)}
+  .legacy{padding:var(--s4) var(--s3)}
+  .flavours{grid-template-columns:repeat(3,minmax(0,1fr))}
   .evbar{font-size:.86rem;padding-block:6px}
   .evbar .long{display:none}
   .evbar .short{display:inline}
   .hc-wrap:nth-child(n+5){display:none}
   .hc{--w:104px}
   .hc-wrap{margin-inline:-14px}
-  .cats,.val-grid,.contact-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
@@ -479,7 +514,7 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   </div>
   <div class="hero-copy">
     <a class="hero-pill" id="heroPill" href="#events" hidden style="--i:0"></a>
-    <h1 data-i18n="hero_title" style="--i:1">طعم خيالي</h1>
+    <h1 data-i18n="hero_title" style="--i:1">الطعم العنجد</h1>
     <p class="tag" data-i18n="hero_tag" style="--i:2">سكاكر وشوكولاتة نستوردها ونوزّعها بحب — من عمّان إلى كل رفّ في الشرق الأوسط.</p>
     <div class="hero-btns" style="--i:3">
       <a href="#brands" class="btn btn-ink" data-i18n="hero_btn1">اكتشف علاماتنا</a>
@@ -575,7 +610,7 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
     </div>
     <div class="stats">
       <div class="stat" data-reveal><span class="num" data-count="70" data-suffix="+">70+</span><span class="txt" data-i18n="stat_1">عاماً من الإرث التجاري</span></div>
-      <div class="stat" data-reveal style="--d:90ms"><span class="num" data-count="100" data-suffix="+">100+</span><span class="txt" data-i18n="stat_2">منتج في كاتالوجنا</span></div>
+      <div class="stat" data-reveal style="--d:90ms"><span class="num" data-count="157" data-suffix="">157</span><span class="txt" data-i18n="stat_2">منتجاً ونكهة في كاتالوجنا</span></div>
       <div class="stat" data-reveal style="--d:180ms"><span class="num" data-count="3" data-suffix="">3</span><span class="txt" data-i18n="stat_3">قطاعات: أفراد، تجّار، موزعون</span></div>
       <!-- exports only: Jordan is the domestic market and is not counted (MK_NOW minus jo) -->
       <div class="stat" data-reveal style="--d:270ms"><span class="num" data-count="10" data-suffix="+">10+</span><span class="txt" data-i18n="stat_4">دول نصدّر إليها</span></div>
@@ -706,7 +741,7 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
   <div class="foot">
     <div>
       <img src="assets/logo.png" width="700" height="306" alt="Samarqand" loading="lazy">
-      <p data-i18n="foot_1">سمرقند — طعم خيالي، من عمّان إلى العالم.</p>
+      <p data-i18n="foot_1">سمرقند — الطعم العنجد، من عمّان إلى العالم.</p>
       <div class="socials">
         <a href="https://www.instagram.com/samarqand.mena/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#u-ig"/></svg></a>
         <a href="https://www.facebook.com/p/%D8%B4%D8%B1%D9%83%D8%A9-%D8%B3%D9%85%D8%B1%D9%82%D9%86%D8%AF-%D9%84%D9%84%D8%B3%D9%83%D8%A7%D9%83%D8%B1-Samarqand-co-100091360552095/" target="_blank" rel="noopener" aria-label="Facebook"><svg aria-hidden="true"><use href="#u-fb"/></svg></a>
@@ -729,10 +764,9 @@ footer a:focus-visible,footer button:focus-visible{outline-color:var(--yellow)}
 import { featured, ics } from './assets/events.js';
 
 /* ================= static data ================= */
-const CATALOG = [
-  {f:'choco-break.jpg',k:'g1'},{f:'go-up.jpg',k:'g2'},{f:'jolly-bee.jpg',k:'g3'},{f:'stuns.jpg',k:'g4'},
-  {f:'extra-wafer.jpg',k:'g5'},{f:'chocolate-balls.jpg',k:'g6'},{f:'plenty.jpg',k:'g7'},{f:'dino-chips.jpg',k:'g8'}
-];
+// pages of Samarqand_Catalog_2026_v10 rendered to assets/catalog (1217x861)
+const CATALOG = ['choco-break','choco-break-quadro','go-up','florida','waffle-jolly','stuns','babyfox','plenty','extra','pure-love','amos','dino','frostlab','daken']
+  .map((f,i) => ({f:`catalog/${f}.webp`, k:`g${i+1}`}));
 const IG = [ // image slug -> Instagram post
   ['chocobreak-crunch','DctW9maCdbc'],['stuns-smart','DcbVcZKDQ_B'],['chips-share-1','Db8U-sqjfJp'],['teaser','DcTgJjTD0Fc'],
   ['cookies','DcMDJHkj7yM'],['frost-3x','Dbav1SOCJH1'],['chocobreak-sky','Dc1MQ9bjPGo'],['texture','DbTIRd7GdiB']
@@ -747,7 +781,7 @@ const I18N = {
  ar:{
   skip:"تخطَّ إلى المحتوى", menu:"القائمة",
   nav_brands:"علاماتنا", nav_about:"من نحن", nav_events:"المعارض", nav_markets:"أسواقنا", nav_contact:"تواصل معنا",
-  hero_title:"طعم خيالي",
+  hero_title:"الطعم العنجد",
   hero_tag:"سكاكر وشوكولاتة نستوردها ونوزّعها بحب — من عمّان إلى كل رفّ في الشرق الأوسط.",
   hero_btn1:"اكتشف علاماتنا", hero_btn2:"اطلب عرض أسعار",
   st_eyebrow:"علاماتنا", st_title:"علامات بتعدّل المزاج",
@@ -763,7 +797,7 @@ const I18N = {
   about_p2:"تأسست سمرقند عام 2022 في عمّان، لتكون الذراع المتخصص في استيراد وتصدير وتوزيع السكاكر والشوكولاتة في الشرق الأوسط، بالتزام قوي بالجودة والشفافية.",
   about_p3:"نختار أفضل المنتجات العالمية، ونبني علاقات موثوقة مع شركائنا، ونقدّم حلول توزيع مرنة للأفراد والتجّار والموزعين.",
   legacy_1:"تأسيس الشركة الأم — الفاخرة التجارية", legacy_2:"انطلاق سمرقند من عمّان",
-  stat_1:"عاماً من الإرث التجاري", stat_2:"منتج في كاتالوجنا", stat_3:"قطاعات: أفراد، تجّار، موزعون", stat_4:"دول نصدّر إليها",
+  stat_1:"عاماً من الإرث التجاري", stat_2:"منتجاً ونكهة في كاتالوجنا", stat_3:"قطاعات: أفراد، تجّار، موزعون", stat_4:"دول نصدّر إليها",
   ev_eyebrow:"المعارض والفعاليات", ev_title:"وين تلاقونا", ev_lede:"معرضنا القادم — تعالوا نتعرّف ونتذوّق سوا.",
   ev_meet:"نلقاكم في", ev_live:"مباشر الآن — نحن في المعرض", ev_booth:"جناحنا", ev_book:"احجز موعداً معنا في المعرض",
   ev_ics:"أضف إلى التقويم", ev_site:"الموقع الرسمي", ev_live_b:"جارٍ الآن",
@@ -778,9 +812,10 @@ const I18N = {
   cat3_t:"نعناع خالٍ من السكر", cat3_p:"FrostLab بسبع نكهات منعشة.",
   cat4_t:"حلوى مع ألعاب", cat4_p:"مفاجآت الأكثر طلباً لدى الصغار.",
   gal_btn:"حمّل الكاتالوج الكامل (PDF)", zoom:"تكبير:",
-  g1:"Choco Break — كاكاو، جوز هند، حليب", g2:"Go Up — فستق، براوني، فول سوداني", g3:"Jolly Bee — سكاكر جيلي بالفواكه",
-  g4:"Stuns — كراميل ونوغا", g5:"Extra — ويفر مقرمش بطبقات الكريمة", g6:"كرات شوكولاتة فاخرة للهدايا",
-  g7:"Plenty — كرات شوكولاتة بالفستق والبندق", g8:"Dino Chips — شيبس بأربع نكهات",
+  g1:"Choco Break — ويفر بالشوكولاتة: حليب، كاكاو، جوز هند", g2:"Choco Break Quadro — كابتشينو، فستق، توفي", g3:"Go Up — ألواح ويفر مغطاة بالشوكولاتة",
+  g4:"Florida — كوكيز محشوة", g5:"ويفر دب وجولي بي", g6:"Stuns — كراميل ونوغا", g7:"Babyfox — شوكولاتة بالحليب",
+  g8:"Plenty — كرات شوكولاتة", g9:"Extra — ويفر مقرمش", g10:"Pure Love — سكاكر نوغا وكراميل", g11:"AMOS — علكة طرية",
+  g12:"Dino Chips — شيبس بطاطا", g13:"FrostLab — ملبس بدون سكر", g14:"Daken — شوكولاتة داكنة",
   mk_eyebrow:"أسواقنا", mk_title:"من عمّان إلى العالم", mk_p:"نصدّر ونوزّع منتجاتنا إلى أسواق متعددة:", mk_soon:"قريباً إن شاء الله",
   jo:"الأردن", us:"أمريكا", sa:"السعودية", ps:"فلسطين", lb:"لبنان", sy:"سوريا", ye:"اليمن", om:"عُمان",
   eg:"مصر", ae:"الإمارات", qa:"قطر", kw:"الكويت", iq:"العراق", ly:"ليبيا", ma:"المغرب", dz:"الجزائر", tn:"تونس", uz:"أوزبكستان", bh:"البحرين",
@@ -793,13 +828,13 @@ const I18N = {
   con_eyebrow:"تواصل معنا", con_title:"جاهزون نخدمك", con_p:"للاستفسار عن المنتجات، طلبات الجملة، أو فرص التوزيع — تواصل معنا مباشرة.",
   c1:"رقم المعرض", c2:"المبيعات المحلية", c3:"المبيعات الخارجية", c4:"رقم الشركة", c5:"البريد الإلكتروني", c6:"العنوان", c6_p:"عمّان — الأردن",
   wa:"راسلنا على واتساب",
-  foot_1:"سمرقند — طعم خيالي، من عمّان إلى العالم.",
+  foot_1:"سمرقند — الطعم العنجد، من عمّان إلى العالم.",
   foot_2:"© 2026 شركة سمرقند للسكاكر وتوزيع الشوكولاتة — جميع الحقوق محفوظة | فرع من شركة محمد موسى عمرو (الفاخرة التجارية)"
  },
  en:{
   skip:"Skip to content", menu:"Menu",
   nav_brands:"Our Brands", nav_about:"About", nav_events:"Events", nav_markets:"Markets", nav_contact:"Contact Us",
-  hero_title:"A Taste Out of This World",
+  hero_title:"Seriously Sweet",
   hero_tag:"Candy and chocolate we import and distribute with love — from Amman to every shelf in the Middle East.",
   hero_btn1:"Discover Our Brands", hero_btn2:"Request a Quote",
   st_eyebrow:"Our Brands", st_title:"Brands That Make Your Day",
@@ -815,7 +850,7 @@ const I18N = {
   about_p2:"Founded in 2022 in Amman, Samarqand specialises in the import, export and distribution of candy and chocolate across the Middle East, with a strong commitment to quality and transparency.",
   about_p3:"We source the finest international products, build reliable partnerships, and offer flexible distribution for individuals, retailers and wholesalers.",
   legacy_1:"Parent company founded — Al Fakhira Trading", legacy_2:"Samarqand launched in Amman",
-  stat_1:"years of commercial heritage", stat_2:"products in our catalogue", stat_3:"segments: individuals, retailers, wholesalers", stat_4:"export countries",
+  stat_1:"years of commercial heritage", stat_2:"products & flavours in our catalogue", stat_3:"segments: individuals, retailers, wholesalers", stat_4:"export countries",
   ev_eyebrow:"Trade Shows & Events", ev_title:"Where to Meet Us", ev_lede:"Our next show — come say hello and taste with us.",
   ev_meet:"Meet us at", ev_live:"Live now — we're at the show", ev_booth:"Our stand", ev_book:"Book a meeting at the show",
   ev_ics:"Add to calendar", ev_site:"Official website", ev_live_b:"Happening now",
@@ -830,9 +865,10 @@ const I18N = {
   cat3_t:"Sugar-free Mints", cat3_p:"FrostLab in seven fresh flavours.",
   cat4_t:"Candy with Toys", cat4_p:"Surprises that kids ask for most.",
   gal_btn:"Download the Full Catalogue (PDF)", zoom:"Enlarge:",
-  g1:"Choco Break — cacao, coconut, milk", g2:"Go Up — pistachio, brownie, peanut", g3:"Jolly Bee — fruity jelly candy",
-  g4:"Stuns — caramel & nougat", g5:"Extra — crispy wafer with cream layers", g6:"Premium gift chocolate balls",
-  g7:"Plenty — chocolate balls with pistachio & hazelnut", g8:"Dino Chips — four flavours",
+  g1:"Choco Break — chocolate wafer: milk, cacao, coconut", g2:"Choco Break Quadro — cappuccino, pistachio, toffee", g3:"Go Up — chocolate-coated wafer bars",
+  g4:"Florida — filled cookies", g5:"Waffle Ice Cream & Jolly Bee", g6:"Stuns — caramel & nougat", g7:"Babyfox — milk chocolate",
+  g8:"Plenty — chocolate balls", g9:"Extra — crispy wafer", g10:"Pure Love — nougat & caramel candies", g11:"AMOS — soft gummies",
+  g12:"Dino Chips — potato chips", g13:"FrostLab — sugar-free mints", g14:"Daken — dark chocolate",
   mk_eyebrow:"Our Markets", mk_title:"From Amman to the World", mk_p:"We export and distribute to markets including:", mk_soon:"Coming Soon",
   jo:"Jordan", us:"USA", sa:"Saudi Arabia", ps:"Palestine", lb:"Lebanon", sy:"Syria", ye:"Yemen", om:"Oman",
   eg:"Egypt", ae:"UAE", qa:"Qatar", kw:"Kuwait", iq:"Iraq", ly:"Libya", ma:"Morocco", dz:"Algeria", tn:"Tunisia", uz:"Uzbekistan", bh:"Bahrain",
@@ -845,7 +881,7 @@ const I18N = {
   con_eyebrow:"Contact Us", con_title:"Ready to Serve You", con_p:"For product enquiries, wholesale orders or distribution opportunities — reach out directly.",
   c1:"Showroom", c2:"Local Sales", c3:"International Sales", c4:"Company Line", c5:"Email", c6:"Address", c6_p:"Amman — Jordan",
   wa:"Message Us on WhatsApp",
-  foot_1:"Samarqand — a taste out of this world, from Amman to everywhere.",
+  foot_1:"Samarqand — seriously sweet, from Amman to everywhere.",
   foot_2:"© 2026 Samarqand Candy & Chocolate Distribution Co. — All rights reserved | A branch of Mohammad Mousa Amro Company (Al Fakhira Trading)"
  }
 };
@@ -866,7 +902,7 @@ const NOW = (()=>{ const q = new URLSearchParams(location.search).get('now');
 /* ================= build static lists ================= */
 function buildCatalog(){
   $('#catRow').innerHTML = CATALOG.map((p,i)=>`
-    <button type="button" data-i="${i}"><img src="assets/${p.f}" width="900" height="637" loading="lazy" decoding="async" alt="" data-alt="${p.k}">
+    <button type="button" data-i="${i}"><img src="assets/${p.f}" width="1217" height="861" loading="lazy" decoding="async" alt="" data-alt="${p.k}">
     <span class="cap" data-i18n="${p.k}"></span></button>`).join('');
 }
 function buildIG(){
@@ -991,7 +1027,9 @@ function initCounters(){
 // The page background: whichever [data-bg] block crosses the middle of the viewport owns the colour.
 // The two colour fields take the previous and next block's colours so the drift reads as a journey.
 function initPage(){
-  const blocks = $$('[data-bg]'), media = $$('.story-media img'), root = document.documentElement;
+  // on phones the brand panels are cards in a horizontal row, each with its own colour — they must not drive the page
+  const cards = matchMedia('(max-width:900px)').matches;
+  const blocks = $$('[data-bg]').filter(b => !(cards && b.closest('.story-panels'))), media = $$('.story-media img'), root = document.documentElement;
   if(!('IntersectionObserver' in window)) return;
   const io = new IntersectionObserver(ents => ents.forEach(e => {
     if(!e.isIntersecting) return;
