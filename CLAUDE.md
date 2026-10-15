@@ -33,6 +33,10 @@ as a Google Doc in Drive `Full Mass Group` and posts one Install / Skip / Later 
 (no overlapping plugins), irrelevant plugins stay switched off, routine and scheduled work runs on
 cheaper models, finished threads get resolved.
 
+**Library docs.** Before writing or fixing code against Django, DRF, Flutter, PostgreSQL or any
+other library, look up the current docs with the **Context7** connector (Django 6.1 =
+`/websites/djangoproject_en_6_1`). Do not code from memory.
+
 ## 1. Rules
 
 - **Pushing to `main` publishes the site** (GitHub Pages, `CNAME`). Work on a branch + draft PR.
