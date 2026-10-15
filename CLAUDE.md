@@ -25,6 +25,14 @@ This repo is one of four that will become **one Samarqand platform**. Order of w
 - **Show proof**: links, test output, screenshots. Prefer a visual map or roadmap over a wall of text.
 - **Let running agents finish.** Never rebase, force-push or delete a branch you did not create.
 
+**Daily skills scout.** Every morning at 05:55 Asia/Amman a scheduled task ("Morning skills scout")
+looks for new Claude skills, plugins and MCP connectors that fit this stack (Django/DRF/PostgreSQL,
+Flutter, Arabic RTL back-office, HR, ERP/accounting, website). It writes `Skills scout YYYY-MM-DD`
+as a Google Doc in Drive `Full Mass Group` and posts one Install / Skip / Later card per candidate.
+**Nothing is installed without the owner's answer on that card.** Usage rules: one plugin per job
+(no overlapping plugins), irrelevant plugins stay switched off, routine and scheduled work runs on
+cheaper models, finished threads get resolved.
+
 ## 1. Rules
 
 - **Pushing to `main` publishes the site** (GitHub Pages, `CNAME`). Work on a branch + draft PR.
